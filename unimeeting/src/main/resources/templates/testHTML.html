@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"><head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2 th:text="${ctgr}"></h2>
+<ul th:each="e:${met}">
+    <li th:text="${e}"></li>
+</ul>
+
+</body>
+</html>
