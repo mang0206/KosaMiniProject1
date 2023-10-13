@@ -21,15 +21,15 @@ public class MeetingBoardController {
     // ctrg category, path -> default all
     // search searchword, query
     // page,page number query -> default 1
-    @RequestMapping(value = {"/meeting/board", "/meeting/board/{ctgr}"})
-    public ModelAndView viewMetBoard(@PathVariable(required = false) String ctgr, String search, @RequestParam(defaultValue = "1") int page){
+    @RequestMapping(value = {"/meeting/board"})
+    public ModelAndView viewMetBoard(@RequestParam(required = false) String ctgr,@RequestParam(required = false) String search, @RequestParam(defaultValue = "1") int page){
         ModelAndView mv = new ModelAndView();
         List<String> category = metmap.viewCtgy();
         mv.addObject("ctgr_list", category);
         //page
 //        int page_num = metmap.countMet(ctgr, search);
 //        mv.addObject("page_num", page_num);
-        List<MeetingDTO> meetings = metmap.viewMetBoard(ctgr.equals("null")? null:ctgr ,search, (page-1)*4);
+        List<MeetingDTO> meetings = metmap.viewMetBoard(ctgr ,search, (page-1)*4);
         mv.addObject("met_list", meetings);
 
         mv.setViewName("testHTML");
