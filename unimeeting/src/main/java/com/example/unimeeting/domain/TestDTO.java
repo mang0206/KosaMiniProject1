@@ -1,2 +1,4 @@
-package com.example.unimeeting.domain;public class TestDTO {
+package com.example.unimeeting.domain;
+
+public class TestDTO {
 }

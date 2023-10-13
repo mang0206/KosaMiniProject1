@@ -1,2 +1,4 @@
-package com.example.unimeeting.dao;public interface TestMapper {
+package com.example.unimeeting.dao;
+
+public interface TestMapper {
 }
