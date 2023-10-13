@@ -6,15 +6,15 @@
 <body>
 <button onclick="location.href = '/meeting/board'">전체</button>
 <th:block th:each="e:${ctgr_list}">
-    <a th:text="${e}" th:href="@{/meeting/board/{page}(page=${e})}" style="text-decoration-line: none"></a>
+    <a th:text="${e}" th:href="@{/meeting/board/{ctgr}(ctgr=${e})}" style="text-decoration-line: none"></a>
 </th:block>
 <hr>
-<form method="get" th:action="/meeting/board">
+<form method="get" th:action="@{/meeting/board/__${ctgr}__}">
     검색 : <label><input name="search" /><br></label>
     <input type="submit" value="검색"/>
 </form>
 <hr>
-<button onclick="location.href='/meeting/insertMetForm.html'"></button>
+<!--<button onclick="location.href='/meeting/insertMetForm.html'"></button>-->
 <ul th:each="e:${met_list}">
     <li th:text="${e.getCategory()}"></li>
     <li th:text="|장소: ${e.getLocation()}|"></li>
@@ -24,7 +24,7 @@
     <br>
 </ul>
 <hr>
-<h2 th:text="${page_num}"></h2>
+<!--<h2 th:text="${page_num}"></h2>-->
 
 </body>
 </html>

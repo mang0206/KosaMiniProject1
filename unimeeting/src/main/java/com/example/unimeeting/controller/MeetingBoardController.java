@@ -29,7 +29,7 @@ public class MeetingBoardController {
         //page
 //        int page_num = metmap.countMet(ctgr, search);
 //        mv.addObject("page_num", page_num);
-        List<MeetingDTO> meetings = metmap.viewMetBoard(ctgr,search, (page-1)*4);
+        List<MeetingDTO> meetings = metmap.viewMetBoard(ctgr.equals("null")? null:ctgr ,search, (page-1)*4);
         mv.addObject("met_list", meetings);
 
         mv.setViewName("testHTML");

@@ -16,7 +16,7 @@ public interface MeetingMapper {
     @Select("<script>select * from meeting" +
             "<where>" +
             "<if test='category!=null'>category = #{category} </if>" +
-            "<if test='search!=null'>title like concat('%',#{search}, '%')</if>" +
+            "<if test='search!=null'>and title like concat('%',#{search}, '%')</if>" +
             "</where>order by idx desc limit 4 offset ${page}</script>")
     public List<MeetingDTO> viewMetBoard(@Param("category") String category,@Param("search") String search,@Param("page") int page );
 
