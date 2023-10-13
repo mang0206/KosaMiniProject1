@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post" action="/book/insertBook">
+    도서명 : <label><input name="title" /><br></label>
+    가격 : <label><input name="price" type="number"/> 원<br></label>
+    도서 분류 :
+    <label><input type="radio" name="kind" value="b01" >프로그래밍 언어</label>
+    <label><input type="radio" name="kind" value="b02" >웹 프로그래밍</label>
+    <label><input type="radio" name="kind" value="b03" >빅데이터</label>
+    <label><input type="radio" name="kind" value="b04" >인프라</label>
+    <label><input type="radio" name="kind" value="b05" >데이터베이스</label>
+    <br>
+    <input type="submit" value="저장"/>
+</form>
+
+</body>
+</html>
