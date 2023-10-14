@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"><head>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h5 th:text="${meeting.category}"></h5>
+<h1 th:text="${meeting.title}"></h1>
+<h6 th:text="|시작일: ${meeting.start_datetime} / 현재인원/모집인원 : ${meeting_member}/${meeting.recruits}|"></h6>
+<hr>
+<div th:text="${meeting.content_text}"></div>
+<hr>
+<!--참가신청: idx session-->
+<button th:onclick="|location.href=@{/meeting/add_member}|">참가 신청</button>
+<button th:onclick="|location.href=@{/meeting/add_scrap}|">스크랩</button>
+</body>
+</html>

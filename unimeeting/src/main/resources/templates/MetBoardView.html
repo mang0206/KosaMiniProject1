@@ -29,7 +29,7 @@
 
 <!-- Meeting List -->
 <ul th:each="e:${met_list}">
-    <li th:text="${e.getCategory()}" th:onclick="@{/meeting/post(idx=${e.idx})}"></li>
+    <li th:text="${e.getCategory()}" th:onclick="|location.href='@{/meeting/post(idx=${e.idx})}'|"></li>
     <li th:text="|장소: ${e.getLocation()}|"></li>
     <li th:text="|제목: ${e.getTitle()}|"></li>
     <li th:text="|내용: ${e.getContent_text()}|"></li>

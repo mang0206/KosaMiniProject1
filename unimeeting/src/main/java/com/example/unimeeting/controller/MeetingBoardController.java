@@ -35,7 +35,7 @@ public class MeetingBoardController {
         List<MeetingDTO> meetings = metmap.viewMetBoard(ctgr ,search, (page-1)*4);
         mv.addObject("met_list", meetings);
 
-        mv.setViewName("testHTML");
+        mv.setViewName("MetBoardView");
         return mv;
     }
 
@@ -49,4 +49,17 @@ public class MeetingBoardController {
         return "redirect:/meeting/board";
     }
 
+    // view Meeting Post
+    @GetMapping("/meeting/post")
+    public ModelAndView viewMetPost(int idx){
+        MeetingDTO meeting = metmap.viewMetPost(idx);
+        int meeting_member = metmap.countMetMem(idx);
+        ModelAndView mv = new ModelAndView();
+        if(meeting != null){
+            mv.addObject("meeting", meeting);
+            mv.addObject("meeting_member", meeting_member);
+        }
+        mv.setViewName("MetPostView");
+        return mv;
+    }
 }

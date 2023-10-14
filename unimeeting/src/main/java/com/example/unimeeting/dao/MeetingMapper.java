@@ -28,6 +28,14 @@ public interface MeetingMapper {
             "values (#{title}, #{category}, #{location}, #{start_datetime}, now() , #{content_text}, #{content_img}, #{writer_nickname})")
     public boolean insertMet(MeetingDTO meetingDTO);
 
+    // View Meeting Post
+    @Select("select * from meeting where idx = ${idx}")
+    public MeetingDTO viewMetPost(@Param("idx") int idx);
+
+    // Count Meeting member
+    @Select("select count(*) from meeting_member where meeting_idx = ${idx}")
+    public int countMetMem(@Param("idx") int idx);
+
     //    // page
 //    @Select("<script>select count(*) from meeting"+
 //            "<where>" +
