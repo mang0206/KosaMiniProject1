@@ -4,18 +4,30 @@
     <title>Title</title>
 </head>
 <body>
+<!-- Category Button-->
 <button onclick="location.href = '/meeting/board'">전체</button>
 <th:block th:each="e:${ctgr_list}">
-    <a th:text="${e}" th:href="@{/meeting/board(ctgr=${e})}" style="text-decoration-line: none"></a>
+    <a th:text="${e}" th:href="@{/meeting/board/{ctgr}(ctgr=${e})}" style="text-decoration-line: none"></a>
 </th:block>
 <hr>
-<!--PARAM 추가할 방법을 찾아야 한다-->
-<form method="get" th:action="@{/meeting/board)}">
+<!-- /Category Button-->
+
+<!-- Search-->
+<!-- __${...}__ = pathVariable 를 가져올 수 있다. 현재 접속한 category 내에서 검색 기능을 구현하기 위해 사용 -->
+<!-- __${...}-- == null 일 경우 uri에 문자열 null 이 입력되는 것을 방지-->
+<form method="get"  th:action="@{/meeting/board{ctgr}(ctgr = __${ctgr}__ != null ? @{/__${ctgr}__} : __${ctgr}__)}">
     검색 : <label><input name="search" required/><br></label>
     <input type="submit" value="검색"/>
 </form>
 <hr>
-<!--<button onclick="location.href='/meeting/insertMetForm.html'"></button>-->
+<!-- /Search-->
+
+<!-- Insert Meeting Button -->
+<button onclick="location.href = '/insertMetForm.html'" value="${ctgr_list}">모임 만들기</button>
+<hr>
+<!-- /Insert Meeting Button -->
+
+<!-- Meeting List -->
 <ul th:each="e:${met_list}">
     <li th:text="${e.getCategory()}"></li>
     <li th:text="|장소: ${e.getLocation()}|"></li>
@@ -25,7 +37,8 @@
     <br>
 </ul>
 <hr>
-<!--<h2 th:text="${page_num}"></h2>-->
+<!--/Meeting List -->
+
 
 </body>
 </html>

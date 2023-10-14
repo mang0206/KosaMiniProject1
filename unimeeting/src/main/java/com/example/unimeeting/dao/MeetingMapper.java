@@ -10,9 +10,12 @@ import java.util.List;
 
 @Mapper
 public interface MeetingMapper {
+
+    // Category List
     @Select("select distinct category from meeting order by category")
     public List<String> viewCtgy();
 
+    // Meeting List
     @Select("<script>select * from meeting" +
             "<where>" +
             "<if test='category!=null'>category = #{category} </if>" +
@@ -20,11 +23,12 @@ public interface MeetingMapper {
             "</where>order by idx desc limit 4 offset ${page}</script>")
     public List<MeetingDTO> viewMetBoard(@Param("category") String category,@Param("search") String search,@Param("page") int page );
 
+    // Insert Meeting
+//    @Insert("insert into book (title, category, location, start_datetime, created_datetime, content_text, content_img,writer_nickname) " +
+//            "values (#{title}, #{category}, #{location}, , #{created_datetime}, #{content_text}, #{content_img}, #{writer_nickname})")
+//    public boolean insertBook(MeetingDTO meetingDTO);
 
-    @Insert("insert into book (title, category, location, start_datetime, created_datetime, content_text, content_img,writer_nickname) " +
-            "values (#{title}, #{category}, #{location}, , #{created_datetime}, #{content_text}, #{content_img}, #{writer_nickname})")
-    public boolean insertBook(MeetingDTO meetingDTO);
-//    // page
+    //    // page
 //    @Select("<script>select count(*) from meeting"+
 //            "<where>" +
 //            "<if test='category!=null'>category = #{category} </if>" +
