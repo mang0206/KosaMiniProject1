@@ -5,18 +5,32 @@
     <title>Title</title>
 </head>
 <body>
-<form method="post" action="/book/insertBook">
-    도서명 : <label><input name="title" /><br></label>
-    가격 : <label><input name="price" type="number"/> 원<br></label>
-    도서 분류 :
-    <label><input type="radio" name="kind" value="b01" >프로그래밍 언어</label>
-    <label><input type="radio" name="kind" value="b02" >웹 프로그래밍</label>
-    <label><input type="radio" name="kind" value="b03" >빅데이터</label>
-    <label><input type="radio" name="kind" value="b04" >인프라</label>
-    <label><input type="radio" name="kind" value="b05" >데이터베이스</label>
-    <br>
-    <input type="submit" value="저장"/>
-</form>
+<script>
 
+        let request = new XMLHttpRequest();
+        request.onload = function(){
+            if (request.status == 200) {
+                let result = document.getElementById("categories");
+                let ctgr = JSON.parse(request.responseText);
+                console.log(ctgr);
+                for(let i = 0; i < ctgr.length; i++){
+                    result.innerHTML += `<label><input type="radio" name="category" value=${ctgr[i]} >${ctgr[i]}</label>`;
+                }
+            }
+        };
+        request.open('GET', '/getCategory', true);
+        request.send();
+
+</script>
+<form action="/meeting/insertMet" method="post">
+카테고리 <div id="categories"></div>
+    제목: <label><input name="title" /><br></label>
+    모집 인원: <label><input name="recruits" type="number" min="2"/><br></label>
+    시작일: <label><input name="start_datetime" type="date"/><br></label>
+    소개: <label><input name="content_text" maxlength="500" /><br></label>
+    작성자(임시): <label><input name="writer_nickname" /><br></label>
+    장소(임시): <label><input name="location" /><br></label>
+    <input type="submit" value="업로드"/>
+</form>
 </body>
 </html>

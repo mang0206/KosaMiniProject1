@@ -17,7 +17,7 @@ public class MeetingDTO {
     private String location;
     private String start_datetime;
     private String created_datetime;
-
+    private int recruits;
     private String content_text;
     private String content_img;
     private String writer_nickname;

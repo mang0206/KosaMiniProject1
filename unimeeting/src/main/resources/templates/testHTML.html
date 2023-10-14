@@ -23,13 +23,13 @@
 <!-- /Search-->
 
 <!-- Insert Meeting Button -->
-<button onclick="location.href = '/insertMetForm.html'" value="${ctgr_list}">모임 만들기</button>
+<button onclick="location.href = '/insertMetForm.html'">모임 만들기</button>
 <hr>
 <!-- /Insert Meeting Button -->
 
 <!-- Meeting List -->
 <ul th:each="e:${met_list}">
-    <li th:text="${e.getCategory()}"></li>
+    <li th:text="${e.getCategory()}" th:onclick="@{/meeting/post(idx=${e.idx})}"></li>
     <li th:text="|장소: ${e.getLocation()}|"></li>
     <li th:text="|제목: ${e.getTitle()}|"></li>
     <li th:text="|내용: ${e.getContent_text()}|"></li>
