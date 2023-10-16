@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-import java.util.Map;
 
 @Controller
-public class MeetingBoardController {
+public class MeetingController {
 
     @Autowired
     MeetingMapper metmap;
@@ -32,7 +31,7 @@ public class MeetingBoardController {
         public ModelAndView viewMetBoard(@PathVariable(required = false) String ctgr,@RequestParam(required = false) String search, @RequestParam(defaultValue = "1") int page){
         ModelAndView mv = new ModelAndView();
         mv.addObject("ctgr_list", getCategory());
-        List<MeetingDTO> meetings = metmap.viewMetBoard(ctgr ,search, (page-1)*4);
+        List<MeetingDTO> meetings = metmap.viewMetBoard(ctgr ,search!=null ? search.trim() : search, (page-1)*4);
         mv.addObject("met_list", meetings);
 
         mv.setViewName("MetBoardView");

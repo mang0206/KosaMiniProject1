@@ -23,7 +23,7 @@ public interface MeetingMapper {
             "</where>order by idx desc limit 4 offset ${page}</script>")
     public List<MeetingDTO> viewMetBoard(@Param("category") String category,@Param("search") String search,@Param("page") int page );
 
-//     Insert Meeting
+    // Insert Meeting
     @Insert("insert into meeting (title, category, location, start_datetime, created_datetime, content_text, content_img,writer_nickname) " +
             "values (#{title}, #{category}, #{location}, #{start_datetime}, now() , #{content_text}, #{content_img}, #{writer_nickname})")
     public boolean insertMet(MeetingDTO meetingDTO);
