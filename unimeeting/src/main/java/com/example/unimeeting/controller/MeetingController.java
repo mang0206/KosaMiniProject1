@@ -62,11 +62,27 @@ public class MeetingController {
         return mv;
     }
 
+    // get Meeting
+    @RequestMapping(value = "/meeting/getMetJson", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public MeetingDTO getMetJson(int idx){
+        return metmap.viewMetPost(idx);
+    }
+
     // delete meeting
     @RequestMapping("/meeting/deleteMet")
-    public String deleteMetPost(int idx, String writer_nickname){
-        System.out.println("test");
+    public String deleteMetPost(int idx, String writer_nickname){ // HttpSession
         return metmap.deleteMeeting(idx, writer_nickname) ? "redirect:/meeting/board" : "redirect:/";
     }
 
+    // update meeting
+    @RequestMapping("/meeting/updateMet")
+    public String updateMetPost(MeetingDTO meetingDTO,Model m){
+        System.out.println(meetingDTO);
+        boolean result = metmap.updateMet(meetingDTO);
+        if (!result) {
+            m.addAttribute("msg", "글 작성을 처리하는 동안 오류 발생");
+        }
+        return "redirect:/meeting/board";
+    }
 }

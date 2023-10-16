@@ -5,13 +5,29 @@
     <title>모임 작성</title>
 </head>
 <body>
+<script>
+    // response != null -> target.value = ...
+
+    let url = new URL(document.referrer);
+    if(url.pathname == "/meeting/post") {
+        let idx = new URLSearchParams(url.search);
+        let xhr = new XMLHttpRequest;
+        xhr.onload = () => {
+            console.log(xhr.response);
+        }
+        xhr.open("GET", `/meeting/post?${idx}`, true);
+        xhr.send();
+
+    }
+
+</script>
 <form action="/meeting/insertMet" method="post">
     카테고리<br>
-    <label><input type="radio" name="category" value="운동" >운동</label>
+    <label><input type="radio" name="category" value="운동" checked>운동</label>
     <label><input type="radio" name="category" value="스터디" >스터디</label>
     <label><input type="radio" name="category" value="독서" >독서</label>
     <br>
-    제목: <label><input name="title" /><br></label>
+    제목: <label><input id="title" name="title" /><br></label>
     모집 인원: <label><input name="recruits" type="number" min="2"/><br></label>
     시작일: <label><input name="start_datetime" type="date"/><br></label>
     소개: <label><input name="content_text" maxlength="500" /><br></label>

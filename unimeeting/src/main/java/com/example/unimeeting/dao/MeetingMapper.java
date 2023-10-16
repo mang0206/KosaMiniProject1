@@ -21,8 +21,8 @@ public interface MeetingMapper {
     public List<MeetingDTO> viewMetBoard(@Param("category") String category,@Param("search") String search,@Param("page") int page );
 
     // Insert Meeting
-    @Insert("insert into meeting (title, category, location, start_datetime, created_datetime, content_text, content_img,writer_nickname, recruits) " +
-            "values (#{title}, #{category}, #{location}, #{start_datetime}, now() , #{content_text}, #{content_img}, #{writer_nickname}, #{recruits})")
+    @Insert("insert into meeting (title, category, location, start_datetime, created_datetime, content_text,writer_nickname, recruits) " +
+            "values (#{title}, #{category}, #{location}, #{start_datetime}, now() , #{content_text}, #{writer_nickname}, #{recruits})")
     public boolean insertMet(MeetingDTO meetingDTO);
 
     // View Meeting Post
@@ -35,6 +35,11 @@ public interface MeetingMapper {
 
     @Delete("delete from meeting where idx=#{idx} && writer_nickname=#{writer_nickname}")
     public boolean deleteMeeting(int idx, String writer_nickname);
+
+    @Update("update meeting set title=#{title}, category=#{category}, location=#{location}, start_datetime=#{start_datetime}, content_text=#{content_text},recruits=#{recruits} where idx=#{idx} and writer_nickname=#{writer_nickname}")
+    public boolean updateMet(MeetingDTO meetingDTO);
+
+
     //    // page
 //    @Select("<script>select count(*) from meeting"+
 //            "<where>" +

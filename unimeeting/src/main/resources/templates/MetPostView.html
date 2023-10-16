@@ -17,5 +17,10 @@
 
 <!--delete button-->
 <button th:onclick="|location.href='@{/meeting/deleteMet(idx = ${meeting.idx}, writer_nickname = ${meeting.writer_nickname})}'|">삭제</button>
+<!--update button-->
+<button th:onclick="|location.href='@{/updateMetForm.html}'|">수정</button>
+<!--<form th:action=@{/meeting/insertMetForm.html}" method="post">-->
+<!--    <input type="submit" value="수정">-->
+<!--</form>-->
 </body>
 </html>
