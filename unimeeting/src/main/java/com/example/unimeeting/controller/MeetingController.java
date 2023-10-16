@@ -61,4 +61,12 @@ public class MeetingController {
         mv.setViewName("MetPostView");
         return mv;
     }
+
+    // delete meeting
+    @RequestMapping("/meeting/deleteMet")
+    public String deleteMetPost(int idx, String writer_nickname){
+        System.out.println("test");
+        return metmap.deleteMeeting(idx, writer_nickname) ? "redirect:/meeting/board" : "redirect:/";
+    }
+
 }

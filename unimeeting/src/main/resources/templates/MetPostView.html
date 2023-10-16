@@ -14,5 +14,8 @@
 <!--참가신청: idx session-->
 <button th:onclick="|location.href=@{/meeting/add_member}|">참가 신청</button>
 <button th:onclick="|location.href=@{/meeting/add_scrap}|">스크랩</button>
+
+<!--delete button-->
+<button th:onclick="|location.href='@{/meeting/deleteMet(idx = ${meeting.idx}, writer_nickname = ${meeting.writer_nickname})}'|">삭제</button>
 </body>
 </html>
