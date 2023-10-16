@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <section>
+    <article id="mypage_side">
+      <button id="side_attend" name = "attend">참여 내역</button>
+      <button id="side_create" name="create">생성한 소모임</button>
+      <button id="side_scrap" name="scrap">스크랩 소모임</button>
+      <button id="side_myInfo" name="myInfo">내 정보 수정</button>
+    </article>
+    <article id="show_info">
+      <h1 id="info_header"></h1>
+      <div id ="info_result">
+        <ul th:each="meeting : ${list}">
+          <li th:text="${meeting}"></li>
+        </ul>
+      </div>
+    </article>
+
+  </section>
+
+  <script type="text/javascript" th:src="@{/javascript/mypage.js}"></script>
+</body>
+</html>
