@@ -2,6 +2,7 @@ package com.example.unimeeting.controller;
 
 import com.example.unimeeting.dao.InfoMapper;
 import com.example.unimeeting.domain.InfoDTO;
+import com.example.unimeeting.domain.UserVO;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.LoggerFactory;
@@ -9,29 +10,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.slf4j.Logger;
 
 import java.util.List;
 
+//import static jdk.internal.org.jline.utils.Colors.s;
+
 @Controller
 @SessionAttributes("user")
-
 public class MainController {
+
 
     @Autowired
     InfoMapper dao;
 
     private static final Logger logger = LoggerFactory.getLogger(MainController.class); //로그 기록 남기기 위해
 
+    @ModelAttribute("user")
+    public UserVO inout(){
+        return null;
+    }
 
-    @GetMapping("/testPage")
-    public String test(Model model) {
+    @GetMapping("/mainPage")
+    public String test(Model model, @ModelAttribute("user") UserVO id) {
+        System.out.println("main");
         model.addAttribute("data", "hello");
         model.addAttribute("list", dao.listM());
-
-
-        return "testPage";
+        System.out.println(id);
+        if (id != null){
+            model.addAttribute("inout",id);
+        }
+        return "mainPage";
     }
     
     @RequestMapping(value = "/join", method = RequestMethod.GET)
@@ -51,7 +63,7 @@ public class MainController {
         ModelAndView mav = new ModelAndView();
         List<InfoDTO> list = dao.listM();
         mav.addObject("list", list);
-        mav.setViewName("testPage");
+        mav.setViewName("mainPage");
         return mav;
 
     }
@@ -66,21 +78,25 @@ public class MainController {
         } else {
             mav.addObject("msg", "추출x");
         }
-        mav.setViewName("testPage");
+        mav.setViewName("mainPage");
         return mav;
     }
-    @GetMapping(value="index")
 
-    public void indexGET()(ModelAttribute() request) {
-        @ModelAttribute("login")
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();   // 세션 날림
+    @GetMapping("/logout")
+    public String logout(@ModelAttribute("user") UserVO id,WebRequest request, SessionStatus status, Model model){
+//        inout();
+//        id = null;
+        status.setComplete();
+        request.removeAttribute("user", WebRequest.SCOPE_SESSION);
+        System.out.println("logout");
+        model.addAttribute("data", "hello");
+        model.addAttribute("list", dao.listM());
+        System.out.println(id);
+        if (id != null){
+            model.addAttribute("inout",id);
         }
-        model.addAttribute("loginout", "123");
-        return "redirect:/";
+        return "redirect:/mainPage";
     }
-
 }
 
 
