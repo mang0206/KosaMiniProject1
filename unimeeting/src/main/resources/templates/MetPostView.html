@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"><head>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<th:block th:if="${msg}">
+    <script th:inline="javascript">
+        console.log("test");
+        alert([[${msg}]]);
+    </script>
+</th:block>
+<h5 th:text="${meeting.category}"></h5>
+<h1 th:text="${meeting.title}"></h1>
+<h6 th:text="|시작일: ${meeting.start_datetime} / 현재인원/모집인원 : ${meeting_member}/${meeting.recruits}|"></h6>
+<hr>
+<div th:text="${meeting.content_text}"></div>
+<hr>
+<!--참가신청: idx session-->
+<th:block th:if="${apply}">
+    <button th:onclick="|location.href='@{/meeting/apply(meeting_idx=${meeting.idx})}'|">신청 취소</button>
+</th:block>
+<th:block th:unless="${apply}">
+    <button th:onclick="|location.href='@{/meeting/apply(meeting_idx=${meeting.idx})}'|">참가 신청</button>
+</th:block>
+
+<th:block th:if="${scrap}">
+    <button th:onclick="|location.href='@{/meeting/scrap(meeting_idx=${meeting.idx})}'|">스크랩 취소</button>
+</th:block>
+<th:block th:unless="${scrap}">
+    <button th:onclick="|location.href='@{/meeting/scrap/cancel(meeting_idx=${meeting.idx})}'|">스크랩</button>
+</th:block>
+
+<!--delete button-->
+<button th:onclick="|location.href='@{/meeting/deleteMet(idx = ${meeting.idx}, writer_nickname = ${meeting.writer_nickname})}'|">삭제</button>
+<!--update button-->
+<button th:onclick="|location.href='@{/updateMetForm.html}'|">수정</button>
+<!--<form th:action=@{/meeting/insertMetForm.html}" method="post">-->
+<!--    <input type="submit" value="수정">-->
+<!--</form>-->
+</body>
+</html>
