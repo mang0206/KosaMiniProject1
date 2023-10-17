@@ -1,0 +1,58 @@
+/* styles.css */
+#meeting_div {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0;
+    width: 1136px;
+    height: 202px;
+    background: #FFFFFF;
+    border: 1px solid #DDE1E6;
+    border-radius: 8px;
+}
+
+#img_div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    gap: 10px;
+    width: 379px;
+    height: 202px;
+    background: #DDE1E6;
+    border-radius: 8px 0 0 8px;
+}
+
+#meeting_img {
+    width: 100%;
+    height: auto;
+}
+
+#content_div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2px 16px 16px;
+    width: 757px;
+    height: 202px;
+}
+
+.meeting-info {
+    margin: 0;
+}
+
+#meeting_content{
+    margin: "10px";
+}
+
+
+#content_div h6 {
+    order: 1;
+}
+
+#create_datetime, #writer_nickname {
+    order: 2;
+}

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id ='showMeeting_div'>
+</div>
+<script src="/javascript/testBox2.js"></script>
+<script>
+    let meeting = {'idx':1, 'title':"미팅 제목1", "category":"카테고리1","location":'위치1',"start_date":"2023-10-17 14:00:00","content_text":'미팅 내용 1',
+        "create_datetime":"2023-10-16 15:00:00", "writer_nickname":'사용자1', "recruits":5, "img_src":"images/book.png", "now_recruits":3};
+    
+    // 이미지, 현재 인원
+    // CSS 스타일 객체를 정의합니다.
+const meetingDivStyle = {
+    boxSizing: 'border-box',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    padding: '0',
+    width: '1136px',
+    height: '202px',
+    background: '#FFFFFF',
+    border: '1px solid #DDE1E6',
+    borderRadius: '8px',
+};
+
+const imgDivStyle = {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: '0',
+    gap: '10px',
+    width: '379px',
+    height: '202px',
+    background: '#DDE1E6',
+    borderRadius: '8px 0 0 8px',
+};
+
+const contentDivStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    padding: '2px 16px 16px',
+    // padding: '1px',
+    gap: '',
+    width: '757px',
+    height: '202px',
+};
+const tagStyle = {
+    margin: '0', // 태그 사이의 간격을 0으로 설정
+};
+
+// JavaScript 함수
+function makeMeetingBlock(meeting) {
+    const div = document.createElement('div');
+    div.id = "meeting_div";
+    
+    const img_div = document.createElement('div');
+    const img = document.createElement('img');
+    img.width = 100;
+    img.height = 100;
+    img.src = meeting.img_src;
+    img_div.appendChild(img);
+
+    const content_div = document.createElement('div');
+
+    const info = document.createElement('h5');
+    info.textContent = meeting.category;
+
+    const location = document.createElement('span');
+    location.textContent = meeting.location;
+    
+    info.textContent += location;
+
+    const title = document.createElement('h4');
+    title.textContent = meeting.title;
+
+    const content_text = document.createElement('h5');
+    content_text.textContent = meeting.content_text;
+
+    const recruits = document.createElement('h6');
+    recruits.textContent = meeting.now_recruits + "/" + meeting.recruits;
+
+    const create_datetime = document.createElement('h6');
+    create_datetime.textContent = meeting.create_datetime;
+
+    const writer_nickname = document.createElement('h6');
+    writer_nickname.textContent = meeting.writer_nickname;
+    
+    recruits.style.order = 1; // recruits의 순서를 1로 설정
+    create_datetime.style.order = 2; // create_datetime의 순서를 2로 설정
+    writer_nickname.style.order = 3; // writer_nickname의 순서를 3로 설
+
+    const flowdiv = document.createElement('div');
+    flowdiv.style.display = 'flex';
+    flowdiv.style.flexDirection = 'row';
+    flowdiv.style.justifyContent = 'space-between'; // 왼쪽과 오른쪽에 공간 배분
+
+    content_div.appendChild(recruits);
+    content_div.appendChild(create_datetime);
+    content_div.appendChild(writer_nickname);
+    content_div.appendChild(info);
+    content_div.appendChild(title);
+    content_div.appendChild(content_text);
+    // content_div.appendChild(recruits);
+    // content_div.appendChild(create_datetime);
+    // content_div.appendChild(writer_nickname);
+    content_div.appendChild(flowdiv);
+    
+    // 적용된 스타일을 요소에 할당
+    Object.assign(div.style, meetingDivStyle);
+    Object.assign(img_div.style, imgDivStyle);
+    Object.assign(content_div.style, contentDivStyle);
+
+    Object.assign(info.style, tagStyle);
+    Object.assign(title.style, tagStyle);
+    // Object.assign(content_text.style, tagStyle);
+    Object.assign(recruits.style, tagStyle);
+    Object.assign(create_datetime.style, tagStyle);
+    Object.assign(writer_nickname.style, tagStyle);
+
+    div.appendChild(img_div);
+    div.appendChild(content_div);
+
+    document.getElementById('showMeeting_div').appendChild(div);
+}
+
+    window.addEventListener('load',makeMeetingBlock(meeting));
+    // window.addEventListener('load', createHTML());
+</script>
+</body>
+</html>
