@@ -10,3 +10,4 @@ public interface CloudtypeTestMapper {
   @Select("SELECT * FROM user")
   public List<CloudtypeUserVO> list();
 }
+
