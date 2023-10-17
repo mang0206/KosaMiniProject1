@@ -1,7 +1,7 @@
 package com.example.unimeeting.controller;
 
 import com.example.unimeeting.dao.CloudtypeTestMapper;
-import com.example.unimeeting.domain.CloudtypeUserVO;
+import com.example.unimeeting.domain.UpdateUserVO;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,7 @@ public class CloudtypeController {
   @RequestMapping("/test1")
   public ModelAndView list(){
     ModelAndView mav = new ModelAndView();
-    List<CloudtypeUserVO> list = dao.list();
+    List<UpdateUserVO> list = dao.list();
 
     mav.addObject("list", list);
     System.out.println(dao);

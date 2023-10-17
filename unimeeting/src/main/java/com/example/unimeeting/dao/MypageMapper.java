@@ -1,11 +1,10 @@
 package com.example.unimeeting.dao;
 
-import com.example.unimeeting.domain.CloudtypeUserVO;
 import com.example.unimeeting.domain.MeetingVO;
+import com.example.unimeeting.domain.UpdateUserVO;
 import java.util.List;
 
 import com.example.unimeeting.domain.UserVO;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -24,6 +23,6 @@ public interface MypageMapper {
       + " from meeting where idx in (select meeting_idx from scrap where user_idx = #{idx})")
   public List<MeetingVO> scrapList(UserVO userVO);
 
-  @Update("update user set password = #{password}, nickname = #{nickname} where idx = #{idx}")
+  @Update("update user set password = #{password}, nickname = #{nickname}, category = #{category} where idx = #{idx}")
   public boolean updateUser(UserVO userVO);
 }

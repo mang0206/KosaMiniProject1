@@ -3,6 +3,7 @@ package com.example.unimeeting.controller;
 
 import com.example.unimeeting.dao.MypageMapper;
 import com.example.unimeeting.domain.MyInfoMeetingDTO;
+import com.example.unimeeting.domain.UpdateUserVO;
 import java.util.Iterator;
 import java.util.List;
 
@@ -75,8 +76,9 @@ public class MypageSideController {
   }
 
   @PostMapping("/update")
-  public ModelAndView updateUser(@ModelAttribute("user") UserVO s_user, UserVO user, Model model){
+  public ModelAndView updateUser(UserVO user, Model model){
     ModelAndView mav = new ModelAndView();
+    System.out.println(user);
     boolean result = dao.updateUser(user);
     if(result){
       model.addAttribute("msg", "정상적으로 변경되었습니다");

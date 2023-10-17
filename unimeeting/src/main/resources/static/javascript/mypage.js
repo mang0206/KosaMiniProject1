@@ -40,7 +40,13 @@ function sideSelect(e) {
           비밀번호 <input type='password' name='password' id='pwd' placeholder = '변경할 비밀번호 입력' required> <br>
           비밀번호 확인 <input type='password' name='check_pwd' id='c_pwd' placeholder = '비밀번호 확인' required> <br>
           닉네임 <input type='text' name='nickname' placeholder = '변경할 닉네임 입력' required> <br>
-          관심 카테고리 <input type='text' name='category' disabled value = '사용자 ID'> <br>
+          관심 카테고리 <br>
+          운동 <input type="checkbox" name="category" value="운동">
+          스터디 <input type="checkbox" name="category" value="스터디">
+          게임 <input type="checkbox" name="category" value="게임"><br>
+          카페 <input type="checkbox" name="category" value="카페">
+          영화 <input type="checkbox" name="category" value="영화">
+          독서 <input type="checkbox" name="category" value="독서"><br>
           이메일 <input type='text' name='email' disabled value = '${userObj.email}'> <br>
           휴대폰 번호 <input type='text' name='phone_num' disabled value = '${userObj.phone_number}'> <br>
           <input type='submit' value='정 보 변 경' id='submit_button' disabled> </form>`;
