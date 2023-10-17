@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
-  <script src="/static/javascript/include.js"></script>
 </head>
 <style>
 
@@ -26,33 +25,44 @@
 </style>
 <body>
 
-<h1 onclick="location.href='/testPage.html'"><img src="../" alt="">로고</h1>
-<ul>
-<th:block th:each="mem : ${list}">
-[[${mem}]]
-</ul>
-<nav data-include-path="/static/nav.html"></nav>
+<!--<h1 onclick="location.href='/testPage'"><img src="../" alt="">로고</h1>-->
+<div th:replace="/nav ::nav"></div>
+
+
+
 <div id = "mid-content" >
   <div class="search">
-    <input id = "search" type="text" placeholder="검색어 입력">
-
     <form method = "get" action ="/meeting/search">
       검색어 : <input type = "search" name = "keyword" >
       <input type = "submit" value = "검색">
     </form>
+      <select name="list" id="list">
+          <option value="">좋아요 순</option>
+          <option value="">가나다 순</option>
+          <option value="">최신순</option>
+          <option value="">###</option>
+      </select>
+    <th:block th:if="${ list }">
+      <h1 onclick="location.href='/meeting'">미팅</h1>
+      <hr>
+      <table>
+        <tr th:each="vo : ${list}">
+          <td>[[${vo.title}]]</td>
+        </tr>
+      </table>
+    </th:block>
+
+    <table>
+      <tr th:each="vo : ${listSearch}">
+        <td>[[${vo.content_text}]]</td>
+<!--        <td>"${vo.content_text}"</td>-->
+      </tr>
+    </table>
     <hr>
   </div>
-  <select name="list" id="list">
-    <option value="">좋아요 순</option>
-    <option value="">가나다 순</option>
-    <option value="">최신순</option>
-    <option value="">###</option>
-  </select>
+
 </div>
 
 <footer style="background-color: aqua;"><p>footer 영역</p></footer>
 </body>
-<script>
-  includeHTML.includeHTML();
-</script>
 </html>

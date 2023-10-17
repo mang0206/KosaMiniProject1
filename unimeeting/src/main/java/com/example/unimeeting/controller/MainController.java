@@ -23,13 +23,15 @@ public class MainController {
     private static final Logger logger = LoggerFactory.getLogger(MainController.class); //로그 기록 남기기 위해
 
 
-    @GetMapping("testPage")
+    @GetMapping("/testPage")
     public String test(Model model) {
         model.addAttribute("data", "hello");
+        model.addAttribute("list", dao.listM());
+
+
         return "testPage";
     }
-
-
+    
     @RequestMapping(value = "/join", method = RequestMethod.GET)
     public void joinGet() {
 
@@ -42,7 +44,7 @@ public class MainController {
         logger.info("로그인 페이지");
     }
 
-    @GetMapping("/list")
+    @GetMapping("/list") //소모임 리스트
     public ModelAndView list() {
         ModelAndView mav = new ModelAndView();
         List<InfoDTO> list = dao.listM();
@@ -52,12 +54,12 @@ public class MainController {
 
     }
 
-    @GetMapping("/search")
+    @GetMapping("/meeting/search") //검색창
     public ModelAndView search(String keyword) {
         List<InfoDTO> list = dao.searchM1(keyword);
         ModelAndView mav = new ModelAndView();
         if (list.size() != 0) {
-            mav.addObject("list", list);
+            mav.addObject("listSearch", list);
             mav.addObject("button", "메인화면");
         } else {
             mav.addObject("msg", "추출x");
@@ -65,16 +67,19 @@ public class MainController {
         mav.setViewName("testPage");
         return mav;
     }
-
-}
-//    @SessionAttributes
-//    public String logout(HttpServletRequest request) {
-//        @ModelAttribute("logout")
+//    @GetMapping(value="index")
+//
+//    public void indexGET(@SessionAttributes(name = "loginUser", required = false)HttpServletRequest request) {
+//        @ModelAttribute("login")
 //        HttpSession session = request.getSession(false);
 //        if (session != null) {
 //            session.invalidate();   // 세션 날림
 //        }
-//
+//        model.addAttribute("loginout", "123");
 //        return "redirect:/";
+//    }
+
+}
+
 
 
