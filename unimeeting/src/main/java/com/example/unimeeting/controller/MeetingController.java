@@ -25,8 +25,8 @@ public class MeetingController {
 
     @Autowired
     ScrapMapper scrapMapper;
-    
-    @
+
+
     // Get Category
     @RequestMapping(value = "/getCategory", produces = "application/json; charset=utf-8" )
     @ResponseBody
