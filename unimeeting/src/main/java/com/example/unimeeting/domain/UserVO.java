@@ -1,9 +1,6 @@
 package com.example.unimeeting.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 public class UserVO {
@@ -15,4 +12,7 @@ public class UserVO {
     private String category;
     private String phone_number;
 
+    public int getIdx() {
+        return idx;
+    }
 }

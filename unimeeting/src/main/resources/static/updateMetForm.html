@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>모임 작성</title>
+</head>
+<body>
+<script>
+        let url = new URL(document.referrer);
+        let idx = new URLSearchParams(url.search);
+        let xhr = new XMLHttpRequest;
+        xhr.onload = () => {
+            let json = JSON.parse(xhr.responseText);
+            //for(let target in document.getElementsByName("category")){
+            //    if(target.value)
+            //}
+            document.getElementsByName("title")[0].defaultValue = json['title'];
+            document.getElementsByName("recruits")[0].defaultValue = json['recruits'];
+            document.getElementsByName("start_datetime")[0].defaultValue = json['start_datetime'].substring(0, 10);
+            document.getElementsByName("content_text")[0].defaultValue = json['content_text'];
+            document.getElementsByName("writer_nickname")[0].defaultValue = json['writer_nickname'];
+            document.getElementsByName("location")[0].defaultValue = json['location'];
+            document.getElementsByName("writer_nickname")[0].defaultValue = json['writer_nickname'];
+            document.getElementsByName("idx")[0].defaultValue = json['idx'];
+        }
+        xhr.open("GET", `/meeting/getMetJson?${idx}`, true);
+        xhr.send();
+</script>
+<form action="/meeting/updateMet" method="post">
+    카테고리<br>
+    <label><input type="radio" name="category" value="운동" checked>운동</label>
+    <label><input type="radio" name="category" value="스터디" >스터디</label>
+    <label><input type="radio" name="category" value="독서" >독서</label>
+    <br>
+    제목: <label><input name="title" /><br></label>
+    모집 인원: <label><input name="recruits" type="number" min="2"/><br></label>
+    시작일: <label><input name="start_datetime" type="date"/><br></label>
+    소개: <label><input name="content_text" maxlength="500" /><br></label>
+    장소(임시): <label><input name="location" /><br></label>
+    <!--    작성자-> Session 사용 예정 -->
+    <label hidden="hidden"><input name="writer_nickname" /><br></label>
+    <label hidden="hidden"><input name="idx" /><br></label>
+    <input type="submit" value="수정"/>
+</form>
+</body>
+</html>
