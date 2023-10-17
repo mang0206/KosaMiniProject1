@@ -15,6 +15,8 @@ import org.slf4j.Logger;
 import java.util.List;
 
 @Controller
+@SessionAttributes("user")
+
 public class MainController {
 
     @Autowired
@@ -67,17 +69,17 @@ public class MainController {
         mav.setViewName("testPage");
         return mav;
     }
-//    @GetMapping(value="index")
-//
-//    public void indexGET(@SessionAttributes(name = "loginUser", required = false)HttpServletRequest request) {
-//        @ModelAttribute("login")
-//        HttpSession session = request.getSession(false);
-//        if (session != null) {
-//            session.invalidate();   // 세션 날림
-//        }
-//        model.addAttribute("loginout", "123");
-//        return "redirect:/";
-//    }
+    @GetMapping(value="index")
+
+    public void indexGET()(ModelAttribute() request) {
+        @ModelAttribute("login")
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();   // 세션 날림
+        }
+        model.addAttribute("loginout", "123");
+        return "redirect:/";
+    }
 
 }
 
