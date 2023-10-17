@@ -3,6 +3,7 @@ package com.example.unimeeting.controller;
 import com.example.unimeeting.domain.UserVO;
 import com.example.unimeeting.service.UserService;
 import jakarta.servlet.http.HttpSession;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
+@SessionAttributes("user")
 public class UserController {
     private final UserService userService;
 
@@ -22,7 +24,10 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
+    @ModelAttribute
+    public UserVO loginUser(UserVO user){
+        return user;
+    }
 
     @PostMapping("/register")
     public String registerUser(UserVO user, Model model) {
@@ -64,14 +69,15 @@ public class UserController {
     @PostMapping("/login")
     public String loginUser(@RequestParam("user_id") String user_id, @RequestParam("password") String password, Model model, HttpSession session) {
         if (userService.authenticateUser(user_id, password)) {
-            UserVO user = userService.idcheck(user_id);
-            session.setAttribute("user", user);
-            System.out.println(session.getAttribute("user"));
+                UserVO user = userService.idcheck(user_id);
+                session.setAttribute("user", user);
+                loginUser(user);
+                System.out.println(session.getAttribute("user"));
 
-            return "redirect:/main.html";
-        } else {
-            model.addAttribute("error", "Invalid username or password");
-            return "login.html";
+                return "redirect:/main.html";
+            } else {
+                model.addAttribute("error", "Invalid username or password");
+                return "login.html";
         }
     }
 
