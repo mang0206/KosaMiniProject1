@@ -5,6 +5,12 @@
     <title>Title</title>
 </head>
 <body>
+<th:block th:if="${msg}">
+    <script th:inline="javascript">
+        console.log("test");
+        alert([[${msg}]]);
+    </script>
+</th:block>
 <h5 th:text="${meeting.category}"></h5>
 <h1 th:text="${meeting.title}"></h1>
 <h6 th:text="|시작일: ${meeting.start_datetime} / 현재인원/모집인원 : ${meeting_member}/${meeting.recruits}|"></h6>
@@ -12,8 +18,8 @@
 <div th:text="${meeting.content_text}"></div>
 <hr>
 <!--참가신청: idx session-->
-<button th:onclick="|location.href=@{/meeting/add_member}|">참가 신청</button>
-<button th:onclick="|location.href=@{/meeting/add_scrap}|">스크랩</button>
+<button th:onclick="|location.href='@{/meeting/apply(meeting_idx=${meeting.idx})}'|">참가 신청</button>
+    <button th:onclick="|location.href='@{/meeting/add_scrap}'|">스크랩</button>
 
 <!--delete button-->
 <button th:onclick="|location.href='@{/meeting/deleteMet(idx = ${meeting.idx}, writer_nickname = ${meeting.writer_nickname})}'|">삭제</button>
