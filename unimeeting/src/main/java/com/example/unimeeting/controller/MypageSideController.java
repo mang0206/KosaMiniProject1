@@ -29,17 +29,17 @@ public class MypageSideController {
   CloudtypeTestMapper dao_user;
   @ModelAttribute("user")
   public CloudtypeUserVO sessionuser() {
-    List<CloudtypeUserVO> list = dao_user.list();
-    CloudtypeUserVO login_user = null;
-    Iterator iter = list.iterator();
-    CloudtypeUserVO session_user = null;
-    while (iter.hasNext()) {
-      CloudtypeUserVO user = (CloudtypeUserVO)iter.next();
-      if (user.getUser_id().equals("user1")) {
-        session_user = user;
-      }
-    }
-    return session_user;
+//    List<CloudtypeUserVO> list = dao_user.list();
+//    CloudtypeUserVO login_user = null;
+//    Iterator iter = list.iterator();
+//    CloudtypeUserVO session_user = null;
+//    while (iter.hasNext()) {
+//      CloudtypeUserVO user = (CloudtypeUserVO)iter.next();
+//      if (user.getUser_id().equals("user1")) {
+//        session_user = user;
+//      }
+//    }
+    return new CloudtypeUserVO();
   }
 
   @Autowired

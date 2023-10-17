@@ -15,6 +15,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/meeting")
+@SessionAttributes("user")
 public class MeetingController {
 
     @Autowired
@@ -101,7 +102,7 @@ public class MeetingController {
     @RequestMapping("/apply")
     public ModelAndView insertMetMem(int meeting_idx, @ModelAttribute("user") UserVO user){
         ModelAndView mv = viewMetPost(meeting_idx);
-
+        System.out.println(user);
         if(user.getIdx() == 0){
             mv.addObject("msg", "로그인 후 이용 가능한 서비스입니다. ");
         }else{
