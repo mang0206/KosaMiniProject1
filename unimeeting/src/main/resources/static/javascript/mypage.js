@@ -31,8 +31,11 @@ function sideSelect(e) {
     xhr.onload = function() {
       let userObj = JSON.parse(xhr.responseText);
       let result_div = document.getElementById("info_result");
+      let idx = result_div.getAttribute('data-suser');
+
       result_div.innerHTML = '';
-      result_div.innerHTML += `<form action='/mypage' method='post'>
+      result_div.innerHTML += `<form action='/mypage/update' method='post'>
+          <input type="hidden" name='idx' value=${idx}>
           아이디 <input type='text' name='id' disabled value = '${userObj.user_id}'> <br>
           비밀번호 <input type='password' name='password' id='pwd' placeholder = '변경할 비밀번호 입력' required> <br>
           비밀번호 확인 <input type='password' name='check_pwd' id='c_pwd' placeholder = '비밀번호 확인' required> <br>
@@ -54,11 +57,12 @@ function sideSelect(e) {
     let xhr = new XMLHttpRequest();
     xhr.onload = function() {
       let meetingObj = JSON.parse(xhr.responseText);
-
+      console.log(meetingObj);
       let result_div = document.getElementById("info_result");
       result_div.innerHTML = '';
 
       for(let o of meetingObj.list){
+        console.log(o);
         result_div.innerHTML += `${o.title} ${o.category} ${o.writer_nickname} ${o.content_text}<br>`
       }
     }

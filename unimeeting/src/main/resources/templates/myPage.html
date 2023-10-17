@@ -3,25 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+  <title>Bootstrap demo</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 </head>
 <body>
+  <div th:if="${msg}" th:utext="'<script>alert(\'' + ${msg} + '\');</script>'"></div>
+  <div class="panel panel-info">
+    <div class="panel-heading">
+      <h3 class="panel-title">Panel Title</h3>
+    </div>
+    <ul class="list-group" id="mypage_side">
+     <li class="list-group-item"><button id="side_attend" name = "attend">참여 내역</button></li>
+     <li class="list-group-item"><button id="side_create" name="create">생성한 소모임</button></li>
+     <li class="list-group-item"><button id="side_scrap" name="scrap">스크랩 소모임</button></li>
+     <li class="list-group-item"><button id="side_myInfo" name="myInfo">내 정보 수정</button></li>
+    </ul>
+  </div>
   <section>
-    <article id="mypage_side">
-      <button id="side_attend" name = "attend">참여 내역</button>
-      <button id="side_create" name="create">생성한 소모임</button>
-      <button id="side_scrap" name="scrap">스크랩 소모임</button>
-      <button id="side_myInfo" name="myInfo">내 정보 수정</button>
-    </article>
     <article id="show_info">
       <h1 id="info_header"></h1>
-      <div id ="info_result">
-        <div id="showMeeting_div">
-        </div>
+      <div id ="info_result" data-suser th:attr="data-suser=${user.idx}" >
       </div>
     </article>
 
   </section>
 
   <script type="text/javascript" th:src="@{/javascript/mypage.js}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js" crossorigin="anonymous"></script>
 </body>
 </html>

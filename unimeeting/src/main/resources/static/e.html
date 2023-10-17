@@ -40,7 +40,7 @@ function makeMeetingBlock(meeting) {
     const location = document.createElement('span');
     location.textContent = meeting.location;
     location.classList.add("meeting-info"); // span에 class 추가
-
+    info.innerHTML += location;
     const title = document.createElement('h4');
     title.textContent = meeting.title;
     title.classList.add("meeting-info"); // h4에 class 추가

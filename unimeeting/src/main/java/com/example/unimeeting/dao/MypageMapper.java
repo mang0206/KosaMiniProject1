@@ -5,8 +5,10 @@ import com.example.unimeeting.domain.MeetingVO;
 import java.util.List;
 
 import com.example.unimeeting.domain.UserVO;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface MypageMapper {
@@ -21,4 +23,7 @@ public interface MypageMapper {
   @Select("select idx, title, category, location, start_datetime, content_text, created_datetime,writer_nickname, recruits"
       + " from meeting where idx in (select meeting_idx from scrap where user_idx = #{idx})")
   public List<MeetingVO> scrapList(UserVO userVO);
+
+  @Update("update user set password = #{password}, nickname = #{nickname} where idx = #{idx}")
+  public boolean updateUser(UserVO userVO);
 }
