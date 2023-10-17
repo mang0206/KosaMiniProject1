@@ -44,6 +44,7 @@ public class UserController {
         response.put("available", isAvailable);
         return ResponseEntity.ok(response);
     }
+
     @GetMapping("/check-email")
     public ResponseEntity<Map<String, Boolean>> checkEmail(@RequestParam("email") String email) {
         boolean isAvailable = (userService.emailcheck(email) == null);
@@ -51,6 +52,7 @@ public class UserController {
         response.put("available", isAvailable);
         return ResponseEntity.ok(response);
     }
+
     @GetMapping("/check-nickname")
     public ResponseEntity<Map<String, Boolean>> checkNickname(@RequestParam("nickname") String nickname) {
         boolean isAvailable = (userService.nicknamecheck(nickname) == null);
@@ -58,6 +60,7 @@ public class UserController {
         response.put("available", isAvailable);
         return ResponseEntity.ok(response);
     }
+
     @PostMapping("/login")
     public String loginUser(@RequestParam("user_id") String user_id, @RequestParam("password") String password, Model model, HttpSession session) {
         if (userService.authenticateUser(user_id, password)) {
