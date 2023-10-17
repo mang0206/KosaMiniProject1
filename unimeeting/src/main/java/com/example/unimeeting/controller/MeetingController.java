@@ -2,8 +2,8 @@ package com.example.unimeeting.controller;
 
 import com.example.unimeeting.dao.MeetingMapper;
 import com.example.unimeeting.dao.MeetingMemberMapper;
+import com.example.unimeeting.dao.ScrapMapper;
 import com.example.unimeeting.domain.MeetingDTO;
-import com.example.unimeeting.domain.MeetingMemberDTO;
 import com.example.unimeeting.domain.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,15 +18,20 @@ import java.util.List;
 public class MeetingController {
 
     @Autowired
-    MeetingMapper metmap;
+    MeetingMapper meetingMapper;
 
     @Autowired
-    MeetingMemberMapper mmm;
+    MeetingMemberMapper meetingMemberMapper;
+
+    @Autowired
+    ScrapMapper scrapMapper;
+    
+    @
     // Get Category
     @RequestMapping(value = "/getCategory", produces = "application/json; charset=utf-8" )
     @ResponseBody
     public List<String> getCategory(){
-        return metmap.viewCtgy();
+        return meetingMapper.viewCtgy();
     }
 
 
@@ -37,7 +42,7 @@ public class MeetingController {
         public ModelAndView viewMetBoard(@PathVariable(required = false) String ctgr,@RequestParam(required = false) String search, @RequestParam(defaultValue = "1") int page){
         ModelAndView mv = new ModelAndView();
         mv.addObject("ctgr_list", getCategory());
-        List<MeetingDTO> meetings = metmap.viewMetBoard(ctgr ,search!=null ? search.trim() : search, (page-1)*4);
+        List<MeetingDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search, (page-1)*4);
         mv.addObject("met_list", meetings);
 
         mv.setViewName("MetBoardView");
@@ -47,7 +52,7 @@ public class MeetingController {
     // Insert Meeting Post
     @PostMapping("/insertMet")
     public String insertMet(MeetingDTO meetingDTO, Model m){
-        boolean result = metmap.insertMet(meetingDTO);
+        boolean result = meetingMapper.insertMet(meetingDTO);
         if (!result) {
             m.addAttribute("msg", "글 작성을 처리하는 동안 오류 발생");
         }
@@ -57,8 +62,8 @@ public class MeetingController {
     // view Meeting Post
     @GetMapping("/post")
     public ModelAndView viewMetPost(int idx){
-        MeetingDTO meeting = metmap.viewMetPost(idx);
-        int meeting_member = metmap.countMetMem(idx);
+        MeetingDTO meeting = meetingMapper.viewMetPost(idx);
+        int meeting_member = meetingMapper.countMetMem(idx);
         ModelAndView mv = new ModelAndView();
         if(meeting != null){
             mv.addObject("meeting", meeting);
@@ -72,20 +77,20 @@ public class MeetingController {
     @RequestMapping(value = "/getMetJson", produces = "application/json; charset=utf-8")
     @ResponseBody
     public MeetingDTO getMetJson(int idx){
-        return metmap.viewMetPost(idx);
+        return meetingMapper.viewMetPost(idx);
     }
 
     // delete meeting
     @RequestMapping("/deleteMet")
     public String deleteMetPost(int idx, String writer_nickname){ // HttpSession
-        return metmap.deleteMeeting(idx, writer_nickname) ? "redirect:/meeting/board" : "redirect:/";
+        return meetingMapper.deleteMeeting(idx, writer_nickname) ? "redirect:/meeting/board" : "redirect:/";
     }
 
     // update meeting
     @RequestMapping("/updateMet")
     public String updateMetPost(MeetingDTO meetingDTO,Model m){
         System.out.println(meetingDTO);
-        boolean result = metmap.updateMet(meetingDTO);
+        boolean result = meetingMapper.updateMet(meetingDTO);
         if (!result) {
             m.addAttribute("msg", "글 작성을 처리하는 동안 오류 발생");
         }
@@ -100,8 +105,7 @@ public class MeetingController {
         if(user.getIdx() == 0){
             mv.addObject("msg", "로그인 후 이용 가능한 서비스입니다. ");
         }else{
-            MeetingMemberDTO meetingMemberDTO = new MeetingMemberDTO(meeting_idx, user.getIdx());
-            if(mmm.insertMetMem(meetingMemberDTO)){
+            if(meetingMemberMapper.insertMetMem(meeting_idx, user.getIdx())){
                 mv.addObject("msg", "신청이 완료되었습니다.");
             }else {
                 mv.addObject("msg", false);
@@ -117,7 +121,7 @@ public class MeetingController {
         if(user.getIdx() == 0){
             mv.addObject("msg", "로그인 후 이용 가능한 서비스입니다. ");
         }else{
-            if(mmm.deleteMetMem(meeting_idx,user.getIdx())){
+            if(meetingMemberMapper.deleteMetMem(meeting_idx,user.getIdx())){
                 mv.addObject("msg", "취소가 완료되었습니다.");
             }else {
                 mv.addObject("msg", false);
@@ -128,11 +132,11 @@ public class MeetingController {
     }
 
     @RequestMapping("/accept")
-    public ModelAndView updateMetMem(int meeting_idx, int user_idx){
+    public ModelAndView updateMetMem(int meeting_idx, @ModelAttribute("user") UserVO user){
         ModelAndView mv = viewMetPost(meeting_idx);
         // 권한 필요
-        if(mmm.deleteMetMem(meeting_idx,user_idx)){
-            mv.addObject("msg", "취소가 완료되었습니다.");
+        if(meetingMemberMapper.updateApplyMetMem(meeting_idx,user.getIdx())){
+            mv.addObject("msg", "수락이 완료되었습니다.");
         }else {
             mv.addObject("msg", false);
         }
@@ -143,10 +147,43 @@ public class MeetingController {
     public ModelAndView deleteMetMemByLeader(int meeting_idx, int user_idx){
         ModelAndView mv = viewMetPost(meeting_idx);
         // 권한 필요
-        if(mmm.updateApplyMetMem(meeting_idx,user_idx)){
+        if(meetingMemberMapper.updateApplyMetMem(meeting_idx,user_idx)){
             mv.addObject("msg", "취소가 완료되었습니다.");
         }else {
             mv.addObject("msg", false);
+        }
+        mv.setViewName("MetPostView");
+        return mv;
+
+    }
+    @RequestMapping("/scrap")
+    public ModelAndView insertScrap(int meeting_idx, @ModelAttribute("user") UserVO user){
+        ModelAndView mv = viewMetPost(meeting_idx);
+        if(user.getIdx() == 0){
+            mv.addObject("msg", "로그인 후 이용 가능한 서비스입니다. ");
+        }else {
+            if (scrapMapper.insertScrap(meeting_idx, user.getIdx())) {
+                mv.addObject("msg", "스크랩이 완료되었습니다.");
+            } else {
+                mv.addObject("msg", false);
+            }
+        }
+        mv.setViewName("MetPostView");
+        return mv;
+
+    }
+    @RequestMapping("/scrap/cancel")
+    public ModelAndView deleteScrap(int meeting_idx, @ModelAttribute("user") UserVO user){
+
+        ModelAndView mv = viewMetPost(meeting_idx);
+        if(user.getIdx() == 0){
+            mv.addObject("msg", "로그인 후 이용 가능한 서비스입니다. ");
+        }else {
+            if (meetingMemberMapper.updateApplyMetMem(meeting_idx, user.getIdx())) {
+                mv.addObject("msg", "취소가 완료되었습니다.");
+            } else {
+                mv.addObject("msg", false);
+            }
         }
         mv.setViewName("MetPostView");
         return mv;

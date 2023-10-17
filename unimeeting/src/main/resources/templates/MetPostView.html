@@ -18,8 +18,19 @@
 <div th:text="${meeting.content_text}"></div>
 <hr>
 <!--참가신청: idx session-->
-<button th:onclick="|location.href='@{/meeting/apply(meeting_idx=${meeting.idx})}'|">참가 신청</button>
-    <button th:onclick="|location.href='@{/meeting/add_scrap}'|">스크랩</button>
+<th:block th:if="${apply}">
+    <button th:onclick="|location.href='@{/meeting/apply(meeting_idx=${meeting.idx})}'|">신청 취소</button>
+</th:block>
+<th:block th:unless="${apply}">
+    <button th:onclick="|location.href='@{/meeting/apply(meeting_idx=${meeting.idx})}'|">참가 신청</button>
+</th:block>
+
+<th:block th:if="${scrap}">
+    <button th:onclick="|location.href='@{/meeting/scrap(meeting_idx=${meeting.idx})}'|">스크랩 취소</button>
+</th:block>
+<th:block th:unless="${scrap}">
+    <button th:onclick="|location.href='@{/meeting/scrap/cancel(meeting_idx=${meeting.idx})}'|">스크랩</button>
+</th:block>
 
 <!--delete button-->
 <button th:onclick="|location.href='@{/meeting/deleteMet(idx = ${meeting.idx}, writer_nickname = ${meeting.writer_nickname})}'|">삭제</button>
