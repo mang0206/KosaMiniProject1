@@ -80,17 +80,11 @@ public class UserController {
             loginUser(user);
             System.out.println(session.getAttribute("user"));
 
-<<<<<<< HEAD
-                return "redirect:/mainPage";
-            } else {
-                model.addAttribute("error", "Invalid username or password");
-                return "login.html";
-=======
             return "redirect:/main.html";
         } else {
             model.addAttribute("error", "Invalid username or password");
             return "login.html";
->>>>>>> 4cbc30ff0bb63605525ce2132be383c14e7eb06f
+
         }
     }
 

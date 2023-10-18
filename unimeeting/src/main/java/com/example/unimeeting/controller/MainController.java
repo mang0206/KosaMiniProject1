@@ -45,8 +45,9 @@ public class MainController {
             model.addAttribute("list", dao.titleSort());
         } else if (changeTest.equals("start")) {
             model.addAttribute("list", dao.startDate());
-        } else {
+        } else if (changeTest.equals("no")){
             model.addAttribute("list", dao.listM());
+            System.out.println(dao.listM());
         }
         System.out.println(id);
         if (id != null){
@@ -113,7 +114,7 @@ public class MainController {
         List<InfoDTO> list = dao.searchM1(keyword);
         ModelAndView mav = new ModelAndView();
         if (list.size() != 0) {
-            mav.addObject("listSearch", list);
+            mav.addObject("list", list);
             mav.addObject("button", "메인화면");
         } else {
             mav.addObject("msg", "추출x");

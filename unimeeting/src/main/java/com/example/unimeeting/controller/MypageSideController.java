@@ -30,11 +30,9 @@ public class MypageSideController {
 //  @Autowired
 //  CloudtypeTestMapper dao_user;
   @ModelAttribute("user")
-<<<<<<< HEAD
-  public CloudtypeUserVO sessionuser() {
-=======
+
   public UserVO sessionuser() {
->>>>>>> 2e6f76dc2b1a5b3f7bc5500cc7ffc303e5b656b1
+
 //    List<CloudtypeUserVO> list = dao_user.list();
 //    CloudtypeUserVO login_user = null;
 //    Iterator iter = list.iterator();
@@ -45,11 +43,9 @@ public class MypageSideController {
 //        session_user = user;
 //      }
 //    }
-<<<<<<< HEAD
-    return new CloudtypeUserVO();
-=======
+
     return new UserVO();
->>>>>>> 2e6f76dc2b1a5b3f7bc5500cc7ffc303e5b656b1
+
   }
 
   @Autowired
