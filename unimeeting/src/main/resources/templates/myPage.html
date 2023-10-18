@@ -8,6 +8,8 @@
   <link th:href="@{/css/mypage.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
+  <div th:replace="/nav ::nav"></div>
+
   <div th:if="${msg}" th:utext="'<script>alert(\'' + ${msg} + '\');</script>'"></div>
     <div class="page-container">
       <div class="rectangle-left">
