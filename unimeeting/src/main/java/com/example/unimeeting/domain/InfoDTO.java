@@ -16,7 +16,7 @@ public class InfoDTO {
     private int recruits; //모집인원
     private String start_datetime;
     private String end_datetime;
-    private String imgUrl;
+    private String image_url;
     private String code;
     private String displayName;
 

@@ -36,16 +36,40 @@ public class MainController {
     }
 
     @GetMapping("/mainPage") //메인페이지 & 로그인/로그아웃 관리
-    public String test(Model model, @ModelAttribute("user") UserVO id) {
+    public String test(Model model, @ModelAttribute("user") UserVO id, @RequestParam(value = "value", defaultValue = "no") String changeTest) {
         System.out.println("main");
         model.addAttribute("data", "hello");
-        model.addAttribute("list", dao.listM());
+        if (changeTest.equals("popular")){
+            model.addAttribute("list", "hello");
+        } else if (changeTest.equals("title")){
+            model.addAttribute("list", dao.titleSort());
+        } else if (changeTest.equals("start")) {
+            model.addAttribute("list", dao.startDate());
+        } else {
+            model.addAttribute("list", dao.listM());
+        }
         System.out.println(id);
         if (id != null){
             model.addAttribute("inout",id);
         }
         return "mainPage";
     }
+//    @GetMapping("/mainPage/list") //소모임 리스트
+//    public ModelAndView sortedlist(@RequestParam("value") String changeTest) {
+//        ModelAndView mav = new ModelAndView();
+//
+//        if (changeTest.equals("1")){
+//            mav.addObject("list", "hello");
+//        } else if (changeTest.equals("2")){
+//            mav.addObject("list", dao.titleSort());
+//        } else if (changeTest.equals("3")) {
+//            mav.addObject("list", "hello");
+//        } else {
+//            mav.addObject("list", dao.listM());
+//        }
+//        mav.setViewName("mainPage");
+//        return mav;
+//    }
     
     @RequestMapping(value = "/join", method = RequestMethod.GET)
     public void joinGet() {
@@ -59,14 +83,19 @@ public class MainController {
         logger.info("로그인 페이지");
     }
 
-    @GetMapping("/list") //소모임 리스트
-    public ModelAndView list() {
-        ModelAndView mav = new ModelAndView();
-        List<InfoDTO> list = dao.listM();
-        mav.addObject("list", list);
-        mav.setViewName("mainPage");
-        return mav;
-    }
+
+
+//    public String test(Model model, @RequestParam("value") String changeTest) {
+//
+//        if (changeTest.equals("1")){
+//            model.addAttribute("data", "hello");
+//        } else if (changeTest.equals("2")){
+//            model.addAttribute("data", "hello");
+//        } else if (changeTest.equals("3")) {
+//            model.addAttribute("data", "hello");
+//        }
+//        return "mainPage";
+//    }
 
     @GetMapping("/listSort")
     public ModelAndView sort() {
