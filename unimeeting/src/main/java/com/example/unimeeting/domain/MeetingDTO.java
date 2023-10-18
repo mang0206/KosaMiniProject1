@@ -9,9 +9,7 @@ import java.sql.Date;
 
 @Data
 public class MeetingDTO {
-
     private int idx;
-
     private String title;
     private String category;
     private String location;
