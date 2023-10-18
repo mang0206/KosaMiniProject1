@@ -1,3 +1,13 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+*{
+    font-family: 'Pretendard-Regular';
+}
 #moim {
     display: flex;
     flex-direction: row;
@@ -14,7 +24,83 @@
     order: 1;
     flex-grow: 0;
 }
-.sidebar {
+#sidebar {
+    width: 20%;
+    height: 100%;
+    border-width: 0px 1px;
+    border-style: solid;
+    border-color: #DDE1E6;
+}
+#contents {
+text-align: center;
+    padding:100px;
+}
+
+#search {
+/* Field */
+
+box-sizing: border-box;
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 12px 16px;
+gap: 8px;
+
+width: 1000px;
+height: 50px;
+
+/* CoolGray/10 */
+background: #F2F4F8;
+/* CoolGray/30 */
+border-bottom: 1px solid #C1C7CD;
+border-radius: 8px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 1;
+
+
+}
+#search-text {
+/* Text */
+
+width: 900px;
+height: 100%;
+border: 0;
+border-radius: 15px;
+outline: none;
+padding-left: 10px;
+background-color: #F2F4F8;
+
+/* Body/M */
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 140%;
+/* or 22px */
+
+/* CoolGray/60 */
+color: #697077;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 1;
+}
+
+#search-submit{
+    width: 30px;
+    height: 30px;
+    margin-top: 10px;
+
+}
+/* 
+#sidebar {
 
     box-sizing: border-box;
     display: flex;
@@ -27,14 +113,11 @@
     width: 20%;
     height: 1024px;
 
-    /* Default/White */
     background: #FFFFFF;
-    /* CoolGray/20 */
     border-width: 0px 1px;
     border-style: solid;
     border-color: #DDE1E6;
 
-    /* Inside auto layout */
     flex: none;
     order: 0;
     flex-grow: 0;
@@ -95,4 +178,4 @@
     flex-grow: 1;
 
     text-decoration: none;
-}
+} */

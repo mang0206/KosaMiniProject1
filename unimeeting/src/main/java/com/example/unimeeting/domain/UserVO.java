@@ -11,8 +11,4 @@ public class UserVO {
     private String email;
     private String category;
     private String phone_number;
-
-    public int getIdx() {
-        return idx;
-    }
 }

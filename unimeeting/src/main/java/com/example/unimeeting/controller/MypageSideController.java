@@ -29,16 +29,14 @@ public class MypageSideController {
 
   @ModelAttribute("user")
   public UserVO sessionuser() {
-    return null;
+    return new UserVO();
   }
   @Autowired
   MypageMapper dao;
 
   @GetMapping("")
   public String myDefault(Model model, @ModelAttribute("user") UserVO s_user) {
-    if(s_user == null){
-      return "redirect:/userLogin.html";
-    }
+    System.out.println("sessionsessionsessionsessionsessionsession"+s_user);
     model.addAttribute("list", dao.attendList(s_user));
     model.addAttribute("user",s_user);
     return "myPage";

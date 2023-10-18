@@ -25,6 +25,8 @@ public interface MeetingMapper {
             "values (#{title}, #{category}, #{location}, #{start_datetime}, now() , #{content_text}, #{writer_nickname}, #{recruits})")
     public boolean insertMet(MeetingDTO meetingDTO);
 
+    @Select("select max(idx) from meeting")
+    public int getIdxOfCurrentMet();
     // View Meeting Post
     @Select("select * from meeting where idx = ${idx}")
     public MeetingDTO viewMetPost(@Param("idx") int idx);
