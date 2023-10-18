@@ -1,0 +1,22 @@
+nav{
+      font-size: 12pt;
+      position: relative;
+}
+#mid-content {
+
+    margin-top: 50px;
+
+
+}
+
+#search {
+    width: 500px;
+    margin: auto;
+    justify-content: center;
+}
+
+/*main{
+	background-color: yellow;
+    height: 80%;
+	margin-top: 50px;
+}*/
