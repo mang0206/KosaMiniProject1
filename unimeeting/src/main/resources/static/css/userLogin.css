@@ -14,10 +14,22 @@ button#register_button {
 #register_text{
     color:#5302FE;
 }
-.card {
+
+#id_card {
     width: 580px;
     height: 430px;
 }
+div#register_card {
+    width: 580px;
+    /* height: auto; */
+}
+#title_text{
+    font-weight: bold;
+}
+button.btn.btn-primary {
+    background: #5302FE;
+}
+
 
 /**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**/
 .form-group {
