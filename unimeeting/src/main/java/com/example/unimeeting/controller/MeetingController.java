@@ -1,19 +1,27 @@
 package com.example.unimeeting.controller;
 
+import com.example.unimeeting.dao.MeetingImageMapper;
 import com.example.unimeeting.dao.MeetingMapper;
 import com.example.unimeeting.dao.MeetingMemberMapper;
 import com.example.unimeeting.dao.ScrapMapper;
 import com.example.unimeeting.domain.MeetingDTO;
+import com.example.unimeeting.domain.MeetingImageDTO;
 import com.example.unimeeting.domain.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
+@SessionAttributes("user")
 @RequestMapping("/meeting")
 public class MeetingController {
 
@@ -26,6 +34,13 @@ public class MeetingController {
     @Autowired
     ScrapMapper scrapMapper;
 
+    @Autowired
+    MeetingImageMapper meetingImageMapper;
+
+    @ModelAttribute("user")
+    public UserVO sessionLogin(){
+        return null;
+    }
 
     // Get Category
     @RequestMapping(value = "/getCategory", produces = "application/json; charset=utf-8" )
@@ -51,23 +66,57 @@ public class MeetingController {
 
     // Insert Meeting Post
     @PostMapping("/insertMet")
-    public String insertMet(MeetingDTO meetingDTO, Model m){
+    public String insertMet(MeetingDTO meetingDTO, Model m, MultipartRequest mreq){
         boolean result = meetingMapper.insertMet(meetingDTO);
+        int meeting_idx = meetingMapper.getIdxOfCurrentMet();
+        List<MultipartFile> list = mreq.getFiles("images");
+        if(!list.isEmpty()){
+
+            String path = "/images/" + meeting_idx;
+            String realPath = "C:/UNIMEETING/unimeeting/src/main/resources/static" + path;
+            File isDir = new File(realPath);
+            if (!isDir.isDirectory()) {
+                isDir.mkdirs();
+            }
+
+            for (MultipartFile mfile : list) {
+                String fileName = mfile.getOriginalFilename().replace(" ", "_");
+                System.out.println(fileName);
+
+                try {
+                    File f = new File(realPath + "/"+ fileName);
+                    if (f.exists()) {
+                        System.out.println("already exist");
+                    } else {
+                        mfile.transferTo(f);
+                        MeetingImageDTO meetingImageDTO = new MeetingImageDTO(meeting_idx, path+"/"+ fileName);
+                        meetingImageMapper.insertMetImg(meetingImageDTO);
+                        System.out.println("upload images success");
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println("upload images error");
+                }
+            }
+        }
         if (!result) {
             m.addAttribute("msg", "글 작성을 처리하는 동안 오류 발생");
         }
-        return "redirect:/meeting/board";
+        return "redirect:/meeting";
     }
 
     // view Meeting Post
     @GetMapping("/post")
     public ModelAndView viewMetPost(int idx){
         MeetingDTO meeting = meetingMapper.viewMetPost(idx);
+        String[] image_url = meetingImageMapper.selectMetImg(idx);
         int meeting_member = meetingMapper.countMetMem(idx);
+
         ModelAndView mv = new ModelAndView();
         if(meeting != null){
             mv.addObject("meeting", meeting);
             mv.addObject("meeting_member", meeting_member);
+            if(image_url.length != 0) mv.addObject("meeting_image", image_url);
         }
         mv.setViewName("MetPostView");
         return mv;
@@ -83,7 +132,7 @@ public class MeetingController {
     // delete meeting
     @RequestMapping("/deleteMet")
     public String deleteMetPost(int idx, String writer_nickname){ // HttpSession
-        return meetingMapper.deleteMeeting(idx, writer_nickname) ? "redirect:/meeting/board" : "redirect:/";
+        return meetingMapper.deleteMeeting(idx, writer_nickname) ? "redirect:/meeting" : "redirect:/";
     }
 
     // update meeting
@@ -94,7 +143,7 @@ public class MeetingController {
         if (!result) {
             m.addAttribute("msg", "글 작성을 처리하는 동안 오류 발생");
         }
-        return "redirect:/meeting/board";
+        return "redirect:/meeting";
     }
 
     // session, user_idx,
@@ -102,7 +151,7 @@ public class MeetingController {
     public ModelAndView insertMetMem(int meeting_idx, @ModelAttribute("user") UserVO user){
         ModelAndView mv = viewMetPost(meeting_idx);
 
-        if(user.getIdx() == 0){
+        if(user == null){
             mv.addObject("msg", "로그인 후 이용 가능한 서비스입니다. ");
         }else{
             if(meetingMemberMapper.insertMetMem(meeting_idx, user.getIdx())){
@@ -118,7 +167,7 @@ public class MeetingController {
     @RequestMapping("/apply/cancel")
     public ModelAndView deleteMetMemByMem(int meeting_idx,@ModelAttribute("user") UserVO user){
         ModelAndView mv = viewMetPost(meeting_idx);
-        if(user.getIdx() == 0){
+        if(user == null){
             mv.addObject("msg", "로그인 후 이용 가능한 서비스입니다. ");
         }else{
             if(meetingMemberMapper.deleteMetMem(meeting_idx,user.getIdx())){
@@ -132,10 +181,10 @@ public class MeetingController {
     }
 
     @RequestMapping("/accept")
-    public ModelAndView updateMetMem(int meeting_idx, @ModelAttribute("user") UserVO user){
+    public ModelAndView updateMetMem(int meeting_idx, int user_idx){
         ModelAndView mv = viewMetPost(meeting_idx);
         // 권한 필요
-        if(meetingMemberMapper.updateApplyMetMem(meeting_idx,user.getIdx())){
+        if(meetingMemberMapper.updateApplyMetMem(meeting_idx,user_idx)){
             mv.addObject("msg", "수락이 완료되었습니다.");
         }else {
             mv.addObject("msg", false);
@@ -159,7 +208,7 @@ public class MeetingController {
     @RequestMapping("/scrap")
     public ModelAndView insertScrap(int meeting_idx, @ModelAttribute("user") UserVO user){
         ModelAndView mv = viewMetPost(meeting_idx);
-        if(user.getIdx() == 0){
+        if(user ==  null){
             mv.addObject("msg", "로그인 후 이용 가능한 서비스입니다. ");
         }else {
             if (scrapMapper.insertScrap(meeting_idx, user.getIdx())) {
@@ -176,7 +225,7 @@ public class MeetingController {
     public ModelAndView deleteScrap(int meeting_idx, @ModelAttribute("user") UserVO user){
 
         ModelAndView mv = viewMetPost(meeting_idx);
-        if(user.getIdx() == 0){
+        if(user == null){
             mv.addObject("msg", "로그인 후 이용 가능한 서비스입니다. ");
         }else {
             if (meetingMemberMapper.updateApplyMetMem(meeting_idx, user.getIdx())) {

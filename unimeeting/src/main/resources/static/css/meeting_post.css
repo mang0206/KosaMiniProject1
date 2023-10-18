@@ -1,0 +1,33 @@
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+*{
+    font-family: 'Pretendard-Regular';
+}
+
+.btn-color {
+  color: #5302FE;
+ }
+
+.meeting-image {
+    top: 0;
+    left: 0;
+    min-width: 80% !important;
+    max-width: 80% !important;
+}
+
+.meeting-contents > * {
+    margin: 0 auto;
+}
+a.btn.btn-primary.btn-lg.px-4.btn-color {
+    background-color: #5302FE;
+    border-color: #5302FE;
+}
+a.col-1.btn.btn-outline-primary {
+    border-color: #5302FE;
+    color: #5302FE;
+}
