@@ -57,7 +57,6 @@ public class MypageSideController {
 
   @GetMapping("")
   public String myDefault(Model model, @ModelAttribute("user") UserVO s_user) {
-    System.out.println("sessionsessionsessionsessionsessionsession"+s_user);
     model.addAttribute("list", dao.attendList(s_user));
     return "myPage";
   }
