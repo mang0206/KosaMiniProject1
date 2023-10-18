@@ -24,8 +24,9 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
     @ModelAttribute
-    public UserVO loginUser(UserVO user){
+    public UserVO loginUser(UserVO user) {
         return user;
     }
 
@@ -66,18 +67,30 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/login")
+    @RequestMapping("/login")
+    public String loginpage() {
+        return "redirect:/userLogin.html";
+    }
+
+    @PostMapping("/login/do")
     public String loginUser(@RequestParam("user_id") String user_id, @RequestParam("password") String password, Model model, HttpSession session) {
         if (userService.authenticateUser(user_id, password)) {
-                UserVO user = userService.idcheck(user_id);
-                session.setAttribute("user", user);
-                loginUser(user);
-                System.out.println(session.getAttribute("user"));
+            UserVO user = userService.idcheck(user_id);
+            session.setAttribute("user", user);
+            loginUser(user);
+            System.out.println(session.getAttribute("user"));
 
-                return "redirect:/main.html";
+<<<<<<< HEAD
+                return "redirect:/mainPage";
             } else {
                 model.addAttribute("error", "Invalid username or password");
                 return "login.html";
+=======
+            return "redirect:/main.html";
+        } else {
+            model.addAttribute("error", "Invalid username or password");
+            return "login.html";
+>>>>>>> 4cbc30ff0bb63605525ce2132be383c14e7eb06f
         }
     }
 

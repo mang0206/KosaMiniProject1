@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <!-- 제이쿼리 -->
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <!-- 합쳐지고 최소화된 최신 CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+  <!-- 부가적인 테마 -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+  <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+<div th:replace="/nav ::nav"></div>
+
+<div id = "mid-content" >
+
+    <form method = "get" action ="/search">
+      검색어 : <input type = "search" name = "keyword" >
+      <input type = "submit" value = "검색">
+    </form>
+      <select name="changeTest" class="form-select">
+          <option value="popular">인기순</option>
+          <option value="title">제목순</option>
+          <option value="start">최신순</option>
+
+      </select>
+    <th:block th:if="${ list }">
+      <div class="list_div" th:each="list : ${list}">
+          <div class="list_title">[[${list.title}]]</div>
+          <img src="">
+      </div>
+    </th:block>
+
+</div>
+
+
+<script>
+    $("select[name=changeTest]").change(function(){
+    console.log($(this).val()); //value값 가져오기
+    let num = $(this).val()
+    console.log($("select[name=changeTest] option:selected").text()); //text값 가져오기
+    location.href = `/mainPage?value=${num}`
+  });
+
+</script>
+<footer style="background-color: aqua;"><p>footer 영역</p></footer>
+</body>
+</html>
