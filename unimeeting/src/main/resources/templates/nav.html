@@ -1,18 +1,27 @@
-<nav>
-    <ul>
-
-        <a href="/mainPage">메인라운지</a>
-        <a href="/meeting">모임</a>
-        <a href="/post">자유게시판</a>
-        <a href="/notice" >공지사항</a>
-        <th:block th:if="${inout == null}">
-        <a href="/userLogin.html" >로그인</a>
-        <a href="/userRegister.html" >회원가입</a>
-        </th:block>
-
-        <th:block th:if="${inout != null}">
-        <a href="/logout" >로그아웃</a>
-        <a href="/mypage" >마이페이지</a>
-        </th:block>
-    </ul>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="" style="padding: 15px 10px;">
+                <img alt="" src="./images/meeting.png" class="img-responsive" style="height: 30px; width: auto;">
+            </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse" aria-expanded="false">
+            <ul class="nav navbar-nav navbar-left">
+                <li role="presentation"><a href="/mainPage">메인라운지</a></li>
+                <li role="presentation"><a href="/meeting">모임</a></li>
+                <li role="presentation"><a href="/post">자유게시판</a></li>
+                <li role="presentation"><a href="/notice" >공지사항</a></li>
+                <th:block th:if="${inout == null}">
+                    <li role="presentation"><a href="/userLogin.html" >로그인</a></li>
+                    <li role="presentation"><a href="/userRegister.html" >회원가입</a></li>
+                </th:block>
+            </ul>
+            <ul class="ul-inline my-2 my-lg-0">
+                <th:block th:if="${inout != null}">
+                    <li role="presentation"><a href="/logout" >로그아웃</a></li>
+                    <li role="presentation"><a href="/mypage" >마이페이지</a></li>
+                </th:block>
+            </ul>
+        </div>
+    </div>
 </nav>

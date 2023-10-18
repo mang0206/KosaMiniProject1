@@ -3,6 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+  <!-- 제이쿼리 -->
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+  <!-- 합쳐지고 최소화된 최신 CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+  <!-- 부가적인 테마 -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+  <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <style>
 
@@ -32,37 +43,53 @@
 
 <div id = "mid-content" >
   <div class="search">
-    <form method = "get" action ="/meeting/search">
+    <form method = "get" action ="/search">
       검색어 : <input type = "search" name = "keyword" >
       <input type = "submit" value = "검색">
     </form>
-      <select name="list" id="list">
-          <option value="">좋아요 순</option>
-          <option value="">가나다 순</option>
-          <option value="">최신순</option>
-          <option value="">###</option>
+      <select id="changeTest" onchange="selectBoxChange(this.value)">
+          <option value="1">좋아요 순</option>
+          <option value="2">가나다 순</option>
+          <option value="3">최신순</option>
+          <option value="4">###</option>
       </select>
     <th:block th:if="${ list }">
-      <h1 onclick="location.href='/meeting'">미팅</h1>
       <hr>
       <table>
-        <tr th:each="vo : ${list}">
-          <td>[[${vo.title}]]</td>
+        <tr th:each="list : ${list}">
+          <td>[[${list.title}]]</td>
+          <td>[[${list.content_text}]]</td>
         </tr>
       </table>
     </th:block>
 
+    <th:block th:if="${ sort }">
+      <hr>
+      <table>
+        <tr th:each="sr : ${sort}">
+          <td>[[${sr.title}]]</td>
+          <td>[[${sr.content_text}]]</td>
+        </tr>
+      </table>
+    </th:block>
+
+
     <table>
-      <tr th:each="vo : ${listSearch}">
-        <td>[[${vo.content_text}]]</td>
-<!--        <td>"${vo.content_text}"</td>-->
+      <tr th:each="ls : ${listSearch}">
+        <td>[[${ls.title}]]</td>
+        <td>[[${ls.content_text}]]</td>
       </tr>
     </table>
     <hr>
   </div>
-
 </div>
-
+<script>
+$(document).ready(function(){
+    $("#changeTest").change(function(){
+        $("#changeInput").val($(this).val());
+    });
+  });
+</script>
 <footer style="background-color: aqua;"><p>footer 영역</p></footer>
 </body>
 </html>

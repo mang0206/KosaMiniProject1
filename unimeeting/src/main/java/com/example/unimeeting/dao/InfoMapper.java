@@ -13,8 +13,10 @@ public interface InfoMapper {
     @Select("select * from meeting where content_text like concat('%',#{key},'%') or title like concat('%',#{key},'%')")
     public List<InfoDTO> searchM1(String keyword);
 
-//    @Select("select * from meeting order by start_date")
-//    public List<InfoDTO> dddd();
+    @Select("select * from meeting order by binary(title)") //가나다 순
+    public List<InfoDTO> titleSort();
+
+
 
 
 }

@@ -15,6 +15,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.slf4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //import static jdk.internal.org.jline.utils.Colors.s;
@@ -34,7 +35,7 @@ public class MainController {
         return null;
     }
 
-    @GetMapping("/mainPage")
+    @GetMapping("/mainPage") //메인페이지 & 로그인/로그아웃 관리
     public String test(Model model, @ModelAttribute("user") UserVO id) {
         System.out.println("main");
         model.addAttribute("data", "hello");
@@ -65,10 +66,20 @@ public class MainController {
         mav.addObject("list", list);
         mav.setViewName("mainPage");
         return mav;
+    }
+
+    @GetMapping("/listSort")
+    public ModelAndView sort() {
+        ModelAndView mav = new ModelAndView();
+        List<InfoDTO> sort = dao.titleSort();
+        mav.addObject("sort", sort);
+        mav.setViewName("mainPage");
+        return mav;
+
 
     }
 
-    @GetMapping("/meeting/search") //검색창
+    @GetMapping("/search") //검색창
     public ModelAndView search(String keyword) {
         List<InfoDTO> list = dao.searchM1(keyword);
         ModelAndView mav = new ModelAndView();
@@ -84,8 +95,6 @@ public class MainController {
 
     @GetMapping("/logout")
     public String logout(@ModelAttribute("user") UserVO id,WebRequest request, SessionStatus status, Model model){
-//        inout();
-//        id = null;
         status.setComplete();
         request.removeAttribute("user", WebRequest.SCOPE_SESSION);
         System.out.println("logout");
@@ -97,6 +106,9 @@ public class MainController {
         }
         return "redirect:/mainPage";
     }
+
+
+
 }
 
 
