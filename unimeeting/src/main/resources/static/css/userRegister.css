@@ -1,0 +1,112 @@
+.card-header.text-center {
+    background-color: white;
+    border-bottom: none;
+    margin-top: 30px;
+}
+button.btn.btn-primary.btn-block {
+    margin-bottom: 8px;
+    background-color: #5302FE;
+    width: 443px;
+    height: 45px;
+
+
+}
+button#register_button {
+    border-color: #5302FE;
+    background-color: white;
+}
+#register_text{
+    color:#5302FE;
+}
+
+#id_card {
+    width: 580px;
+    height: 430px;
+}
+div#register_card {
+    width: 580px;
+    /* height: auto; */
+}
+#title_text{
+    font-weight: bold;
+}
+button.btn.btn-primary {
+    background: #5302FE;
+
+}
+
+input#user_id {
+    margin-right: 12px;
+    border-radius: 12px;
+}
+input#nickname {
+    margin-right: 12px;
+    border-radius: 12px;
+}
+input#email {
+    margin-right: 12px;
+    border-radius: 12px;
+}
+input#password {
+    border-radius: 12px;
+}
+input#phone_number {
+    border-radius: 12px;
+}
+
+button.btn.btn-primary {
+    border-radius: 12px;
+}
+.input-group {
+    width: 443px;
+}
+.form-control\" {
+    width: 443px;
+}
+label.btn.btn-outline-primary {
+    color: #007bff;
+    border-color: #007bff;
+}
+
+.card-body {
+    margin: auto;
+}
+div#category_row1 {
+    display: flex;
+}
+div#category_row2 {
+    display: flex;
+}
+/**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**//**/
+.form-group {
+    margin-bottom: 20px;
+}
+label.btn.btn-outline-primary {
+    width: 108px;
+    color: #5302FE;
+    border-color: #5302FE;
+}
+.btn-check{
+    margin-right: 14px;
+}
+button.btn.btn-primary {
+    border-radius: 10px !important;
+}
+
+
+
+
+
+/* 입력 필드와 회원가입 버튼의 너비를 동일하게 만듭니다. */
+.form-control, .btn {
+    width: 100%;
+}
+
+/* 페이지를 가운데 정렬합니다. */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}

@@ -1,15 +1,15 @@
 package com.example.unimeeting.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import java.sql.Date;
+import lombok.Data;
 
-@Getter
-@AllArgsConstructor
+@Data
 public class NoticeVO {
-  private int idx;
-  private String title;
-  private String type;
-  private String content_text;
-  private String created_datetime;
-  private String writer_nickname;
+    private int idx;
+    private String title;
+    private String content_text;
+    private Date created_datetime;
+    private String writer_nickname;
+    private String type;//공지사항의 글인지 게시판의 글인지 구별하기위한 것.
+
 }

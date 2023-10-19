@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript">
+    </script>
+    <title>게시판</title>
+</head>
+<body>
+[[${detail}]]
+<button th:onclick="@{/notice/delete(idx=${detail.idx})}">삭제</button>
+
+</body>
