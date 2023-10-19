@@ -40,7 +40,7 @@ public class MainController {
         System.out.println("main");
         model.addAttribute("data", "hello");
         if (changeTest.equals("popular")){
-            model.addAttribute("list", "hello");
+            model.addAttribute("list", dao.popularSort());
         } else if (changeTest.equals("title")){
             model.addAttribute("list", dao.titleSort());
         } else if (changeTest.equals("start")) {
