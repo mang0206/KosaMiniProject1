@@ -21,12 +21,33 @@ body h1{
   font-style: bold;
   color: #545454;
 }
-.search {
-    width: 500px;
-    margin: auto;
-    justify-content: center;
+
+.inner {
+    position: relative;
+    width: 600px;
+    height: 40px;
+    margin: 20px auto;
+    border: 1px solid #bdc1c6;
+    border-radius: 20px;
+
 }
 
+
+.search-bar {
+    width: 90%;
+    height: 90%;
+    margin-left: 20px ;
+    margin-top: 9px;
+    border-style: solid;
+    border: 1px;
+    font-size: 18x;
+    outline: none;
+}
+
+.searching{
+    margin-left: 95%;
+    margin-bottom: 100%;
+}
 .form-select{
     justify-content: flex-end;
 

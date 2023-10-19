@@ -20,10 +20,12 @@
 
 <!--<div id = "mid-content" >-->
 <h1>unimeeting 홈페이지</h1>
+    <div class="inner">
     <form method = "get" action ="/search" class="search">
-      검색어 : <input type = "search" name = "keyword" >
-      <input type = "submit" value = "검색">
+      <input type = "search" name = "keyword" class="search-bar" placeholder="검색어를 입력해 주세요">
+      <input type = "submit" value = "검색" class="searching">
     </form>
+    </div>
     <select name="changeTest" class="form-select">
           <option value="">==선택==</option>
           <option value="no">기본</option>
@@ -33,7 +35,7 @@
     </select>
     <div class="list_container">
       <div class="list_div" th:if="${ list }" th:each="st : ${list}">
-          <a href="#"><img th:src="${st.image_url}" th:if="${st.image_url != null}" style="">
+          <a th:href="@{/meeting/post(meeting_idx=${st.idx})}"><img th:src="${st.image_url}" th:if="${st.image_url != null}" style="">
           <img src="/images/default.jpg" th:if="${st.image_url == null}" style="">
           <p>[[${st.title}]]</p>
 <!--              [[${st.content_text}]]-->
