@@ -78,7 +78,7 @@ public class UserController {
             UserVO user = userService.idcheck(user_id);
             session.setAttribute("user", user);
             System.out.println(session.getAttribute("user"));
-            return "redirect:/main.html";
+            return "redirect:/mainPage";
         } else {
             model.addAttribute("error", "Invalid username or password");
             return "login.html";
