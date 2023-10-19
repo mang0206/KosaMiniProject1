@@ -60,12 +60,12 @@ public class NoticeController {
         return "redirect:/notice/list";
     }
 
-    @RequestMapping("/delete")
-public StrindeleteNotice(int idx,@ModelAttribute("user") UserVO user){
-
-        noticeMapper.deleteNotice(idx, user.getNickname());
-        return "redirect:/notice/list";
-    }
+//    @RequestMapping("/delete")
+//    public StrindeleteNotice(int idx,@ModelAttribute("user") UserVO user){
+//
+//        noticeMapper.deleteNotice(idx, user.getNickname());
+//        return "redirect:/notice/list";
+//    }
 
 
 

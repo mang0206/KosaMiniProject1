@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @GetMapping("/check-nickname")
-    public ResponseEntity<Map<String, Boolegit aan>> checkNickname(@RequestParam("nickname") String nickname) {
+    public ResponseEntity<Map<String, Boolean >> checkNickname(@RequestParam("nickname") String nickname) {
         boolean isAvailable = (userService.nicknamecheck(nickname) == null);
         Map<String, Boolean> response = new HashMap<>();
         response.put("available", isAvailable);
