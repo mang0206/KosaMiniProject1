@@ -4,6 +4,7 @@ import com.example.unimeeting.dao.MeetingImageMapper;
 import com.example.unimeeting.dao.MeetingMapper;
 import com.example.unimeeting.dao.MeetingMemberMapper;
 import com.example.unimeeting.dao.ScrapMapper;
+import com.example.unimeeting.domain.MeetingCntDTO;
 import com.example.unimeeting.domain.MeetingDTO;
 import com.example.unimeeting.domain.MeetingImageDTO;
 import com.example.unimeeting.domain.UserVO;
@@ -54,12 +55,14 @@ public class MeetingController {
     // Meeting Board
     // ctgr(category), path -> default all
     // search query
-        @RequestMapping(value = {"" ,"/{ctgr}"})
+    @RequestMapping(value = {"" ,"/{ctgr}"})
         public ModelAndView viewMetBoard(@PathVariable(required = false) String ctgr,@RequestParam(required = false) String search, @RequestParam(defaultValue = "1") int page){
         ModelAndView mv = new ModelAndView();
         mv.addObject("ctgr_list", getCategory());
-        List<MeetingDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search, (page-1)*4);
+//        List<MeetingDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search, (page-1)*4);
+        List<MeetingCntDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search);
         mv.addObject("met_list", meetings);
+
 
         mv.setViewName("MetBoardView");
         return mv;
