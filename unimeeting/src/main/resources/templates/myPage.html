@@ -6,11 +6,12 @@
   <title>Bootstrap demo</title>
   <link th:href="@{/css/m_box.css}" rel="stylesheet" type="text/css">
   <link th:href="@{/css/mypage.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/nav.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
+  <div th:if="${msg}" th:utext="'<script>alert(\'' + ${msg} + '\');</script>'"></div>
   <div th:replace="/nav ::nav"></div>
 
-  <div th:if="${msg}" th:utext="'<script>alert(\'' + ${msg} + '\');</script>'"></div>
     <div class="page-container">
       <div class="rectangle-left">
         <div class=menu id="mypage_side">
@@ -27,7 +28,7 @@
                 <button class ="menu-item"id="side_scrap" name="scrap">스크랩 소모임</button>
             </div>
             <div class="menu-item">
-                <img class="menu-icon" src="./images/users.png" alt="">
+                <img class="menu-icon" th:src="@{users.png}" alt="">
                 <button class ="menu-item"id="side_myInfo" name="myInfo">내 정보 수정</button>
             </div>
         </div>
@@ -36,7 +37,6 @@
     <!-- <div class="line-16"></div> -->
   
       <div class="rectangle-right">
-        d
         <article id="show_info">
           <h1 id="info_header"></h1>
           <div id ="info_result" data-suser th:attr="data-suser=${user.idx}" >

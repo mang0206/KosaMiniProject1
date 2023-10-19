@@ -12,9 +12,10 @@ import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface MypageMapper {
-  @Select("select m.idx, m.title, m.category, m.location, m.start_datetime, m.content_text, m.created_datetime, writer_nickname, m.recruits, now_recruits "
+  @Select("select m.idx, m.title, m.category, m.location, m.start_datetime, m.content_text, m.created_datetime, writer_nickname, m.recruits, now_recruits, image_url as img_url "
       + "from meeting m join ( select meeting_idx, count(*) as now_recruits "
       + "from meeting_member group by meeting_idx ) mb on m.idx = mb.meeting_idx "
+      + "join ( select meeting_idx, image_url from meeting_image group by meeting_idx ) mi on m.idx = mi.meeting_idx "
       + "where m.idx in (select meeting_idx from meeting_member where user_idx = #{idx})")
   public List<MeetingCntDTO> attendList(UserVO userVO);
 

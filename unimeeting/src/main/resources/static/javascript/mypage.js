@@ -33,26 +33,50 @@ function sideSelect(e) {
       let userObj = JSON.parse(xhr.responseText);
       let result_div = document.getElementById("info_result");
       let idx = result_div.getAttribute('data-suser');
-
-      result_div.innerHTML = '';
-      result_div.innerHTML += `<form action='/mypage/update' method='post'>
-          <input type="hidden" name='idx' value=${idx}>
-          아이디 <input type='text' name='id' disabled value = '${userObj.user_id}'> <br>
-          비밀번호 <input type='password' name='password' id='pwd' placeholder = '변경할 비밀번호 입력' required> <br>
-          비밀번호 확인 <input type='password' name='check_pwd' id='c_pwd' placeholder = '비밀번호 확인' required> <br>
-          닉네임 <input type='text' name='nickname' placeholder = '변경할 닉네임 입력' required> <br>
-          관심 카테고리 <br>
-          운동 <input type="checkbox" name="category" value="운동">
-          스터디 <input type="checkbox" name="category" value="스터디">
-          게임 <input type="checkbox" name="category" value="게임"><br>
-          카페 <input type="checkbox" name="category" value="카페">
-          영화 <input type="checkbox" name="category" value="영화">
-          독서 <input type="checkbox" name="category" value="독서"><br>
-          이메일 <input type='text' name='email' disabled value = '${userObj.email}'> <br>
-          휴대폰 번호 <input type='text' name='phone_num' disabled value = '${userObj.phone_number}'> <br>
-          <input type='submit' value='정 보 변 경' id='submit_button' disabled> </form>`;
-          //          <input type='submit' value='정 보 변 경'> </form>`;
-
+      
+      result_div.innerHTML = `
+      <form action='/mypage/update' method='post' class='form_group'>
+      <input type="hidden" name='idx' value=${idx}>
+      <span class='span_text'>아이디</span> <input type='text' name='id' class='input_box' disabled value = '${userObj.user_id}'> <br>
+      <span class='span_text'>비밀번호</span> <input class='input_box input_chane_box' type='password' name='password' id='pwd' placeholder = '변경할 비밀번호 입력' required> <br>
+      <span class='span_text'>비밀번호 확인</span> <input class='input_box input_chane_box' type='password' name='check_pwd' id='c_pwd' placeholder = '비밀번호 확인' required> <br>
+      <span class='span_text'>닉네임</span> <input class='input_box input_chane_box' type='text' name='nickname' placeholder = '변경할 닉네임 입력' required> <br>
+      <div class='edit-category'>
+          <div class="span-height-div">
+              <span class='span_text'>관심 카테고리</span>
+          </div>
+          <div class="custom-checkbox">
+              <label>
+                  <input type="checkbox" class="custom-checkbox-input">
+                  <div class="custom-checkbox-text">운동</div>
+              </label>
+              <label>
+                  <input type="checkbox" class="custom-checkbox-input">
+                  <div class="custom-checkbox-text">스터디</div>
+              </label>
+              <label>
+                  <input type="checkbox" class="custom-checkbox-input">
+                  <div class="custom-checkbox-text">게임</div>
+              </label>
+              <label>
+                  <input type="checkbox" class="custom-checkbox-input">
+                  <div class="custom-checkbox-text">카페</div>
+              </label>
+              <label>
+                  <input type="checkbox" class="custom-checkbox-input">
+                  <div class="custom-checkbox-text">영화</div>
+              </label>
+              <label>
+                  <input type="checkbox" class="custom-checkbox-input">
+                  <div class="custom-checkbox-text">독서</div>
+              </label>
+          </div>
+      </div>
+      <span class='span_text'>이메일</span> <input class='input_box' type='text' name='email' disabled value = '${userObj.email}'> <br>
+      <span class='span_text'>휴대폰 번호</span> <input class='input_box' type='text' name='phone_num' disabled value = '${userObj.phone_number}'> <br>
+      <div class='submit_btn'>
+          <input type='submit' value='정 보 변 경' id='submit_button' disabled> </form>
+      </div>`;
       document.getElementById('pwd').addEventListener('input', validatePassword);
       document.getElementById('c_pwd').addEventListener('input', validatePassword);
 

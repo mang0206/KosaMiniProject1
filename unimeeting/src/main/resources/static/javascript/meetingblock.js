@@ -12,7 +12,7 @@ function makeMeetingBlock(meeting) {
   img.id = "meeting_img";
   img.width = 100;
   img.height = 100;
-  img.src = meeting.img_src;
+  img.src = meeting.img_url;
   img_div.appendChild(img);
 
   const content_div = document.createElement('div');
@@ -49,10 +49,9 @@ function makeMeetingBlock(meeting) {
   recruits.textContent = meeting.now_recruits + "/" + meeting.recruits;
   recruits.classList.add("meeting-info", "user-card"); // h6에 class 추가
 
-
-  
   const create_datetime = document.createElement('div');
-  create_datetime.textContent = meeting.create_datetime;
+  create_datetime.textContent = elapsedTime(meeting.created_datetime);
+  create_datetime.style.color = "gray";
   create_datetime.classList.add("meeting-info", "user-thumb"); // h6에 class 추가
   
   const writer_nickname = document.createElement('div');
@@ -80,6 +79,30 @@ function makeMeetingBlock(meeting) {
   div.appendChild(content_div);
 
   document.getElementById('info_result').appendChild(div);
+}
+
+function elapsedTime(date) {
+  const start = new Date(date);
+  const end = new Date();
+
+  const diff = (end - start) / 1000;
+  
+  const times = [
+    { name: '년', milliSeconds: 60 * 60 * 24 * 365 },
+    { name: '개월', milliSeconds: 60 * 60 * 24 * 30 },
+    { name: '일', milliSeconds: 60 * 60 * 24 },
+    { name: '시간', milliSeconds: 60 * 60 },
+    { name: '분', milliSeconds: 60 },
+  ];
+
+  for (const value of times) {
+    const betweenTime = Math.floor(diff / value.milliSeconds);
+
+    if (betweenTime > 0) {
+      return `${betweenTime}${value.name} 전`;
+    }
+  }
+  return '방금 전';
 }
 
 export { makeMeetingBlock }

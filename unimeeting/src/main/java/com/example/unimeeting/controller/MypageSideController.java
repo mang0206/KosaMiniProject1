@@ -4,6 +4,7 @@ package com.example.unimeeting.controller;
 import com.example.unimeeting.dao.MypageMapper;
 import com.example.unimeeting.domain.MyInfoMeetingDTO;
 import com.example.unimeeting.domain.UpdateUserVO;
+import jakarta.servlet.http.HttpSession;
 import java.util.Iterator;
 import java.util.List;
 
@@ -29,30 +30,37 @@ public class MypageSideController {
 
   @ModelAttribute("user")
   public UserVO sessionuser() {
-    return new UserVO();
+    return null;
   }
+
   @Autowired
   MypageMapper dao;
 
   @GetMapping("")
-  public String myDefault(Model model, @ModelAttribute("user") UserVO s_user) {
-    System.out.println("sessionsessionsessionsessionsessionsession"+s_user);
+  public String myDefault(Model model, @ModelAttribute("user") UserVO s_user, HttpSession httpSession) {
+    if(s_user == null){
+      return "redirect:/userLogin.html";
+    }
+//    System.out.println("check session");
+//    System.out.println(httpSession.getAttribute("user"));
+//    System.out.println(s_user);
     model.addAttribute("list", dao.attendList(s_user));
-    model.addAttribute("user",s_user);
+    model.addAttribute("user", s_user);
     return "myPage";
   }
 
   @ResponseBody
   @GetMapping(value = "/getSessionData", produces = "application/json; charset=utf-8")
-  public UserVO sessionUser(@ModelAttribute("user") UserVO s_user){
+  public UserVO sessionUser(@ModelAttribute("user") UserVO s_user) {
     return s_user;
   }
 
   @ResponseBody
   @GetMapping(value = "/{select}", produces = "application/json; charset=utf-8")
-  public MyInfoMeetingDTO myInfoMeeting(@PathVariable String select, @ModelAttribute("user") UserVO s_user, Model model) {
+  public MyInfoMeetingDTO myInfoMeeting(@PathVariable String select,
+      @ModelAttribute("user") UserVO s_user, Model model) {
     MyInfoMeetingDTO myInfoMeetingDTO = new MyInfoMeetingDTO();
-    switch(select){
+    switch (select) {
       case "attend":
         myInfoMeetingDTO.setDivision(select);
         myInfoMeetingDTO.setList(dao.attendList(s_user));
@@ -74,11 +82,11 @@ public class MypageSideController {
   }
 
   @PostMapping("/update")
-  public ModelAndView updateUser(UserVO user, Model model){
+  public ModelAndView updateUser(UserVO user, Model model) {
     ModelAndView mav = new ModelAndView();
     System.out.println(user);
     boolean result = dao.updateUser(user);
-    if(result){
+    if (result) {
       model.addAttribute("msg", "정상적으로 변경되었습니다");
     } else {
       model.addAttribute("msg", "User 정보를 업데이트하는 동안 오류 발생했습니다. 다시 시도해 주세요");

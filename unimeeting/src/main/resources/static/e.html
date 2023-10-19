@@ -5,8 +5,41 @@
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="./css/m_box.css">
     <link rel="stylesheet" type="text/css" href="./css/mypage.css">
+    <link rel="stylesheet" type="text/css" href="./css/nav.css">
+    <link rel="stylesheet" type="text/css" href="./css/mypage_user_edit.css">
 </head>
 <body>
+    <nav class="base-header-group">
+        <div class="logo">
+            <img alt="" src="./images/meeting.png" class="logo-image">
+            <span class="logo-text">UniMeeing</span>
+        </div>
+        <div id="navbar" class="frame-3" aria-expanded="false">
+            <div class="nav_div">
+                <a class="nav_text" id="nav_main" href="/mainPage">메인라운지</a>
+            </div>
+            <div class="nav_div">
+                <a class="nav_text" href="/meeting">모임</a>
+            </div>
+            <div class="nav_div">
+                <a class="nav_text" href="/post">자유게시판</a>
+            </div>
+            <div class="nav_div">
+                <a class="nav_text" href="/notice" >공지사항</a>
+            </div>
+                
+                <th:block th:if="${inout == null}" class="button">
+                    <div>
+                        <button class="base-button side-button" onclick="location.href='/userRegister.html'">마이페이지</button>
+                    </div>
+                    <div>
+                        <button class="base-button" onclick="location.href='/userLogin.html'">로그아웃</button>
+                    </div>
+                </th:block>
+        </div>
+    </nav>
+
+
     <div th:if="${msg}" th:utext="'<script>alert(\'' + ${msg} + '\');</script>'"></div>
     <div class="page-container">
       <div class="rectangle-left">
@@ -32,10 +65,9 @@
   
     <!-- <div class="line-16"></div> -->
   
-      <div class="rectangle-right">
-        d
+    <div class="rectangle-right">
         <article id="show_info">
-          <h1 id="info_header"></h1>
+            <h1 id="info_header">내 정보 수정</h1>
           <div id ="info_result" data-suser th:attr="data-suser=${user.idx}" >
           </div>
         </article>
@@ -45,7 +77,7 @@
 
 <script>
     let meeting1 = {'idx':1, 'title':"미팅 제목1", "category":"카테고리1","location":'위치1',"start_date":"2023-10-17 14:00:00",
-        "content_text":'미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1',
+        "content_text":'미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1 미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1',
         "create_datetime":"2023-10-16 15:00:00", "writer_nickname":'사용자1', "recruits":5, "img_src":"images/book.png", "now_recruits":3};
     let meeting2 = {'idx':2, 'title':"미팅 제목2", "category":"카테고리1","location":'위치1',"start_date":"2023-10-17 14:00:00",
         "content_text":'미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1',
@@ -148,10 +180,67 @@ function makeMeetingBlock(meeting) {
     div.appendChild(img_div);
     div.appendChild(content_div);
 
-    document.getElementById('showMeeting_div').appendChild(div);
+    document.getElementById('show_info').appendChild(div);
 }
-window.addEventListener('load',makeMeetingBlock(meeting1));
 
+function sideSelect() {
+    let result_header = document.getElementById("info_header");
+    // result_header.textContent = e.target.innerText;
+
+    let result_div = document.getElementById("info_result");
+
+
+    result_div.innerHTML = '';
+    result_div.innerHTML += `
+    <form action='/mypage/update' method='post' class='form_group'>
+    <input type="hidden" name='idx' value=1>
+    <span class='span_text'>아이디</span> <input type='text' name='id' class='input_box' disabled value = 'user1 '> <br>
+    <span class='span_text'>비밀번호</span> <input class='input_box input_chane_box' type='password' name='password' id='pwd' placeholder = '변경할 비밀번호 입력' required> <br>
+    <span class='span_text'>비밀번호 확인</span> <input class='input_box input_chane_box' type='password' name='check_pwd' id='c_pwd' placeholder = '비밀번호 확인' required> <br>
+    <span class='span_text'>닉네임</span> <input class='input_box input_chane_box' type='text' name='nickname' placeholder = '변경할 닉네임 입력' required> <br>
+    <div class='edit-category'>
+        <div class="span-height-div">
+            <span class='span_text'>관심 카테고리</span>
+        </div>
+        <div class="custom-checkbox">
+            <label>
+                <input type="checkbox" class="custom-checkbox-input">
+                <div class="custom-checkbox-text">운동</div>
+            </label>
+            <label>
+                <input type="checkbox" class="custom-checkbox-input">
+                <div class="custom-checkbox-text">스터디</div>
+            </label>
+            <label>
+                <input type="checkbox" class="custom-checkbox-input">
+                <div class="custom-checkbox-text">게임</div>
+            </label>
+            <label>
+                <input type="checkbox" class="custom-checkbox-input">
+                <div class="custom-checkbox-text">카페</div>
+            </label>
+            <label>
+                <input type="checkbox" class="custom-checkbox-input">
+                <div class="custom-checkbox-text">영화</div>
+            </label>
+            <label>
+                <input type="checkbox" class="custom-checkbox-input">
+                <div class="custom-checkbox-text">독서</div>
+            </label>
+        </div>
+    </div>
+    <span class='span_text'>이메일</span> <input class='input_box' type='text' name='email' disabled value = 'user@email'> <br>
+    <span class='span_text'>휴대폰 번호</span> <input class='input_box' type='text' name='phone_num' disabled value = '010-999-111'> <br>
+    <div class='submit_btn'>
+        <input type='submit' value='정 보 변 경' id='submit_button' disabled> </form>
+    </div>`;
+    //          <input type='submit' value='정 보 변 경'> </form>`;
+
+
+}
+
+// window.addEventListener('load',sideSelect);
+window.addEventListener('load',makeMeetingBlock(meeting1));
 </script>
 </body>
 </html>

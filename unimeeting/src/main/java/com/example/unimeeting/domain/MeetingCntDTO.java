@@ -15,4 +15,5 @@ public class MeetingCntDTO {
   private String content_text;
   private String content_img;
   private String writer_nickname;
+  private String img_url;
 }
