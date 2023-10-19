@@ -51,7 +51,7 @@ public class NoticeController {
     }
 
     @RequestMapping("/delete")
-    public String deleteNotice(int idx,@ModelAttribute("user") UserVO user){
+public StrindeleteNotice(int idx,@ModelAttribute("user") UserVO user){
 
         noticeMapper.deleteNotice(idx, user.getNickname());
         return "redirect:/notice/list";
