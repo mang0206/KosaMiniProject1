@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/noticeWrite.css">
+
+    <!-- 부트스트랩 JS 및 Popper.js 불러오기 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript"></script>
+</head>
+<body>
+<div class="container mt-5">
+    <form action="/notice/write" method="post">
+        <div class="form-group">
+            <label for="title">제목</label>
+            <input name="title" type="text" class="form-control" id="title" minlength="2" required>
+        </div>
+        <div class="form-group">
+            <label for="content_text">내용</label>
+            <textarea name="content_text" type="text" class="form-control" id="content_text" minlength="10" rows="13" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">글쓰기</button>
+    </form>
+</div>
+</body>

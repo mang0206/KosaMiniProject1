@@ -29,7 +29,7 @@ public class NoticeController {
     NoticeMapper noticeMapper;
 
     //=======공지 게시판 글 목록=========//
-    @RequestMapping("/list")
+    @RequestMapping("")
     public ModelAndView process() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("noticeList");
@@ -50,17 +50,24 @@ public class NoticeController {
         noticeVO.setType("1");
         noticeVO.setWriter_nickname(user.getNickname());
         noticeMapper.insertNotice(noticeVO);
+        return "redirect:/notice";
+    }
+    //=====공지 삭제 ===========//
+    @RequestMapping("/delete")
+    public String deleteNotice(int idx,@ModelAttribute("user") UserVO user){
+        if (noticeMapper.isWriter(idx, user.getNickname())==1 ){
+            noticeMapper.deleteNotice(idx);
+        }
         return "redirect:/notice/list";
     }
 
-//    @RequestMapping("/delete")
-//    public StrindeleteNotice(int idx,@ModelAttribute("user") UserVO user){
-//
-//        noticeMapper.deleteNotice(idx, user.getNickname());
-//        return "redirect:/notice/list";
-//    }
-
-
+    @RequestMapping("/update")
+    public ModelAndView updateNotice(int idx){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("noticeList");
+        mav.addObject("list", noticeMapper.selectList());
+        return mav;
+    }
 
 
 

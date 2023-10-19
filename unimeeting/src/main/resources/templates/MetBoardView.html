@@ -40,7 +40,7 @@
 
                 <form id="search" method="get"
                       th:action="@{/meeting{ctgr}(ctgr = __${ctgr}__ != null ? @{/__${ctgr}__} : __${ctgr}__)}">
-                    <label><input id="search-submit" type="image" src="/images/icon-search.png" alt="검색"></label>
+
                     <label><input id="search-text" name="search" required /><br></label>
                     <!--                <input type="submit" value="검색" />-->
                 </form>

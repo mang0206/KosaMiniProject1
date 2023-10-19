@@ -1,0 +1,12 @@
+#title {
+    margin-right: 15px; /* 오른쪽 마진을 추가해 좀 더 예쁘게 보이도록 설정 */
+}
+button.btn.btn-primary {
+    background-color: #5302FE;
+    border-radius: 10px;
+    width: 72px;
+    height: 40px;
+}
+body {
+    background-color: #f8f9fa !important;
+}
