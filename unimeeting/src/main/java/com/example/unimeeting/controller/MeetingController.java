@@ -65,6 +65,13 @@ public class MeetingController {
         return mv;
     }
 
+    // get Meeting
+    @RequestMapping(value = "/getMetJson", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public MeetingDTO getMetJson(int meeting_idx){
+        return meetingMapper.viewMetPost(meeting_idx);
+    }
+
     // Insert Meeting Post
     @PostMapping("/insertMet")
     public String insertMet(MeetingDTO meetingDTO, Model m, MultipartRequest mreq, @ModelAttribute("user") UserVO user){
@@ -141,20 +148,17 @@ public class MeetingController {
     }
 
 
-
-    // get Meeting
-    @RequestMapping(value = "/getMetJson", produces = "application/json; charset=utf-8")
-    @ResponseBody
-    public MeetingDTO getMetJson(int idx){
-        return meetingMapper.viewMetPost(idx);
-    }
-
     // delete meeting
     @RequestMapping("/deleteMet")
     public String deleteMetPost(int idx, String writer_nickname){ // HttpSession
         return meetingMapper.deleteMeeting(idx, writer_nickname) ? "redirect:/meeting" : "redirect:/";
     }
 
+//    @RequestMapping("/updateMetForm")
+//    public String updateMetForm(int idx){
+//        return
+//    }
+//
     // update meeting
     @RequestMapping("/updateMet")
     public String updateMetPost(MeetingDTO meetingDTO,Model m){
