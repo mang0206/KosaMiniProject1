@@ -26,8 +26,8 @@ public class UserController {
     }
 
     @ModelAttribute
-    public UserVO loginUser(UserVO user) {
-        return user;
+    public UserVO loginUser() {
+        return null;
     }
 
     @PostMapping("/register")
@@ -77,9 +77,7 @@ public class UserController {
         if (userService.authenticateUser(user_id, password)) {
             UserVO user = userService.idcheck(user_id);
             session.setAttribute("user", user);
-            loginUser(user);
             System.out.println(session.getAttribute("user"));
-
             return "redirect:/main.html";
         } else {
             model.addAttribute("error", "Invalid username or password");

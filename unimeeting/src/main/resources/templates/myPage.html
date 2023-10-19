@@ -3,25 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+  <title>Bootstrap demo</title>
+  <link th:href="@{/css/m_box.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/mypage.css}" rel="stylesheet" type="text/css">
+  <link th:href="@{/css/nav.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
-  <section>
-    <article id="mypage_side">
-      <button id="side_attend" name = "attend">참여 내역</button>
-      <button id="side_create" name="create">생성한 소모임</button>
-      <button id="side_scrap" name="scrap">스크랩 소모임</button>
-      <button id="side_myInfo" name="myInfo">내 정보 수정</button>
-    </article>
-    <article id="show_info">
-      <h1 id="info_header"></h1>
-      <div id ="info_result">
-        <div id="showMeeting_div">
+  <div th:if="${msg}" th:utext="'<script>alert(\'' + ${msg} + '\');</script>'"></div>
+  <div th:replace="/nav ::nav"></div>
+
+    <div class="page-container">
+      <div class="rectangle-left">
+        <div class=menu id="mypage_side">
+            <div class="menu-item">
+                <img class="menu-icon" src="./images/home.png" alt="">
+                <button class ="menu-item" id="side_attend" name = "attend">참여 내역</button>
+            </div>
+            <div class="menu-item">
+                <img class="menu-icon" src="./images/directory.png" alt="">
+                <button class ="menu-item"id="side_create" name="create">생성한 소모임</button>
+            </div>
+            <div class="menu-item"> 
+                <img class="menu-icon" src="./images/tag.png" alt="">
+                <button class ="menu-item"id="side_scrap" name="scrap">스크랩 소모임</button>
+            </div>
+            <div class="menu-item">
+                <img class="menu-icon" th:src="@{users.png}" alt="">
+                <button class ="menu-item"id="side_myInfo" name="myInfo">내 정보 수정</button>
+            </div>
         </div>
       </div>
-    </article>
+  
+    <!-- <div class="line-16"></div> -->
+  
+      <div class="rectangle-right">
+        <article id="show_info">
+          <h1 id="info_header"></h1>
+          <div id ="info_result" data-suser th:attr="data-suser=${user.idx}" >
+          </div>
+        </article>
+  
+      </div>
+    </div>
 
-  </section>
-
-  <script type="text/javascript" th:src="@{/javascript/mypage.js}"></script>
+  <script type="module" th:src="@{/javascript/mypage.js}"></script>
+  <script type="module" th:src="@{/javascript/meetingblock.js}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js" crossorigin="anonymous"></script>
 </body>
 </html>

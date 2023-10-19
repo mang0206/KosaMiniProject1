@@ -1,6 +1,7 @@
 package com.example.unimeeting.domain;
 
 import java.util.List;
+import java.util.Map;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,5 +9,5 @@ import lombok.Setter;
 @Setter
 public class MyInfoMeetingDTO {
   private String division;
-  private List<MeetingVO> list;
+  private List<MeetingCntDTO> list;
 }
