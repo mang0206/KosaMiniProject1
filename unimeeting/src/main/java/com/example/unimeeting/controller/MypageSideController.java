@@ -1,10 +1,10 @@
 package com.example.unimeeting.controller;
 
-import com.example.unimeeting.dao.CloudtypeTestMapper;
+
 import com.example.unimeeting.dao.MypageMapper;
-import com.example.unimeeting.domain.CloudtypeUserDTO;
-import com.example.unimeeting.domain.CloudtypeUserVO;
 import com.example.unimeeting.domain.MyInfoMeetingDTO;
+import com.example.unimeeting.domain.UpdateUserVO;
+import jakarta.servlet.http.HttpSession;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,86 +21,80 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
 @SessionAttributes("user")
 @RequestMapping("/mypage")
 public class MypageSideController {
-  //  세션 임시 지정
-//  @Autowired
-//  CloudtypeTestMapper dao_user;
-//  @ModelAttribute("user")
-//<<<<<<< HEAD
-//  public CloudtypeUserVO sessionuser() {
-//=======
-//  public UserVO sessionuser() {
-//>>>>>>> 2e6f76dc2b1a5b3f7bc5500cc7ffc303e5b656b1
-////    List<CloudtypeUserVO> list = dao_user.list();
-////    CloudtypeUserVO login_user = null;
-////    Iterator iter = list.iterator();
-////    CloudtypeUserVO session_user = null;
-////    while (iter.hasNext()) {
-////      CloudtypeUserVO user = (CloudtypeUserVO)iter.next();
-////      if (user.getUser_id().equals("user1")) {
-////        session_user = user;
-////      }
-////    }
-//<<<<<<< HEAD
-//    return new CloudtypeUserVO();
-//=======
-//    return new UserVO();
-//>>>>>>> 2e6f76dc2b1a5b3f7bc5500cc7ffc303e5b656b1
-//  }
-//
-//  @Autowired
-//  MypageMapper dao;
-//
-//  @GetMapping("")
-//  public String myDefault(Model model, @ModelAttribute("user") UserVO s_user) {
-//    model.addAttribute("list", dao.attendList(s_user));
-//    return "myPage";
-//  }
+
+  @ModelAttribute("user")
+  public UserVO sessionuser() {
+    return null;
+  }
+
+  @Autowired
+  MypageMapper dao;
+
+  @GetMapping("")
+  public String myDefault(Model model, @ModelAttribute("user") UserVO s_user, HttpSession httpSession) {
+    if(s_user == null){
+      return "redirect:/userLogin.html";
+    }
+//    System.out.println("check session");
+//    System.out.println(httpSession.getAttribute("user"));
+//    System.out.println(s_user);
+    model.addAttribute("list", dao.attendList(s_user));
+    model.addAttribute("user", s_user);
+    return "myPage";
+  }
+
+  @ResponseBody
+  @GetMapping(value = "/getSessionData", produces = "application/json; charset=utf-8")
+  public UserVO sessionUser(@ModelAttribute("user") UserVO s_user) {
+    return s_user;
+  }
+
+  @ResponseBody
+  @GetMapping(value = "/{select}", produces = "application/json; charset=utf-8")
+  public MyInfoMeetingDTO myInfoMeeting(@PathVariable String select,
+      @ModelAttribute("user") UserVO s_user, Model model) {
+    MyInfoMeetingDTO myInfoMeetingDTO = new MyInfoMeetingDTO();
+    switch (select) {
+      case "attend":
+        myInfoMeetingDTO.setDivision(select);
+        myInfoMeetingDTO.setList(dao.attendList(s_user));
+        break;
+      case "create":
+        myInfoMeetingDTO.setDivision(select);
+        myInfoMeetingDTO.setList(dao.createList(s_user));
+        break;
+      case "scrap":
+        myInfoMeetingDTO.setDivision(select);
+        myInfoMeetingDTO.setList(dao.scrapList(s_user));
+        break;
+      case "myInfo":
+        model.addAttribute("info_user", s_user);
+        break;
+    }
+
+    return myInfoMeetingDTO;
+  }
+
+  @PostMapping("/update")
+  public ModelAndView updateUser(UserVO user, Model model) {
+    ModelAndView mav = new ModelAndView();
+    System.out.println(user);
+    boolean result = dao.updateUser(user);
+    if (result) {
+      model.addAttribute("msg", "정상적으로 변경되었습니다");
+    } else {
+      model.addAttribute("msg", "User 정보를 업데이트하는 동안 오류 발생했습니다. 다시 시도해 주세요");
+    }
+
+    RedirectView redirectView = new RedirectView("/mypage", true);
+    mav.setView(redirectView);
+//    mav.setViewName("myPage");
+    return mav;
+  }
 }
-//
-//  @ResponseBody
-//  @GetMapping(value = "/getSessionData", produces = "application/json; charset=utf-8")
-//  public CloudtypeUserVO sessionUser(@ModelAttribute("user") CloudtypeUserVO s_user){
-//    return s_user;
-//  }
-//
-//  @ResponseBody
-//  @GetMapping(value = "/{select}", produces = "application/json; charset=utf-8")
-//  public MyInfoMeetingDTO myInfoMeeting(@PathVariable String select, @ModelAttribute("user") CloudtypeUserVO s_user, Model model) {
-//    MyInfoMeetingDTO myInfoMeetingDTO = new MyInfoMeetingDTO();
-//    switch(select){
-//      case "attend":
-//        myInfoMeetingDTO.setDivision(select);
-//        myInfoMeetingDTO.setList(dao.attendList(s_user));
-//        break;
-//      case "create":
-//        myInfoMeetingDTO.setDivision(select);
-//        myInfoMeetingDTO.setList(dao.createList(s_user));
-//        break;
-//      case "scrap":
-//        myInfoMeetingDTO.setDivision(select);
-//        myInfoMeetingDTO.setList(dao.scrapList(s_user));
-//        break;
-//      case "myInfo":
-//        model.addAttribute("info_user", s_user);
-//        break;
-//    }
-//
-//    return myInfoMeetingDTO;
-//  }
-//
-//  @PostMapping("")
-//  public void updateUser(@ModelAttribute("user") CloudtypeUserVO s_user, CloudtypeUserDTO user){
-//    ModelAndView mav = new ModelAndView();
-//    System.out.println(user);
-//
-//
-//    if(user.getPassword().equals(s_user.getPassword())){
-//
-//    }
-//  }
-//}

@@ -1,8 +1,6 @@
 package com.example.unimeeting.domain;
 
 import java.sql.Date;
-
-
 import lombok.Data;
 
 @Data

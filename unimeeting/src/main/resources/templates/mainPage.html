@@ -5,6 +5,7 @@
   <title>Title</title>
   <!-- 제이쿼리 -->
   <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <link th:href="@{/css/nav.css}" rel="stylesheet" type="text/css">
   <!-- 합쳐지고 최소화된 최신 CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
   <!-- 부가적인 테마 -->
@@ -17,26 +18,34 @@
 
 <div th:replace="/nav ::nav"></div>
 
-<div id = "mid-content" >
-
-    <form method = "get" action ="/search">
+<!--<div id = "mid-content" >-->
+<h1>unimeeting 홈페이지</h1>
+    <form method = "get" action ="/search" class="search">
       검색어 : <input type = "search" name = "keyword" >
       <input type = "submit" value = "검색">
     </form>
-      <select name="changeTest" class="form-select">
+    <select name="changeTest" class="form-select">
+          <option value="">==선택==</option>
+          <option value="no">기본</option>
           <option value="popular">인기순</option>
           <option value="title">제목순</option>
           <option value="start">최신순</option>
-
-      </select>
-    <th:block th:if="${ list }">
-      <div class="list_div" th:each="list : ${list}">
-          <div class="list_title">[[${list.title}]]</div>
-          <img src="">
+    </select>
+    <div class="list_container">
+      <div class="list_div" th:if="${ list }" th:each="st : ${list}">
+          <a href="#"><img th:src="${st.image_url}" th:if="${st.image_url != null}" style="">
+          <img src="/images/default.jpg" th:if="${st.image_url == null}" style="">
+          <p>[[${st.title}]]</p>
+<!--              [[${st.content_text}]]-->
+<!--              [[${st.start_datetime}]]-->
+          <p>More Info</p>
+          </a>
+          <div class="clearfix"></div>
       </div>
-    </th:block>
+    </div>
+<!--    </th:block>-->
 
-</div>
+<!--</div>-->
 
 
 <script>
@@ -47,7 +56,16 @@
     location.href = `/mainPage?value=${num}`
   });
 
+    $("select[name=keyword]").change(function(){
+    console.log($(this).val());
+    let num = $(this).val()
+    console.log($("select[name=keyword] option:selected").text()); //text값 가져오기
+    location.href = `/search?keyword=${num}`
+  });
+
+
+
 </script>
-<footer style="background-color: aqua;"><p>footer 영역</p></footer>
+<!--<footer style="background-color: aqua;"><p>footer 영역</p></footer>-->
 </body>
 </html>
