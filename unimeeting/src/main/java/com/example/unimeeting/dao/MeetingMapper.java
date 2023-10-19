@@ -25,6 +25,8 @@ public interface MeetingMapper {
             "values (#{title}, #{category}, #{location}, #{start_datetime}, now() , #{content_text}, #{writer_nickname}, #{recruits})")
     public boolean insertMet(MeetingDTO meetingDTO);
 
+    @Select("select max(idx) from meeting")
+    public int getIdxOfCurrentMet();
     // View Meeting Post
     @Select("select * from meeting where idx = ${idx}")
     public MeetingDTO viewMetPost(@Param("idx") int idx);
@@ -39,6 +41,8 @@ public interface MeetingMapper {
     @Update("update meeting set title=#{title}, category=#{category}, location=#{location}, start_datetime=#{start_datetime}, content_text=#{content_text},recruits=#{recruits} where idx=#{idx} and writer_nickname=#{writer_nickname}")
     public boolean updateMet(MeetingDTO meetingDTO);
 
+    @Select("select count(*) from meeting where idx=#{idx} && writer_nickname=#{writer_nickname}")
+    public int isWriter(int idx, String writer_nickname);
 
     //    // page
 //    @Select("<script>select count(*) from meeting"+
