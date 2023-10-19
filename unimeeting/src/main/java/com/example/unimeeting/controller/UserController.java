@@ -3,7 +3,6 @@ package com.example.unimeeting.controller;
 import com.example.unimeeting.domain.UserVO;
 import com.example.unimeeting.service.UserService;
 import jakarta.servlet.http.HttpSession;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -51,6 +50,11 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    @RequestMapping("/login")
+    public String loginpage() {
+        return "redirect:/userLogin.html";
+    }
+
     @GetMapping("/check-email")
     public ResponseEntity<Map<String, Boolean>> checkEmail(@RequestParam("email") String email) {
         boolean isAvailable = (userService.emailcheck(email) == null);
@@ -65,11 +69,6 @@ public class UserController {
         Map<String, Boolean> response = new HashMap<>();
         response.put("available", isAvailable);
         return ResponseEntity.ok(response);
-    }
-
-    @RequestMapping("/login")
-    public String loginpage() {
-        return "redirect:/userLogin.html";
     }
 
     @PostMapping("/login/do")

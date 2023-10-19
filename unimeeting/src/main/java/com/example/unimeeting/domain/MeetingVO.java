@@ -18,4 +18,5 @@ public class MeetingVO {
   private String created_datetime;
   private String writer_nickname;
   private int recruits;
+
 }
