@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,7 +67,8 @@ public class MeetingController {
 
     // Insert Meeting Post
     @PostMapping("/insertMet")
-    public String insertMet(MeetingDTO meetingDTO, Model m, MultipartRequest mreq){
+    public String insertMet(MeetingDTO meetingDTO, Model m, MultipartRequest mreq, @ModelAttribute("user") UserVO user){
+        meetingDTO.setWriter_nickname(user.getNickname());
         boolean result = meetingMapper.insertMet(meetingDTO);
         int meeting_idx = meetingMapper.getIdxOfCurrentMet();
         List<MultipartFile> list = mreq.getFiles("images");
@@ -107,7 +109,24 @@ public class MeetingController {
 
     // view Meeting Post
     @GetMapping("/post")
-    public ModelAndView viewMetPost(int idx){
+    public ModelAndView viewMetPost(int meeting_idx, @ModelAttribute("user") UserVO user){
+        ModelAndView mv = viewMet(meeting_idx);
+
+        if(user!=null){
+            mv.addObject("apply", meetingMemberMapper.checkMetMem(meeting_idx, user.getIdx()) == 0);
+            mv.addObject("scrap", scrapMapper.checkScrap(meeting_idx, user.getIdx()) == 0);
+            mv.addObject("isWriter", meetingMapper.isWriter(meeting_idx, user.getNickname()) > 0);
+        }else{
+            mv.addObject("apply", true);
+            mv.addObject("scrap", true);
+        }
+
+        System.out.println(mv);
+        mv.setViewName("MetPostView");
+        return mv;
+    }
+
+    public ModelAndView viewMet(int idx){
         MeetingDTO meeting = meetingMapper.viewMetPost(idx);
         String[] image_url = meetingImageMapper.selectMetImg(idx);
         int meeting_member = meetingMapper.countMetMem(idx);
@@ -118,9 +137,10 @@ public class MeetingController {
             mv.addObject("meeting_member", meeting_member);
             if(image_url.length != 0) mv.addObject("meeting_image", image_url);
         }
-        mv.setViewName("MetPostView");
         return mv;
     }
+
+
 
     // get Meeting
     @RequestMapping(value = "/getMetJson", produces = "application/json; charset=utf-8")
@@ -148,93 +168,82 @@ public class MeetingController {
 
     // session, user_idx,
     @RequestMapping("/apply")
-    public ModelAndView insertMetMem(int meeting_idx, @ModelAttribute("user") UserVO user){
-        ModelAndView mv = viewMetPost(meeting_idx);
+    public String insertMetMem(@ModelAttribute("user") UserVO user, @RequestParam("meeting_idx") int meeting_idx, RedirectAttributes rttr){
         if(user == null){
-            mv.addObject("msg", "로그인 후 이용 가능한 서비스입니다. ");
+            rttr.addFlashAttribute("msg", "로그인 후 이용 가능한 서비스입니다. ");
         }else{
-            if(meetingMemberMapper.insertMetMem(meeting_idx, user.getIdx())){
-                mv.addObject("msg", "신청이 완료되었습니다.");
+            if(meetingMemberMapper.checkMetMem(meeting_idx, user.getIdx()) > 0){
+                rttr.addFlashAttribute("msg", "이미 신청한 소모임입니다.");
             }else {
-                mv.addObject("msg", false);
+                meetingMemberMapper.insertMetMem(meeting_idx, user.getIdx());
+                rttr.addFlashAttribute("msg", "신청이 완료되었습니다.");
             }
         }
-        mv.setViewName("MetPostView");
-        return mv;
+        return "redirect:/meeting/post?meeting_idx=" + meeting_idx;
     }
 
     @RequestMapping("/apply/cancel")
-    public ModelAndView deleteMetMemByMem(int meeting_idx,@ModelAttribute("user") UserVO user){
-        ModelAndView mv = viewMetPost(meeting_idx);
+    public String deleteMetMemByMem(@ModelAttribute("user") UserVO user, int meeting_idx, RedirectAttributes rttr){
         if(user == null){
-            mv.addObject("msg", "로그인 후 이용 가능한 서비스입니다. ");
+            rttr.addFlashAttribute("msg", "로그인 후 이용 가능한 서비스입니다. ");
         }else{
             if(meetingMemberMapper.deleteMetMem(meeting_idx,user.getIdx())){
-                mv.addObject("msg", "취소가 완료되었습니다.");
+                rttr.addFlashAttribute("msg", "취소가 완료되었습니다.");
             }else {
-                mv.addObject("msg", false);
+                rttr.addFlashAttribute("msg", "ERROR!");
             }
         }
-        mv.setViewName("MetPostView");
-        return mv;
+        return "redirect:/meeting/post?meeting_idx=" + meeting_idx;
     }
 
+//    마이페이지와 연동 예정
     @RequestMapping("/accept")
-    public ModelAndView updateMetMem(int meeting_idx, int user_idx){
-        ModelAndView mv = viewMetPost(meeting_idx);
+    public String updateMetMem(int meeting_idx, int user_idx, RedirectAttributes rttr){
         // 권한 필요
         if(meetingMemberMapper.updateApplyMetMem(meeting_idx,user_idx)){
-            mv.addObject("msg", "수락이 완료되었습니다.");
+            rttr.addFlashAttribute("msg", "수락이 완료되었습니다.");
         }else {
-            mv.addObject("msg", false);
+            rttr.addFlashAttribute("msg", false);
         }
-        mv.setViewName("MetPostView");
-        return mv;
+        return "redirect:/meeting/post?meeting_idx=" + meeting_idx;
     }
     @RequestMapping("/accept/cancel")
-    public ModelAndView deleteMetMemByLeader(int meeting_idx, int user_idx){
-        ModelAndView mv = viewMetPost(meeting_idx);
+    public String deleteMetMemByLeader(int meeting_idx, int user_idx, RedirectAttributes rttr){
         // 권한 필요
         if(meetingMemberMapper.updateApplyMetMem(meeting_idx,user_idx)){
-            mv.addObject("msg", "취소가 완료되었습니다.");
+            rttr.addFlashAttribute("msg", "수락이 취소 되었습니다.");
         }else {
-            mv.addObject("msg", false);
+            rttr.addFlashAttribute("msg", false);
         }
-        mv.setViewName("MetPostView");
-        return mv;
-
+        return "redirect:/meeting/post?meeting_idx=" + meeting_idx;
     }
+
     @RequestMapping("/scrap")
-    public ModelAndView insertScrap(int meeting_idx, @ModelAttribute("user") UserVO user){
-        ModelAndView mv = viewMetPost(meeting_idx);
+    public String insertScrap(int meeting_idx, @ModelAttribute("user") UserVO user, RedirectAttributes rttr){
         if(user ==  null){
-            mv.addObject("msg", "로그인 후 이용 가능한 서비스입니다. ");
+            rttr.addFlashAttribute("msg", "로그인 후 이용 가능한 서비스입니다. ");
         }else {
             if (scrapMapper.insertScrap(meeting_idx, user.getIdx())) {
-                mv.addObject("msg", "스크랩이 완료되었습니다.");
+                rttr.addFlashAttribute("msg", "스크랩이 완료되었습니다.");
             } else {
-                mv.addObject("msg", false);
+                rttr.addFlashAttribute("msg", false);
             }
         }
-        mv.setViewName("MetPostView");
-        return mv;
-
+        return "redirect:/meeting/post?meeting_idx=" + meeting_idx;
     }
     @RequestMapping("/scrap/cancel")
-    public ModelAndView deleteScrap(int meeting_idx, @ModelAttribute("user") UserVO user){
+    public String deleteScrap(int meeting_idx, @ModelAttribute("user") UserVO user, RedirectAttributes rttr){
 
-        ModelAndView mv = viewMetPost(meeting_idx);
         if(user == null){
-            mv.addObject("msg", "로그인 후 이용 가능한 서비스입니다. ");
+            rttr.addFlashAttribute("msg", "로그인 후 이용 가능한 서비스입니다. ");
         }else {
-            if (meetingMemberMapper.updateApplyMetMem(meeting_idx, user.getIdx())) {
-                mv.addObject("msg", "취소가 완료되었습니다.");
+            if (scrapMapper.deleteScrap(meeting_idx, user.getIdx())) {
+                rttr.addFlashAttribute("msg", "취소가 완료되었습니다.");
             } else {
-                mv.addObject("msg", false);
+                rttr.addFlashAttribute("msg", false);
             }
         }
-        mv.setViewName("MetPostView");
-        return mv;
+        return "redirect:/meeting/post?meeting_idx=" + meeting_idx;
 
     }
 }

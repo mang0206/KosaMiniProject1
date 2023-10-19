@@ -41,6 +41,8 @@ public interface MeetingMapper {
     @Update("update meeting set title=#{title}, category=#{category}, location=#{location}, start_datetime=#{start_datetime}, content_text=#{content_text},recruits=#{recruits} where idx=#{idx} and writer_nickname=#{writer_nickname}")
     public boolean updateMet(MeetingDTO meetingDTO);
 
+    @Select("select count(*) from meeting where idx=#{idx} && writer_nickname=#{writer_nickname}")
+    public int isWriter(int idx, String writer_nickname);
 
     //    // page
 //    @Select("<script>select count(*) from meeting"+

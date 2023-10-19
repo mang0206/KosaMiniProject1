@@ -31,3 +31,6 @@ a.col-1.btn.btn-outline-primary {
     border-color: #5302FE;
     color: #5302FE;
 }
+.col-md-auto a {
+    width 200px;
+}

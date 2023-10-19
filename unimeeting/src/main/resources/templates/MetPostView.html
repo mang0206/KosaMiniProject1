@@ -17,18 +17,18 @@
 <body>
 <th:block th:if="${msg}">
     <script th:inline="javascript">
-        console.log("test");
         alert([[${ msg }]]);
     </script>
 </th:block>
 <div class="col-lg-8 mx-auto p-4 py-md-5">
 
     <main>
+        <button class="row" type="button"><img src="이미지 경로" alt="<">버튼명</button>
         <div class="row justify-content-between mb-2" style="margin:2px;">
             <a class="col-1 btn btn-outline-primary" th:text="${meeting.category}"
                th:href="@{/meeting(ctgr=${meeting.category})}">Category</a>
 
-            <div class="col-md-2 btn-group" role="group" aria-label="Basic mixed styles example">
+            <div th:if="${isWriter}" class="col-md-2 btn-group" role="group" aria-label="Basic mixed styles example">
                 <button type="button" class="btn btn-danger"
                         th:onclick="|location.href='@{/meeting/deleteMet(idx = ${meeting.idx}, writer_nickname = ${meeting.writer_nickname})}'|">삭제
                 </button>
@@ -50,20 +50,20 @@
             <div class="col row">
                 <div class="col-md-auto" th:if="${apply}">
                     <a class="btn btn-primary btn-lg px-4 btn-color"
-                       th:onclick="|location.href='@{/meeting/apply(meeting_idx=${meeting.idx})}'|">신청 취소</a>
+                       th:href="@{/meeting/apply(meeting_idx=${meeting.idx})}">신청</a>
                 </div>
                 <div class="col-md-auto" th:unless="${apply}">
                     <a class="btn btn-primary btn-lg px-4 btn-color"
-                       th:onclick="|location.href='@{/meeting/apply(meeting_idx=${meeting.idx})}'|">참가 신청</a>
+                       th:href="@{/meeting/apply/cancel(meeting_idx=${meeting.idx})}">신청 취소</a>
                 </div>
 
                 <div class="col-md-auto" th:if="${scrap}">
                     <a class="btn btn-primary btn-lg px-4 btn-color"
-                       th:onclick="|location.href='@{/meeting/scrap(meeting_idx=${meeting.idx})}'|">스크랩 취소</a>
+                       th:href="@{/meeting/scrap(meeting_idx=${meeting.idx})}">스크랩</a>
                 </div>
                 <div class="col-md-auto" th:unless="${scrap}">
                     <a class="btn btn-primary btn-lg px-4 btn-color"
-                       th:onclick="|location.href='@{/meeting/scrap/cancel(meeting_idx=${meeting.idx})}'|">스크랩</a>
+                       th:href="@{/meeting/scrap/cancel(meeting_idx=${meeting.idx})}">스크랩 취소</a>
                 </div>
 
 
@@ -79,11 +79,11 @@
                 <div class="carousel-inner">
                     <div class="carousel-item active" th:each="image, index: ${meeting_image}"
                          th:if="${index.index} == 0">
-                        <img th:src="@{${image}}" class="d-block w-100" alt="no image">
+                        <img th:src="${image}" class="d-block w-100" alt="no image">
                     </div>
                     <div class="carousel-item" th:each="image, index: ${meeting_image}"
                          th:unless="${index.index} == 0">
-                        <img th:src="@{${image}}" class="d-block w-100" alt="no image">
+                        <img th:src="${image}" class="d-block w-100" alt="no image">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target='#carouselExampleDark'

@@ -29,37 +29,37 @@ public class MypageSideController {
   //  세션 임시 지정
 //  @Autowired
 //  CloudtypeTestMapper dao_user;
-  @ModelAttribute("user")
-<<<<<<< HEAD
-  public CloudtypeUserVO sessionuser() {
-=======
-  public UserVO sessionuser() {
->>>>>>> 2e6f76dc2b1a5b3f7bc5500cc7ffc303e5b656b1
-//    List<CloudtypeUserVO> list = dao_user.list();
-//    CloudtypeUserVO login_user = null;
-//    Iterator iter = list.iterator();
-//    CloudtypeUserVO session_user = null;
-//    while (iter.hasNext()) {
-//      CloudtypeUserVO user = (CloudtypeUserVO)iter.next();
-//      if (user.getUser_id().equals("user1")) {
-//        session_user = user;
-//      }
-//    }
-<<<<<<< HEAD
-    return new CloudtypeUserVO();
-=======
-    return new UserVO();
->>>>>>> 2e6f76dc2b1a5b3f7bc5500cc7ffc303e5b656b1
-  }
-
-  @Autowired
-  MypageMapper dao;
-
-  @GetMapping("")
-  public String myDefault(Model model, @ModelAttribute("user") UserVO s_user) {
-    model.addAttribute("list", dao.attendList(s_user));
-    return "myPage";
-  }
+//  @ModelAttribute("user")
+//<<<<<<< HEAD
+//  public CloudtypeUserVO sessionuser() {
+//=======
+//  public UserVO sessionuser() {
+//>>>>>>> 2e6f76dc2b1a5b3f7bc5500cc7ffc303e5b656b1
+////    List<CloudtypeUserVO> list = dao_user.list();
+////    CloudtypeUserVO login_user = null;
+////    Iterator iter = list.iterator();
+////    CloudtypeUserVO session_user = null;
+////    while (iter.hasNext()) {
+////      CloudtypeUserVO user = (CloudtypeUserVO)iter.next();
+////      if (user.getUser_id().equals("user1")) {
+////        session_user = user;
+////      }
+////    }
+//<<<<<<< HEAD
+//    return new CloudtypeUserVO();
+//=======
+//    return new UserVO();
+//>>>>>>> 2e6f76dc2b1a5b3f7bc5500cc7ffc303e5b656b1
+//  }
+//
+//  @Autowired
+//  MypageMapper dao;
+//
+//  @GetMapping("")
+//  public String myDefault(Model model, @ModelAttribute("user") UserVO s_user) {
+//    model.addAttribute("list", dao.attendList(s_user));
+//    return "myPage";
+//  }
 }
 //
 //  @ResponseBody

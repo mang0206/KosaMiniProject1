@@ -47,7 +47,7 @@
                 <!-- /Search-->
 
                 <!-- Insert Meeting Button -->
-                <button onclick="location.href = '/insertMetForm.html'">모임 만들기</button>
+                <button onclick="location.href = '/insertMetForm.html'" >모임 만들기</button>
 
             </div>
             <hr>
@@ -55,7 +55,7 @@
 
             <!-- Meeting List -->
             <ul th:each="e:${met_list}">
-                <li th:text="${e.getCategory()}" th:onclick="|location.href='@{/meeting/post(idx=${e.idx})}'|"></li>
+                <li th:text="${e.getCategory()}" th:onclick="|location.href='@{/meeting/post(meeting_idx=${e.idx})}'|"></li>
                 <li th:text="|장소: ${e.getLocation()}|"></li>
                 <li th:text="|제목: ${e.getTitle()}|"></li>
                 <li th:text="|내용: ${e.getContent_text()}|"></li>
