@@ -150,7 +150,6 @@ function sideSelect(e) {
 // });
 
 var menuItems = document.querySelectorAll(".menu-item");
-console.log(menuItems)
 // 각 버튼에 클릭 이벤트 리스너를 추가합니다.
 menuItems.forEach(function(item) {
   item.addEventListener("click", function() {
