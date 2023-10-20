@@ -47,28 +47,28 @@ function sideSelect(e) {
           </div>
           <div class="custom-checkbox">
               <label>
-                  <input type="checkbox" class="custom-checkbox-input">
+                  <input type="checkbox" class="custom-checkbox-input" name="category" value="운동">
                   <div class="custom-checkbox-text">운동</div>
               </label>
               <label>
-                  <input type="checkbox" class="custom-checkbox-input">
-                  <div class="custom-checkbox-text">스터디</div>
+                  <input type="checkbox" class="custom-checkbox-input" name="category" value="코딩">
+                  <div class="custom-checkbox-text">코딩</div>
               </label>
               <label>
-                  <input type="checkbox" class="custom-checkbox-input">
+                  <input type="checkbox" class="custom-checkbox-input" name="category" value="요리">
+                  <div class="custom-checkbox-text">요리</div>
+              </label>
+              <label>
+                  <input type="checkbox" class="custom-checkbox-input" name="category" value="게임">
                   <div class="custom-checkbox-text">게임</div>
               </label>
               <label>
-                  <input type="checkbox" class="custom-checkbox-input">
-                  <div class="custom-checkbox-text">카페</div>
+                  <input type="checkbox" class="custom-checkbox-input" name="category" value="애니">
+                  <div class="custom-checkbox-text">애니</div>
               </label>
               <label>
-                  <input type="checkbox" class="custom-checkbox-input">
+                  <input type="checkbox" class="custom-checkbox-input" name="category" value="영화">
                   <div class="custom-checkbox-text">영화</div>
-              </label>
-              <label>
-                  <input type="checkbox" class="custom-checkbox-input">
-                  <div class="custom-checkbox-text">독서</div>
               </label>
           </div>
       </div>
