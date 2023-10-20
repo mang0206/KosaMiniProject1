@@ -4,6 +4,7 @@ import com.example.unimeeting.dao.MeetingImageMapper;
 import com.example.unimeeting.dao.MeetingMapper;
 import com.example.unimeeting.dao.MeetingMemberMapper;
 import com.example.unimeeting.dao.ScrapMapper;
+import com.example.unimeeting.domain.MeetingCntDTO;
 import com.example.unimeeting.domain.MeetingDTO;
 import com.example.unimeeting.domain.MeetingImageDTO;
 import com.example.unimeeting.domain.UserVO;
@@ -49,16 +50,21 @@ public class MeetingController {
         return meetingMapper.viewCtgy();
     }
 
-
     // Get Meeting Board
     // [path]ctgr(category) 카테고리 별로 meeting row 가져옴. (ctgr == null -> 모든 meeting row)
     // [param] search query. (required=false)
-        @RequestMapping(value = {"" ,"/{ctgr}"})
+    @RequestMapping(value = {"" ,"/{ctgr}"})
         public ModelAndView viewMetBoard(@PathVariable(required = false) String ctgr,@RequestParam(required = false) String search, @RequestParam(defaultValue = "1") int page){
         ModelAndView mv = new ModelAndView();
         mv.addObject("ctgr_list", getCategory());
-        List<MeetingDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search, (page-1)*4);
+//        List<MeetingDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search, (page-1)*4);
+        System.out.println("ctgr = " + ctgr);
+        List<MeetingCntDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search);
         mv.addObject("met_list", meetings);
+        System.out.println(meetings.size());
+
+        if(ctgr != null)
+            mv.addObject("path_ctgr", ctgr);
 
         mv.setViewName("MetBoardView");
         return mv;

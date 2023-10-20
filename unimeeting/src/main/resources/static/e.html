@@ -42,7 +42,7 @@
 
     <div th:if="${msg}" th:utext="'<script>alert(\'' + ${msg} + '\');</script>'"></div>
     <div class="page-container">
-      <div class="rectangle-left">
+      <div class="nav-lef">
         <div class=menu id="mypage_side">
             <div class="menu-item">
                 <img class="menu-icon" src="./images/home.png" alt="">
@@ -65,7 +65,7 @@
   
     <!-- <div class="line-16"></div> -->
   
-    <div class="rectangle-right">
+    <div class="contents-right">
         <article id="show_info">
             <h1 id="info_header">내 정보 수정</h1>
           <div id ="info_result" data-suser th:attr="data-suser=${user.idx}" >

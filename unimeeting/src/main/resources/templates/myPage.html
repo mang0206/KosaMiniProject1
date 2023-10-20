@@ -12,39 +12,38 @@
   <div th:if="${msg}" th:utext="'<script>alert(\'' + ${msg} + '\');</script>'"></div>
   <div th:replace="/nav ::nav"></div>
 
-    <div class="page-container">
-      <div class="rectangle-left">
-        <div class=menu id="mypage_side">
-            <div class="menu-item">
-                <img class="menu-icon" src="./images/home.png" alt="">
-                <button class ="menu-item" id="side_attend" name = "attend">참여 내역</button>
-            </div>
-            <div class="menu-item">
-                <img class="menu-icon" src="./images/directory.png" alt="">
-                <button class ="menu-item"id="side_create" name="create">생성한 소모임</button>
-            </div>
-            <div class="menu-item"> 
-                <img class="menu-icon" src="./images/tag.png" alt="">
-                <button class ="menu-item"id="side_scrap" name="scrap">스크랩 소모임</button>
-            </div>
-            <div class="menu-item">
-                <img class="menu-icon" th:src="@{users.png}" alt="">
-                <button class ="menu-item"id="side_myInfo" name="myInfo">내 정보 수정</button>
-            </div>
-        </div>
-      </div>
-  
-    <!-- <div class="line-16"></div> -->
-  
-      <div class="rectangle-right">
-        <article id="show_info">
-          <h1 id="info_header"></h1>
-          <div id ="info_result" data-suser th:attr="data-suser=${user.idx}" >
+  <div class="page-container">
+    <!-- 좌측 Side Bar -->
+    <div class="nav-left">
+      <div class=menu id="mypage_side">
+          <div class="menu-item">
+              <img class="menu-icon" src="./images/home.png" alt="">
+              <button class ="menu-item" id="side_attend" name = "attend">참여 내역</button>
           </div>
-        </article>
-  
+          <div class="menu-item">
+              <img class="menu-icon" src="./images/directory.png" alt="">
+              <button class ="menu-item"id="side_create" name="create">생성한 소모임</button>
+          </div>
+          <div class="menu-item"> 
+              <img class="menu-icon" src="./images/tag.png" alt="">
+              <button class ="menu-item"id="side_scrap" name="scrap">스크랩 소모임</button>
+          </div>
+          <div class="menu-item">
+              <img class="menu-icon" th:src="@{/images/users.png}" alt="">
+              <button class ="menu-item"id="side_myInfo" name="myInfo">내 정보 수정</button>
+          </div>
       </div>
     </div>
+
+    <!-- 우측 내용 area -->
+    <div class="contents-right">
+      <article id="show_info">
+        <h1 id="info_header"></h1>
+        <div id ="info_result" data-suser th:attr="data-suser=${user.idx}" ></div>
+      </article>
+
+    </div>
+  </div>
 
   <script type="module" th:src="@{/javascript/mypage.js}"></script>
   <script type="module" th:src="@{/javascript/meetingblock.js}"></script>

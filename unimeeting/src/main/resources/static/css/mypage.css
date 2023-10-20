@@ -10,7 +10,7 @@
 }
 
 /* Rectangle 37 */
-.rectangle-right {
+.contents-right {
     display: flex;
     flex-direction: row;
     position: absolute;
@@ -23,7 +23,7 @@
 }
 
 /* Rectangle 38 */
-.rectangle-left {
+.nav-left {
     /* display: flex; */
     position: absolute;
     width: 256px;
@@ -41,7 +41,7 @@
     padding: 0px;
     position: absolute;
     width: 224px;
-    height: 800px;
+    height: 300px;
     left: 16px;
     /* top: 80px; */
     background: #FFFFFF;
@@ -110,6 +110,7 @@
     color: #353434;
     background-color: #e2e2e2;
     margin-bottom: 30px;
+    border-radius: 10px;
   }
 
   .input_chane_box {
@@ -117,7 +118,7 @@
     background-color: #e9e8a7;
     color: #000000;
     border: #FFFFFF;
-
+    border-radius: 10px;
   }
   input::placeholder {
     color: rgb(53, 28, 50);
