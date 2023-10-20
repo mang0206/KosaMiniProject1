@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @ToString
 public class InfoDTO {
-    private String id; //
+    private String idx; //
     private String nickname; //닉네임
     private String title;
     private String category; //분류
