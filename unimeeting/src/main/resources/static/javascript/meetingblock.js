@@ -4,7 +4,10 @@ let meetings = {'idx':1, 'title':"미팅 제목1", "category":"카테고리1","l
 function makeMeetingBlock(meeting) {
   const div = document.createElement('div');
   div.id = "meeting_div";
-  
+  div.addEventListener('click', function() {
+    window.location.href = `/meeting/post?meeting_idx=${meeting.idx}`;
+  });
+
   const img_div = document.createElement('div');
   img_div.id = "img_div";
 

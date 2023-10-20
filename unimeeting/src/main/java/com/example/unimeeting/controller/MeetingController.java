@@ -68,7 +68,7 @@ public class MeetingController {
         mv.addObject("cnt", new int[metCnt]);
 
         if(ctgr != null)
-            mv.addObject("path_ctgr", ctgr);
+            mv.addObject("path_ctgr", "/"+ctgr);
 
         mv.setViewName("MetBoardView");
         return mv;

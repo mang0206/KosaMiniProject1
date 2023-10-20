@@ -55,7 +55,7 @@
     align-items: center;
     padding: 12px 8px;
     gap: 8px;
-    width: 224px;
+    width: 197px;
     height: 48px;
     border: #FFFFFF;
     background: #ffffff;
@@ -63,10 +63,16 @@
     font-style: normal;
     font-size: 16px;
     font-weight: 700;
-    color: #21272A;
-    
+    color: #21272A; 
 }
 
+.menu-item:hover {
+  border: 1px solid #6129FF;
+  border-radius: 10px;
+}
+.menu-item button:hover{
+  border: #FFFFFF;
+}
 /* icon / jam-icons / outline & logos / home */
 .menu-icon {
     width: 24px;
@@ -76,6 +82,7 @@
 .selected {
     background: #6129FF;
     color:#FFFFFF;
+    border-radius: 10px;
 }
 
 #show_info {
