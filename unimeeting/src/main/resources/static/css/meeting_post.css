@@ -12,19 +12,10 @@
 .btn-color {
   color: #5302FE;
  }
-.carousel {
-    width
-}
-.carousel-item img {
-  object-fit: cover;
-  object-position: center;
-  height: 100%;
-  overflow: hidden;
-  max-width:100%
-}
 
 .meeting-contents > * {
     margin: 0 auto;
+    width: 80%;
 }
 a.btn.btn-primary.btn-lg.px-4.btn-color {
     background-color: #5302FE;

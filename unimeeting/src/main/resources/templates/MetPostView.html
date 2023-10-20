@@ -72,17 +72,17 @@
 
         </div>
 
+        <hr class="mb-5">
         <div class="meeting-contents">
-            <hr class="mb-5">
 
             <div th:if="${meeting_image}" id="carouselExampleDark" class="carousel carousel-dark slide border border-dark-subtle mb-5"
                  data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    <div class="carousel-item active" th:each="image, index: ${meeting_image}"
+                    <div class="carousel-item active object-fit-contain" th:each="image, index: ${meeting_image}"
                          th:if="${index.index} == 0">
                         <img th:src="${image}" class="d-block object-fit-contain" alt="no image">
                     </div>
-                    <div class="carousel-item" th:each="image, index: ${meeting_image}"
+                    <div class="carousel-item object-fit-contain" th:each="image, index: ${meeting_image}"
                          th:unless="${index.index} == 0">
                         <img th:src="${image}" class="d-block object-fit-contain" alt="no image">
                     </div>

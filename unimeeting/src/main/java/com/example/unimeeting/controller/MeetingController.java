@@ -129,11 +129,10 @@ public class MeetingController {
         }
 
         if(user!=null){
-            System.out.println("--------------------------" + meeting_idx+ "--------------");
-            System.out.println("--------------------------" + user.getIdx()+ "--------------");
             mv.addObject("apply", meetingMemberMapper.checkMetMem(meeting_idx, user.getIdx()) == 0);
             mv.addObject("scrap", scrapMapper.checkScrap(meeting_idx, user.getIdx()) == 0);
-            mv.addObject("isWriter", meetingMapper.isWriter(meeting_idx, user.getNickname()) > 0);
+            System.out.println(meetingMapper.isWriter(meeting_idx, user.getNickname())+"-------------");
+            mv.addObject("isWriter", meetingMapper.isWriter(meeting_idx, user.getNickname()) == 1);
         }else{
             mv.addObject("apply", true);
             mv.addObject("scrap", true);
