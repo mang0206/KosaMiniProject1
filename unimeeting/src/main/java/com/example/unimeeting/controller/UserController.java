@@ -80,7 +80,7 @@ public class UserController {
             return "redirect:/mainPage";
         } else {
             model.addAttribute("error", "Invalid username or password");
-            return "login.html";
+            return "userLoginError.html";
 
         }
     }

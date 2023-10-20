@@ -44,19 +44,6 @@
                 <!-- Search-->
                 <!-- __${...}__ = pathVariable 를 가져올 수 있다. 현재 접속한 category 내에서 검색 기능을 구현하기 위해 사용 -->
                 <!-- __${...}-- == null 일 경우 uri에 문자열 null 이 입력되는 것을 방지-->
-<<<<<<< HEAD
-
-                <!-- /Search-->
-                <form id="search" method="get" class="meeting-search"
-                      th:action="@{/meeting/{ctgr}(ctgr=${path_ctgr})}">
-                    <div class="search-label">
-                        <label><input id="search-submit" type="image" src="/images/icon-search.png" alt="검색"></label>
-                        <label><input id="search-text" name="search" required /><br></label>
-                    </div>
-                    <!-- Insert Meeting Button -->
-                    <button onclick="location.href='/meeting/goInsertMet'">모임 만들기</button>
-                </form>
-=======
                 <div class="meeting-search">
                     <form id="search" method="get"
                           th:action="@{/meeting{ctgr}(ctgr=${path_ctgr})}">
@@ -66,12 +53,9 @@
                         </div>
                         <!--                <input type="submit" value="검색" />-->
                     </form>
+                    <!-- Insert Meeting Button -->
                     <button class="make-meeting-button" onclick="location.href = '/insertMetForm.html'" >모임 만들기</button>
                 </div>
-                <!-- /Search-->
-
-                <!-- Insert Meeting Button -->
->>>>>>> MJ
 
                 <!--/Meeting List -->
                 <div id ="info_result" th:each="e:${met_list}">
