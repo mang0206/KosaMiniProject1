@@ -1,0 +1,34 @@
+<nav class="base-header-group">
+    <div class="logo">
+        <img alt="" src="./images/meeting.png" class="logo-image">
+        <span class="logo-text">UniMeeing</span>
+    </div>
+    <div id="navbar" class="frame-3" aria-expanded="false">
+        <div class="nav_div">
+            <a class="nav_text" id="nav_main" href="/mainPage">메인라운지</a>
+        </div>
+        <div class="nav_div">
+            <a class="nav_text" href="/meeting">모임</a>
+        </div>
+        <div class="nav_div">
+            <a class="nav_text" href="/post">자유게시판</a>
+        </div>
+        <div class="nav_div">
+            <a class="nav_text" href="/notice" >공지사항</a>
+        </div>
+
+        <th:block th:if="${user == null}">
+            <div class="button">
+                <button class="base-button side-button" onclick="location.href='/userRegister.html'">회원가입</button>
+                <button class="base-button" onclick="location.href='/userLogin.html'">로그인</button>
+            </div>
+        </th:block>
+
+        <th:block th:if="${user != null}">
+            <div class="button">
+                <button class="base-button  side-button" onclick="location.href='/mypage'">마이페이지</button>
+                <button class="base-button" onclick="location.href='/logout'">로그아웃</button>
+            </div>
+        </th:block>
+    </div>
+</nav>

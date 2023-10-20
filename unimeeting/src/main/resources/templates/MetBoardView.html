@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>모임</title>
+
+    <link rel="stylesheet" href="/css/meeting.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div id="moim">
+        <div id="sidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary">
+            <a href="/meeting"
+                class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+                <svg class="bi pe-none me-2" width="40" height="32"></svg>
+                <span class="fs-4">모임</span>
+            </a>
+            <hr>
+            <nav class="nav nav-pills flex-column" th:each="e:${ctgr_list}">
+                <div class="nav-item">
+                    <a class="nav-link link-body-emphasis" th:text="${e}" th:href="@{/meeting/{ctgr}(ctgr=${e})}">
+                        <svg class="bi pe-none me-2" width="16" height="16">
+                            <use xlink:href="#home" />
+                        </svg>
+                    </a>
+
+                </div>
+            </nav>
+        </div>
+        <div id="contents">
+            <!-- Search-->
+            <!-- __${...}__ = pathVariable 를 가져올 수 있다. 현재 접속한 category 내에서 검색 기능을 구현하기 위해 사용 -->
+            <!-- __${...}-- == null 일 경우 uri에 문자열 null 이 입력되는 것을 방지-->
+            <div class="multi-layout">
+
+                <form id="search" method="get"
+                      th:action="@{/meeting{ctgr}(ctgr = __${ctgr}__ != null ? @{/__${ctgr}__} : __${ctgr}__)}">
+                    <label><input id="search-submit" type="image" src="/images/icon-search.png" alt="검색"></label>
+                    <label><input id="search-text" name="search" required /><br></label>
+                    <!--                <input type="submit" value="검색" />-->
+                </form>
+                <!-- /Search-->
+
+                <!-- Insert Meeting Button -->
+                <button onclick="location.href = '/insertMetForm.html'" >모임 만들기</button>
+
+            </div>
+            <hr>
+            <!-- /Insert Meeting Button -->
+
+            <!-- Meeting List -->
+            <ul th:each="e:${met_list}">
+                <li th:text="${e.getCategory()}" th:onclick="|location.href='@{/meeting/post(meeting_idx=${e.idx})}'|"></li>
+                <li th:text="|장소: ${e.getLocation()}|"></li>
+                <li th:text="|제목: ${e.getTitle()}|"></li>
+                <li th:text="|내용: ${e.getContent_text()}|"></li>
+                <li th:text="|작성자: ${e.getWriter_nickname}|"></li>
+                <br>
+            </ul>
+            <hr>
+            <!--/Meeting List -->
+        </div>
+
+    </div>
+
+    <!-- Category Button-->
+    <!--<button onclick="location.href = '/meeting/board'">전체</button>-->
+    <!--<th:block th:each="e:${ctgr_list}">-->
+    <!--    <a th:text="${e}" th:href="@{/meeting/board/{ctgr}(ctgr=${e})}" style="text-decoration-line: none"></a>-->
+    <!--</th:block>-->
+    <!-- /Category Button-->
+
+
+
+
+
+</body>
+
+</html>
+
+
+
+<!--        <div id="sidebar">-->
+<!--            <div class="menu">-->
+<!--                <div class="sidebar-button">-->
+<!--                    <div class="sidebar-text">-->
+<!--                        <a onclick="location.href = '/meeting'" class="w3-bar-item w3-button">전체</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <th:block th:each="e:${ctgr_list}">-->
+<!--                    <div class="sidebar-button">-->
+<!--                        <div class="sidebar-text">-->
+<!--                            <a th:text="${e}" th:href="@{/meeting/{ctgr}(ctgr=${e})}"></a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </th:block>-->
+<!--            </div>-->
+<!--        </div>-->
