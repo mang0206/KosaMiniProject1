@@ -7,57 +7,15 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
-    <style>
-
-        .form-check-input:checked {
-          background-color: #5302FE;
-          border-color: #5302FE;
-        }
-
-        .btn-primary {
-          --bs-btn-color: #fff;
-          --bs-btn-bg: #5302FE;
-          --bs-btn-border-color: #5302FE;
-          --bs-btn-hover-color: #fff;
-          --bs-btn-hover-bg: #6129FF;
-          --bs-btn-hover-border-color: #6129FF;
-          --bs-btn-focus-shadow-rgb: 49, 132, 253;
-          --bs-btn-active-color: #fff;
-          --bs-btn-active-bg: #6129FF;
-          --bs-btn-active-border-color: #6129FF;
-          --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-          --bs-btn-disabled-color: #fff;
-          --bs-btn-disabled-bg: #5302FE;
-          --bs-btn-disabled-border-color: #5302FE;
-        }
-
-        form.was-validated
-        .invalid-feedback{
-            display: inline;
-        }
-    </style>
 </head>
 <body>
 <script>
-    // response != null -> target.value = ...
 
     let was_validated = () => {
     console.log("test");
         let form = document.querySelector("#form");
         form.classList.add("was-validated");
     };
-
-    let url = new URL(document.referrer);
-    if(url.pathname == "/meeting/post") {
-        let idx = new URLSearchParams(url.search);
-        let xhr = new XMLHttpRequest;
-        xhr.onload = () => {
-            console.log(xhr.response);
-        }
-        xhr.open("GET", `/meeting/post?${idx}`, true);
-        xhr.send();
-
-    }
 
 </script>
 <form id="form" action="/meeting/insertMet" method="post" enctype="multipart/form-data" class="col-lg-8 mx-auto p-4 py-md-5">
@@ -114,7 +72,7 @@
     </div>
     <div class="mb-3">
         <label for="images" class="form-label">사진</label>
-        <input class="form-control" type="file" id="images" multiple>
+        <input class="form-control" type="file" id="images"name="images" multiple>
     </div>
 
     <button id="submit" type="submit" class="btn btn-primary" onclick="was_validated()">등록</button><!--    제목: <label><input id="title" name="title" /><br></label>-->

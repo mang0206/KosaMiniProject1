@@ -7,66 +7,103 @@
 
     <link rel="stylesheet" href="/css/meeting.css">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"> -->
+    <link th:href="@{/css/m_box.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/mypage.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/nav.css}" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-    <div id="moim">
-        <div id="sidebar" class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary">
-            <a href="/meeting"
-                class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-                <svg class="bi pe-none me-2" width="40" height="32"></svg>
-                <span class="fs-4">모임</span>
-            </a>
-            <hr>
-            <nav class="nav nav-pills flex-column" th:each="e:${ctgr_list}">
-                <div class="nav-item">
+    <th:block th:if="${msg}">
+        <script th:inline="javascript">
+            alert([[${ msg }]]);
+        </script>
+    </th:block>
+    <div th:replace="/nav ::nav"></div>
+
+    <div class="page-container">
+        <div class="meeting-nav-left" id="mypage_side">
+            <nav th:each="e:${ctgr_list}" class="meeting-menu-item ">
+                <div class="btn-menu-item">
                     <a class="nav-link link-body-emphasis" th:text="${e}" th:href="@{/meeting/{ctgr}(ctgr=${e})}">
                         <svg class="bi pe-none me-2" width="16" height="16">
                             <use xlink:href="#home" />
                         </svg>
                     </a>
-
+    
                 </div>
             </nav>
         </div>
-        <div id="contents">
-            <!-- Search-->
-            <!-- __${...}__ = pathVariable 를 가져올 수 있다. 현재 접속한 category 내에서 검색 기능을 구현하기 위해 사용 -->
-            <!-- __${...}-- == null 일 경우 uri에 문자열 null 이 입력되는 것을 방지-->
-            <div class="multi-layout">
-
-                <form id="search" method="get"
-                      th:action="@{/meeting{ctgr}(ctgr = __${ctgr}__ != null ? @{/__${ctgr}__} : __${ctgr}__)}">
-                    <label><input id="search-submit" type="image" src="/images/icon-search.png" alt="검색"></label>
-                    <label><input id="search-text" name="search" required /><br></label>
-                    <!--                <input type="submit" value="검색" />-->
-                </form>
-                <!-- /Search-->
-
-                <!-- Insert Meeting Button -->
-                <button onclick="location.href = '/insertMetForm.html'" >모임 만들기</button>
-
-            </div>
-            <hr>
-            <!-- /Insert Meeting Button -->
-
+        
+        </div>
+        <!-- 우측 내용 area -->
+        <div class="contents-right">
             <!-- Meeting List -->
-            <ul th:each="e:${met_list}">
-                <li th:text="${e.getCategory()}" th:onclick="|location.href='@{/meeting/post(meeting_idx=${e.idx})}'|"></li>
-                <li th:text="|장소: ${e.getLocation()}|"></li>
-                <li th:text="|제목: ${e.getTitle()}|"></li>
-                <li th:text="|내용: ${e.getContent_text()}|"></li>
-                <li th:text="|작성자: ${e.getWriter_nickname}|"></li>
-                <br>
-            </ul>
+            <div id="show_info">
+                <!-- Search-->
+                <!-- __${...}__ = pathVariable 를 가져올 수 있다. 현재 접속한 category 내에서 검색 기능을 구현하기 위해 사용 -->
+                <!-- __${...}-- == null 일 경우 uri에 문자열 null 이 입력되는 것을 방지-->
+                <div class="meeting-search">
+                    <form id="search" method="get"
+                          th:action="@{/meeting{ctgr}(ctgr=${path_ctgr})}">
+                        <div class="search-label">
+                            <label><input id="search-submit" type="image" src="/images/icon-search.png" alt="검색"></label>
+                            <label><input id="search-text" name="search" required /><br></label>
+                        </div>
+                        <!--                <input type="submit" value="검색" />-->
+                    </form>
+                    <!-- Insert Meeting Button -->
+                    <button class="make-meeting-button" onclick="location.href = '/meeting/goInsertMet'" >모임 만들기</button>
+                </div>
+
+                <!--/Meeting List -->
+                <div id ="info_result" th:each="e:${met_list}">
+                    <div id="meeting_div" th:onclick="|location.href='@{/meeting/post(meeting_idx=${e.idx})}'|">
+                        <div id="img_div">
+                            <img id="meeting_img" th:src="${e.img_url}" alt="meeting image" onerror="this.src='/images/book.png'">
+                        </div>
+                        <div id="content_div">
+                            <h5 id="Title_Category" class="meeting-info">
+                                <span class="meeting-info" th:text="${e.category}"></span> <span id="location" class="meeting-info" th:text="${e.location}"></span>
+                            </h5>
+                            <h2 class="meeting-info" th:text="${e.title}"></h2>
+                            <h5 id="meeting_content" class="meeting-info" th:text="${e.content_text}"></h5>
+                            <div id ="flow">
+                                <div class="meeting-info user-card" th:text="${e.now_recruits} + ' / ' +  ${e.recruits}"></div>
+                                <div id="flowchild">
+                                    <div class="meeting-info user-thumb" style="color: gray" th:data-created_datetime="${e.created_datetime}"></div>
+                                    <div class="meeting-info details" th:text="${e.writer_nickname}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+<!--            pagination    -->
             <hr>
-            <!--/Meeting List -->
+
         </div>
 
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <th:block th:each="i, index : ${cnt}">
+                        <li class="page-item" th:text="${index.count}"><a class="page-link" th:href="@{/meeting(page=${index.count})}}"></a></li>
+                    </th:block>
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
     </div>
+
 
     <!-- Category Button-->
     <!--<button onclick="location.href = '/meeting/board'">전체</button>-->
@@ -74,11 +111,36 @@
     <!--    <a th:text="${e}" th:href="@{/meeting/board/{ctgr}(ctgr=${e})}" style="text-decoration-line: none"></a>-->
     <!--</th:block>-->
     <!-- /Category Button-->
+    <script th:inline="javascript">
+        let target = document.getElementsByClassName('user-thumb');
+        for(let o of target){
+            o.textContent = elapsedTime(o.getAttribute('data-created_datetime'));
+        }
+        console.log(target)
+        function elapsedTime(date) {
+            const start = new Date(date);
+            const end = new Date();
 
+            const diff = (end - start) / 1000;
+            
+            const times = [
+                { name: '년', milliSeconds: 60 * 60 * 24 * 365 },
+                { name: '개월', milliSeconds: 60 * 60 * 24 * 30 },
+                { name: '일', milliSeconds: 60 * 60 * 24 },
+                { name: '시간', milliSeconds: 60 * 60 },
+                { name: '분', milliSeconds: 60 },
+            ];
 
+            for (const value of times) {
+                const betweenTime = Math.floor(diff / value.milliSeconds);
 
-
-
+                if (betweenTime > 0) {
+                return `${betweenTime}${value.name} 전`;
+                }
+            }
+            return '방금 전';
+        }
+    </script>
 </body>
 
 </html>

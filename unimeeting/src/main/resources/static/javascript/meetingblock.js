@@ -4,17 +4,21 @@ let meetings = {'idx':1, 'title':"미팅 제목1", "category":"카테고리1","l
 function makeMeetingBlock(meeting) {
   const div = document.createElement('div');
   div.id = "meeting_div";
-  
+  div.addEventListener('click', function() {
+    window.location.href = `/meeting/post?meeting_idx=${meeting.idx}`;
+  });
+
   const img_div = document.createElement('div');
   img_div.id = "img_div";
 
   const img = document.createElement('img');
   img.id = "meeting_img";
-  img.width = 100;
-  img.height = 100;
   img.src = meeting.img_url;
   img_div.appendChild(img);
 
+  img.onerror = function() {
+    img.src = "/images/book.png" 
+  }
   const content_div = document.createElement('div');
   content_div.id = "content_div";
 

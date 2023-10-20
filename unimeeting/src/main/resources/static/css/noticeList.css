@@ -1,0 +1,51 @@
+table.table.table-bordered {
+    width: 1280px;
+    height: 690px;
+}
+body {
+    background-color: #f8f9fa!important;
+}
+a {
+    text-decoration: none;
+    color: black;
+}
+th {
+    border-right-style: hidden;
+    text-align: center;
+}
+#text_title{
+    text-align: left;
+}
+td {
+    border-right-style: hidden;
+    vertical-align: middle;
+}
+noticelist_num{
+    width: 110px
+}
+button.btn.btn-primary {
+    background-color: #5302FE;
+    border-radius: 10px;
+}
+input[type="text"] {
+    border-width: inherit;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    width: 1280px;
+    height: 38px;
+}
+input {
+    background-repeat: no-repeat;
+    border: 1px solid #ccc;
+    padding: 5px 5px;
+    width: 120px;
+}
+
+input::-webkit-input-placeholder{
+    background-image: url(https://cdn1.iconfinder.com/data/icons/hawcons/32/698627-icon-111-search-256.png) ;
+    background-size: contain;
+    background-position:  1px center;
+    background-repeat: no-repeat;
+    text-align: center;
+    text-indent: 0;
+}

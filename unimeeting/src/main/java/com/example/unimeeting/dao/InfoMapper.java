@@ -15,7 +15,7 @@ public interface InfoMapper {
     public List<InfoDTO> searchM1(String keyword);
 
     @Select("select * from meeting as a left join (select meeting_idx, count(*) as scrap_cnt\n" +
-            "from scrap group by meeting_idx) as c on a.idx = c.meeting_idx join (select meeting_idx, image_url\n" +
+            "from scrap group by meeting_idx) as c on a.idx = c.meeting_idx left join (select meeting_idx, image_url\n" +
             "from meeting_image group by meeting_idx) as b on c.meeting_idx = b.meeting_idx order by scrap_cnt desc") // 인기순
     public List<InfoDTO> popularSort();
 

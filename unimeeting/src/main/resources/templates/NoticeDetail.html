@@ -2,12 +2,29 @@
 <html lang="kr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <script type="text/javascript">
-    </script>
     <title>게시판</title>
+    <!-- 부트스트랩 CSS 불러오기 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/noticeDetail.css">
 </head>
 <body>
-[[${detail}]]
-<button th:onclick="@{/notice/delete(idx=${detail.idx})}">삭제</button>
+<div class="container mt-5">
+    <h2 class="mt-3" th:text="${detail.title}"></h2>
+    <div id="content_box" class="mt-3">
+        <p class="mt-4"></p>
+        <p id="p_1" class="mt-4"><strong>작성자:</strong> <span th:text="${detail.writer_nickname}"></span></p>
+        <p id="p_2" class="mt-4"><strong>작성일:</strong> <span th:text="${detail.created_datetime}"></span></p>
+        <p class="mt-4" th:text="${detail.content_text}"></p>
 
+    </div>
+
+    <a class="btn btn-danger btn-delete" th:href="@{/board/delete(idx=${detail.idx})}">삭제</a>
+        <a class="btn btn-danger btn-delete" th:href="@{/updateWrite.html}">수정</a>
+</div>
+
+<!-- 부트스트랩 JS, jQuery, Popper.js 불러오기 -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+</html>

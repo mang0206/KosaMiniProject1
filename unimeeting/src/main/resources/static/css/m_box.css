@@ -1,4 +1,4 @@
-/* Content Box */
+    /* Content Box */
 #meeting_div {
     box-sizing: border-box;
     display: flex;
@@ -14,24 +14,31 @@
     margin: 15px;
 }
 
+#meeting_div:hover {
+    border-color:#6129FF;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
 /* Placeholder / picture */
 #img_div {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 0;
+    /* padding-right: 30px; */
     /* gap: 10px; */
-    width: 379px;
+    width: 270x;
     height: 252px;
     /* background: url(Image-placeholder-empty), #DDE1E6; */
-    border-radius: 8px 0px 0px 8px;
+    /* border-radius: 8px 0px 0px 8px; */
 }
 
 #meeting_img {
-    width: 80%;
-    height: 80%;
+    width: 170px;
+    height: auto;
     border-radius: 8px 0px 0px 8px;
+    padding-right: 70px;
 }
 /* Content */
 #content_div {

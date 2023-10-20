@@ -84,7 +84,6 @@ public class MypageSideController {
   @PostMapping("/update")
   public ModelAndView updateUser(UserVO user, Model model) {
     ModelAndView mav = new ModelAndView();
-    System.out.println(user);
     boolean result = dao.updateUser(user);
     if (result) {
       model.addAttribute("msg", "정상적으로 변경되었습니다");

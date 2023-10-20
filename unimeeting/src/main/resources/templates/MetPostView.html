@@ -14,21 +14,54 @@
                 crossorigin="anonymous"></script>
     </head>
 
-<body>
+<body class="p-5 ps-5 pe-5">
 <th:block th:if="${msg}">
     <script th:inline="javascript">
         alert([[${ msg }]]);
     </script>
 </th:block>
-<div class="col-lg-8 mx-auto p-4 py-md-5">
+<div class="col-lg-8 mx-auto p-5 py-md-5">
 
-    <main>
-        <button class="row" type="button"><img src="이미지 경로" alt="<">버튼명</button>
-        <div class="row justify-content-between mb-2" style="margin:2px;">
-            <a class="col-1 btn btn-outline-primary" th:text="${meeting.category}"
-               th:href="@{/meeting(ctgr=${meeting.category})}">Category</a>
 
-            <div th:if="${isWriter}" class="col-md-2 btn-group" role="group" aria-label="Basic mixed styles example">
+    <main class="row">
+        <div class="col mb-2">
+            <div class="row justify-content-between mb-4" style="margin:2px;}">
+                <a style="width:200px;" class="col-1 btn btn-outline-primary " th:text="${meeting.category}"
+                   th:href="@{/meeting(ctgr=${meeting.category})}">Category</a>
+
+            </div>
+            <h1 class="fw-bold mb-2" th:text="${meeting.title}"></h1>
+
+            <div class="text-body-secondary mb-4">
+                <p class="fs-6" th:text="|현재인원 / 모집인원 : ${meeting_member} / ${meeting.recruits} | + ' | ' + | 시작일: ${#strings.substring(meeting.start_datetime, 0, 10)}|"></p>
+            </div>
+
+        </div>
+            <!--참가신청: idx session-->
+        <div class="col mb-2" style="text-align: right;">
+
+            <div th:unless="${isWriter}" class="row justify-content-end">
+                <div class="col-auto offset-md-4" th:if="${apply}">
+                    <a class="btn btn-primary btn-lg px-4 btn-color"
+                       th:href="@{/meeting/apply(meeting_idx=${meeting.idx})}">신청</a>
+                </div>
+                <div class="col-auto offset-md-4" th:unless="${apply}">
+                    <a class="btn btn-primary btn-lg px-4 btn-color"
+                       th:href="@{/meeting/apply/cancel(meeting_idx=${meeting.idx})}">신청 취소</a>
+                </div>
+
+                <div class="col-auto" th:if="${scrap}">
+                    <a class="btn btn-primary btn-lg px-4 btn-color"
+                       th:href="@{/meeting/scrap(meeting_idx=${meeting.idx})}">스크랩</a>
+                </div>
+                <div class="col-auto" th:unless="${scrap}">
+                    <a class="btn btn-primary btn-lg px-4 btn-color"
+                       th:href="@{/meeting/scrap/cancel(meeting_idx=${meeting.idx})}">스크랩 취소</a>
+                </div>
+
+
+            </div>
+            <div th:if="${isWriter}" class="btn-group justify-content-end" role="group" aria-label="Basic mixed styles example" style="width:max-content;">
                 <button type="button" class="btn btn-danger"
                         th:onclick="|location.href='@{/meeting/deleteMet(idx = ${meeting.idx}, writer_nickname = ${meeting.writer_nickname})}'|">삭제
                 </button>
@@ -38,52 +71,20 @@
             </div>
 
         </div>
-        <h1 class="" th:text="${meeting.title}" style="font-size:50px;"></h1>
 
-        <div class="row">
-            <p class="col-md-auto fs-6" th:text="|시작일: ${#strings.substring(meeting.start_datetime, 0, 10)}|"></p>
-            <p class="col-md-auto fs-6" th:text="|현재인원/모집인원 : ${meeting_member}/${meeting.recruits}|"></p>
-
-        </div>
-        <!--참가신청: idx session-->
-        <div class="row mb-5">
-            <div class="col row">
-                <div class="col-md-auto" th:if="${apply}">
-                    <a class="btn btn-primary btn-lg px-4 btn-color"
-                       th:href="@{/meeting/apply(meeting_idx=${meeting.idx})}">신청</a>
-                </div>
-                <div class="col-md-auto" th:unless="${apply}">
-                    <a class="btn btn-primary btn-lg px-4 btn-color"
-                       th:href="@{/meeting/apply/cancel(meeting_idx=${meeting.idx})}">신청 취소</a>
-                </div>
-
-                <div class="col-md-auto" th:if="${scrap}">
-                    <a class="btn btn-primary btn-lg px-4 btn-color"
-                       th:href="@{/meeting/scrap(meeting_idx=${meeting.idx})}">스크랩</a>
-                </div>
-                <div class="col-md-auto" th:unless="${scrap}">
-                    <a class="btn btn-primary btn-lg px-4 btn-color"
-                       th:href="@{/meeting/scrap/cancel(meeting_idx=${meeting.idx})}">스크랩 취소</a>
-                </div>
-
-
-            </div>
-
-        </div>
-
+        <hr class="mb-5">
         <div class="meeting-contents">
-            <hr class="mb-5">
 
-            <div th:if="${meeting_image}" id="carouselExampleDark" class="carousel carousel-dark slide border border-dark-subtle mb-5 meeting-image"
+            <div th:if="${meeting_image}" id="carouselExampleDark" class="carousel carousel-dark slide border border-dark-subtle mb-5"
                  data-bs-ride="carousel">
-                <div class="carousel-inner">
+                    <div class="carousel-inner position-absolute top-50 start-50 translate-middle">
                     <div class="carousel-item active" th:each="image, index: ${meeting_image}"
                          th:if="${index.index} == 0">
-                        <img th:src="${image}" class="d-block w-100" alt="no image">
+                        <img th:src="${image}" class="d-block" alt="no image">
                     </div>
                     <div class="carousel-item" th:each="image, index: ${meeting_image}"
                          th:unless="${index.index} == 0">
-                        <img th:src="${image}" class="d-block w-100" alt="no image">
+                        <img th:src="${image}" class="d-block" alt="no image">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target='#carouselExampleDark'
@@ -97,7 +98,7 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
-            <div class="mb-5" th:text="${meeting.content_text}" style="width:80%;"></div>
+            <div class="mb-5 fs-6" th:text="${meeting.content_text}" style="width:80%;"></div>
         </div>
 
     </main>
