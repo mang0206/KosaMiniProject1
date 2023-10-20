@@ -58,6 +58,8 @@
    --bs-btn-disabled-bg: #5302FE;
    --bs-btn-disabled-border-color: #5302FE;
  }
+
+
 .btn-outline-primary {
     --bs-btn-color: #0d6efd;
     --bs-btn-border-color: #0d6efd;
@@ -96,3 +98,13 @@
   .form-check-label {
     color:#212529 !important;
   }
+
+
+        form.was-validated
+        .invalid-feedback{
+            display: inline;
+        }
+
+        #displayNone * {
+            display: none;
+        }

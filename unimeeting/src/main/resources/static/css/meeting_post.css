@@ -12,12 +12,15 @@
 .btn-color {
   color: #5302FE;
  }
-
-.meeting-image {
-    top: 0;
-    left: 0;
-    min-width: 80% !important;
-    max-width: 80% !important;
+.carousel {
+    width
+}
+.carousel-item img {
+  object-fit: cover;
+  object-position: center;
+  height: 100%;
+  overflow: hidden;
+  max-width:100%
 }
 
 .meeting-contents > * {
@@ -33,4 +36,12 @@ a.col-1.btn.btn-outline-primary {
 }
 .col-md-auto a {
     width 200px;
+}
+
+main {
+    margin: auto;
+}
+
+.justify-content-end{
+    height: fit-content;
 }

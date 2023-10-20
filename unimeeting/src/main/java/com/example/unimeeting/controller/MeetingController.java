@@ -26,18 +26,17 @@ import java.util.List;
 @RequestMapping("/meeting")
 public class MeetingController {
 
+    // Mapper
     @Autowired
     MeetingMapper meetingMapper;
-
     @Autowired
     MeetingMemberMapper meetingMemberMapper;
-
     @Autowired
     ScrapMapper scrapMapper;
-
     @Autowired
     MeetingImageMapper meetingImageMapper;
 
+    // get Session
     @ModelAttribute("user")
     public UserVO sessionLogin(){
         return null;
@@ -51,9 +50,9 @@ public class MeetingController {
     }
 
 
-    // Meeting Board
-    // ctgr(category), path -> default all
-    // search query
+    // Get Meeting Board
+    // [path]ctgr(category) 카테고리 별로 meeting row 가져옴. (ctgr == null -> 모든 meeting row)
+    // [param] search query. (required=false)
         @RequestMapping(value = {"" ,"/{ctgr}"})
         public ModelAndView viewMetBoard(@PathVariable(required = false) String ctgr,@RequestParam(required = false) String search, @RequestParam(defaultValue = "1") int page){
         ModelAndView mv = new ModelAndView();
@@ -68,6 +67,8 @@ public class MeetingController {
     // Insert Meeting Post
     @PostMapping("/insertMet")
     public String insertMet(MeetingDTO meetingDTO, Model m, MultipartRequest mreq, @ModelAttribute("user") UserVO user){
+
+
         meetingDTO.setWriter_nickname(user.getNickname());
         boolean result = meetingMapper.insertMet(meetingDTO);
         int meeting_idx = meetingMapper.getIdxOfCurrentMet();
@@ -75,6 +76,9 @@ public class MeetingController {
         if(!list.isEmpty()){
 
             String path = "/images/" + meeting_idx;
+            // 상대 경로를 찾는 함수인 getRealPath()는 프로젝트 폴더 구조에서 resources가 아닌 webapp 폴더를 우선으로 찾고
+            //  해당 폴더가 존재하지 않으면 위와 같이 임시 폴더를 찾아간다.
+            // webapp 폴더를 만드는 방법도 있으나, Spring Boot는 jar로 배포되기 때문에 webapp 폴더를 만든다면 정상 배포 되지 않는다.
             String realPath = "C:/UNIMEETING/unimeeting/src/main/resources/static" + path;
             File isDir = new File(realPath);
             if (!isDir.isDirectory()) {
@@ -82,6 +86,7 @@ public class MeetingController {
             }
 
             for (MultipartFile mfile : list) {
+                // replace -> 파일 이름의 공백을 언더바로 변경
                 String fileName = mfile.getOriginalFilename().replace(" ", "_");
                 System.out.println(fileName);
 
@@ -107,10 +112,21 @@ public class MeetingController {
         return "redirect:/meeting";
     }
 
-    // view Meeting Post
+
+    // Get Meeting Post
     @GetMapping("/post")
     public ModelAndView viewMetPost(int meeting_idx, @ModelAttribute("user") UserVO user){
-        ModelAndView mv = viewMet(meeting_idx);
+        MeetingDTO meeting = meetingMapper.viewMetPost(meeting_idx);
+        // get images of meeting post
+        String[] image_url = meetingImageMapper.selectMetImg(meeting_idx);
+        // get
+        int meeting_member = meetingMapper.countMetMem(meeting_idx);
+        ModelAndView mv = new ModelAndView();
+        if(meeting != null){
+            mv.addObject("meeting", meeting);
+            mv.addObject("meeting_member", meeting_member);
+            if(image_url.length != 0) mv.addObject("meeting_image", image_url);
+        }
 
         if(user!=null){
             mv.addObject("apply", meetingMemberMapper.checkMetMem(meeting_idx, user.getIdx()) == 0);
@@ -126,19 +142,7 @@ public class MeetingController {
         return mv;
     }
 
-    public ModelAndView viewMet(int idx){
-        MeetingDTO meeting = meetingMapper.viewMetPost(idx);
-        String[] image_url = meetingImageMapper.selectMetImg(idx);
-        int meeting_member = meetingMapper.countMetMem(idx);
 
-        ModelAndView mv = new ModelAndView();
-        if(meeting != null){
-            mv.addObject("meeting", meeting);
-            mv.addObject("meeting_member", meeting_member);
-            if(image_url.length != 0) mv.addObject("meeting_image", image_url);
-        }
-        return mv;
-    }
 
 
 
@@ -158,6 +162,7 @@ public class MeetingController {
     // update meeting
     @RequestMapping("/updateMet")
     public String updateMetPost(MeetingDTO meetingDTO,Model m){
+        System.out.println("----------------------updateMeetingDTO------------------");
         System.out.println(meetingDTO);
         boolean result = meetingMapper.updateMet(meetingDTO);
         if (!result) {
