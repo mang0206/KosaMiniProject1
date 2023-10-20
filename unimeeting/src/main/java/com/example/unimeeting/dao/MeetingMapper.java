@@ -13,6 +13,13 @@ public interface MeetingMapper {
     @Select("select distinct category from meeting order by category")
     public List<String> viewCtgy();
 
+    @Select("select count(*) from meeting")
+    public int cntMetAll();
+
+    @Select("select count(*) from meeting where category=#{category}")
+    public int cntMetOfCategory(String category);
+
+
     // Meeting List
 //    @Select("<script>select * " +
 //            "from meeting " +
@@ -28,8 +35,8 @@ public interface MeetingMapper {
         "<where>" +
         "<if test='category!=null'>category like #{category} </if>" +
         "<if test='search!=null'>and title like concat('%',#{search}, '%')</if>" +
-        "</where>order by idx desc </script>")
-    public List<MeetingCntDTO> viewMetBoard(@Param("category") String category,@Param("search") String search);
+        "</where>order by idx desc limit 4 offset ${page} </script>")
+    public List<MeetingCntDTO> viewMetBoard(@Param("category") String category,@Param("search") String search, @Param("page") int page);
 
     // Insert Meeting
     @Insert("insert into meeting (title, category, location, start_datetime, created_datetime, content_text,writer_nickname, recruits) " +

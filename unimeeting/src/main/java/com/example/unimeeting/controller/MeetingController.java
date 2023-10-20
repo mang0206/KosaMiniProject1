@@ -59,9 +59,13 @@ public class MeetingController {
         mv.addObject("ctgr_list", getCategory());
 //        List<MeetingDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search, (page-1)*4);
         System.out.println("ctgr = " + ctgr);
-        List<MeetingCntDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search);
+        List<MeetingCntDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search, (page-1)*4);
         mv.addObject("met_list", meetings);
         System.out.println(meetings.size());
+        int metCnt = ctgr == null ? meetingMapper.cntMetAll() : meetingMapper.cntMetOfCategory(ctgr);
+        metCnt /= 4;
+
+        mv.addObject("cnt", new int[metCnt]);
 
         if(ctgr != null)
             mv.addObject("path_ctgr", ctgr);
@@ -70,9 +74,12 @@ public class MeetingController {
         return mv;
     }
 
-//    // check user before insert met
-//    @RequestMapping("/checkUser")
-////    public
+    // check user before insert met
+    @RequestMapping("/goInsertMet")
+    public String goInsertMet(@ModelAttribute("user") UserVO user, RedirectAttributes rttr){
+        rttr.addFlashAttribute("msg", "로그인 후 이용 가능한 서비스입니다. ");
+        return user == null ? "redirect:/meeting": "redirect:/insertMetForm.html";
+    }
 
 
     // Insert Meeting Post
