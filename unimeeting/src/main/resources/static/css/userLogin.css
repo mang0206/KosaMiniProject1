@@ -7,6 +7,7 @@
 button.btn.btn-primary.btn-block {
     margin-bottom: 8px;
     background-color: #5302FE;
+
 }
 
 button#register_button {
@@ -34,6 +35,7 @@ div#register_card {
 
 button.btn.btn-primary {
     background: #5302FE;
+    border-color: #5302FE;
 }
 
 

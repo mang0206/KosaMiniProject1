@@ -4,16 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.unimeeting.domain.NoticeVO;
 import com.example.unimeeting.domain.UserVO;
 
 @Controller
-@RequestMapping("/notice")
+@RequestMapping("/board")
 @SessionAttributes("user")
 
 public class NoticeController {
@@ -29,11 +26,11 @@ public class NoticeController {
     NoticeMapper noticeMapper;
 
     //=======공지 게시판 글 목록=========//
-    @RequestMapping("")
-    public ModelAndView process() {
+    @RequestMapping("/{type}")
+    public ModelAndView process(@PathVariable("type") String type) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("noticeList");
-        mav.addObject("list", noticeMapper.selectList());
+        mav.addObject("list", noticeMapper.selectList(type));
         return mav;
     }
     // ======공지 글 상세페이지 ======//
@@ -47,10 +44,10 @@ public class NoticeController {
     //========공지 작성=================//
     @RequestMapping("/write")
     public String write(NoticeVO noticeVO,@ModelAttribute("user") UserVO user){
-        noticeVO.setType("1");
+        System.out.println(noticeVO+"------------------------------");
         noticeVO.setWriter_nickname(user.getNickname());
         noticeMapper.insertNotice(noticeVO);
-        return "redirect:/notice";
+        return "redirect:/board/"+noticeVO.getType();
     }
     //=====공지 삭제 ===========//
     @RequestMapping("/delete")
@@ -58,17 +55,20 @@ public class NoticeController {
         if (noticeMapper.isWriter(idx, user.getNickname())==1 ){
             noticeMapper.deleteNotice(idx);
         }
-        return "redirect:/notice/list";
+        return "redirect:/board/list";
     }
 
     @RequestMapping("/update")
-    public ModelAndView updateNotice(int idx){
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("noticeList");
-        mav.addObject("list", noticeMapper.selectList());
-        return mav;
+    public String updateNotice(NoticeVO noticeVO){
+        System.out.println(noticeVO);
+        noticeMapper.updateNotice(noticeVO);
+        return "redirect:/board/detail?idx="+noticeVO.getIdx();
     }
-
+    @RequestMapping(value = "/updateJSON", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public NoticeVO updateJSON(int idx){
+        return noticeMapper.selectNotice(idx);
+    }
 
 
 

@@ -19,7 +19,7 @@
         <input type="text" class="form-control placeholder-image" placeholder="검색어를 입력해 주세요">
         <thead class="thead-dark">
         <tr>
-            <th id="noticelist_num"style="width: 150px">번호</th>
+            <th id="noticelist_num" style="width: 150px">번호</th>
             <th id="text_title">제목</th>
             <th style="width: 150px">작성자</th>
             <th style="width: 150px">작성일</th>
@@ -29,14 +29,14 @@
         <tr th:if="${list}" th:each="notice : ${list}">
             <td style="text-align: center" th:text="${notice.idx}"></td>
             <td>
-                <a th:href="@{/notice/detail(idx=${notice.idx})}" th:text="${notice.title}"></a>
+                <a th:href="@{/board/detail(idx=${notice.idx})}" th:text="${notice.title}"></a>
             </td>
             <td style="text-align: center" th:text="${notice.writer_nickname}"></td>
             <td style="text-align: center" th:text="${notice.created_datetime}"></td>
         </tr>
         </tbody>
     </table>
-    <button class="btn btn-primary" onclick="location.href='/NoticeWrite.html'">게시글 작성</button>
+    <button class="btn btn-primary" onclick="location.href='/noticeWrite.html'">게시글 작성</button>
 </div>
 <!-- 중앙 컨텐츠 끝 -->
 

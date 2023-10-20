@@ -17,7 +17,9 @@
         <p class="mt-4" th:text="${detail.content_text}"></p>
 
     </div>
-    <a class="btn btn-danger btn-delete" th:href="@{/notice/delete(idx=${detail.idx})}">삭제</a>
+
+    <a class="btn btn-danger btn-delete" th:href="@{/board/delete(idx=${detail.idx})}">삭제</a>
+        <a class="btn btn-danger btn-delete" th:href="@{/updateWrite.html}">수정</a>
 </div>
 
 <!-- 부트스트랩 JS, jQuery, Popper.js 불러오기 -->
