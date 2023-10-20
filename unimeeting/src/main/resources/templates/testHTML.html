@@ -9,7 +9,7 @@
     <a th:text="${e}" th:href="@{/meeting/board/{ctgr}(ctgr=${e})}" style="text-decoration-line: none"></a>
 </th:block>
 <hr>
-<form method=gigggg"get" th:action="@{/meeting/board/__${ctgr}__}">
+<form method="get" th:action="@{/meeting/board/__${ctgr}__}">
     검색 : <label><input name="search" /><br></label>
     <input type="submit" value="검색"/>
 </form>

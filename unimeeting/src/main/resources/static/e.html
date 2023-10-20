@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="./css/m_box.css">
+    <link rel="stylesheet" type="text/css" href="./css/mypage.css">
+    <link rel="stylesheet" type="text/css" href="./css/nav.css">
+    <link rel="stylesheet" type="text/css" href="./css/mypage_user_edit.css">
+</head>
+<body>
+    <nav class="base-header-group">
+        <div class="logo">
+            <img alt="" src="./images/meeting.png" class="logo-image">
+            <span class="logo-text">UniMeeing</span>
+        </div>
+        <div id="navbar" class="frame-3" aria-expanded="false">
+            <div class="nav_div">
+                <a class="nav_text" id="nav_main" href="/mainPage">메인라운지</a>
+            </div>
+            <div class="nav_div">
+                <a class="nav_text" href="/meeting">모임</a>
+            </div>
+            <div class="nav_div">
+                <a class="nav_text" href="/post">자유게시판</a>
+            </div>
+            <div class="nav_div">
+                <a class="nav_text" href="/notice" >공지사항</a>
+            </div>
+                
+                <th:block th:if="${inout == null}" class="button">
+                    <div>
+                        <button class="base-button side-button" onclick="location.href='/userRegister.html'">마이페이지</button>
+                    </div>
+                    <div>
+                        <button class="base-button" onclick="location.href='/userLogin.html'">로그아웃</button>
+                    </div>
+                </th:block>
+        </div>
+    </nav>
+
+
+    <div th:if="${msg}" th:utext="'<script>alert(\'' + ${msg} + '\');</script>'"></div>
+    <div class="page-container">
+      <div class="rectangle-left">
+        <div class=menu id="mypage_side">
+            <div class="menu-item">
+                <img class="menu-icon" src="./images/home.png" alt="">
+                <button class ="menu-item" id="side_attend" name = "attend">참여 내역</button>
+            </div>
+            <div class="menu-item">
+                <img class="menu-icon" src="./images/directory.png" alt="">
+                <button class ="menu-item"id="side_create" name="create">생성한 소모임</button>
+            </div>
+            <div class="menu-item"> 
+                <img class="menu-icon" src="./images/tag.png" alt="">
+                <button class ="menu-item"id="side_scrap" name="scrap">스크랩 소모임</button>
+            </div>
+            <div class="menu-item">
+                <img class="menu-icon" src="./images/users.png" alt="">
+                <button class ="menu-item"id="side_myInfo" name="myInfo">내 정보 수정</button>
+            </div>
+        </div>
+      </div>
+  
+    <!-- <div class="line-16"></div> -->
+  
+    <div class="rectangle-right">
+        <article id="show_info">
+            <h1 id="info_header">내 정보 수정</h1>
+          <div id ="info_result" data-suser th:attr="data-suser=${user.idx}" >
+          </div>
+        </article>
+  
+      </div>
+    </div>
+
+<script>
+    let meeting1 = {'idx':1, 'title':"미팅 제목1", "category":"카테고리1","location":'위치1',"start_date":"2023-10-17 14:00:00",
+        "content_text":'미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1 미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1',
+        "create_datetime":"2023-10-16 15:00:00", "writer_nickname":'사용자1', "recruits":5, "img_src":"images/book.png", "now_recruits":3};
+    let meeting2 = {'idx':2, 'title':"미팅 제목2", "category":"카테고리1","location":'위치1',"start_date":"2023-10-17 14:00:00",
+        "content_text":'미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1',
+        "create_datetime":"2023-10-16 15:00:00", "writer_nickname":'사용자1', "recruits":5, "img_src":"images/book.png", "now_recruits":3};
+    let meeting3 = {'idx':3, 'title':"미팅 제목3", "category":"카테고리1","location":'위치1',"start_date":"2023-10-17 14:00:00",
+        "content_text":'미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1',
+        "create_datetime":"2023-10-16 15:00:00", "writer_nickname":'사용자1', "recruits":5, "img_src":"images/book.png", "now_recruits":3};
+    let meeting4 = {'idx':4, 'title':"미팅 제목4", "category":"카테고리1","location":'위치1',"start_date":"2023-10-17 14:00:00",
+        "content_text":'미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1',
+    "create_datetime":"2023-10-16 15:00:00", "writer_nickname":'사용자1', "recruits":5, "img_src":"images/book.png", "now_recruits":3};
+    let meeting5 = {'idx':5, 'title':"미팅 제목5", "category":"카테고리1","location":'위치1',"start_date":"2023-10-17 14:00:00",
+        "content_text":'미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1미팅 내용 1',
+        "create_datetime":"2023-10-16 15:00:00", "writer_nickname":'사용자1', "recruits":5, "img_src":"images/book.png", "now_recruits":3};
+
+    
+    let meeting = [meeting1, meeting2, meeting3, meeting4, meeting5]
+        // 이미지, 현재 인원
+    // CSS 스타일 객체를 정의합니다.
+
+// JavaScript 함수
+function makeMeetingBlock(meeting) {
+    const div = document.createElement('div');
+    div.id = "meeting_div";
+    
+    const img_div = document.createElement('div');
+    img_div.id = "img_div";
+
+    const img = document.createElement('img');
+    img.id = "meeting_img";
+    img.width = 100;
+    img.height = 100;
+    img.src = meeting.img_src;
+    img_div.appendChild(img);
+
+    const content_div = document.createElement('div');
+    content_div.id = "content_div";
+
+    
+    const info = document.createElement('h5');
+    info.id ="Title_Category"
+    info.classList.add("meeting-info"); // h5에 class 추가
+
+    const category = document.createElement('span');
+    category.textContent = meeting.category;
+    category.classList.add("meeting-info"); // span에 class 추가
+
+    const location = document.createElement('span');
+    location.textContent = meeting.location;
+    location.id = "location"
+    location.classList.add("meeting-info"); // span에 class 추가
+
+    info.appendChild(category);
+    info.appendChild(document.createTextNode(' ')); // 공백을 추가하여 간격을 만듭니다.
+    info.appendChild(location);
+
+    const title = document.createElement('h2');
+    title.textContent = meeting.title;
+    title.classList.add("meeting-info"); // h4에 class 추가
+
+    const content_text = document.createElement('h5');
+    content_text.textContent = meeting.content_text;
+    content_text.id = "meeting_content";
+    content_text.classList.add("meeting-info"); // h5에 class 추가
+
+    const recruits = document.createElement('div');
+    recruits.textContent = meeting.now_recruits + "/" + meeting.recruits;
+    recruits.classList.add("meeting-info", "user-card"); // h6에 class 추가
+  
+
+    
+    const create_datetime = document.createElement('div');
+    create_datetime.textContent = meeting.create_datetime;
+    create_datetime.classList.add("meeting-info", "user-thumb"); // h6에 class 추가
+    
+    const writer_nickname = document.createElement('div');
+    writer_nickname.textContent = meeting.writer_nickname;
+    writer_nickname.classList.add("meeting-info", "details"); // h6에 class 추가
+    
+    const wirter_time = document.createElement('div');
+    wirter_time.id = "flowchild";
+    writer_nickname.classList.add("meeting-info");
+    wirter_time.appendChild(create_datetime);
+    wirter_time.appendChild(writer_nickname);
+
+
+    const flowdiv = document.createElement('div');
+    flowdiv.id="flow"
+
+    flowdiv.appendChild(recruits);
+    flowdiv.appendChild(wirter_time);
+
+    content_div.appendChild(info);
+    content_div.appendChild(title);
+    content_div.appendChild(content_text);
+    content_div.appendChild(flowdiv);
+
+
+
+
+    div.appendChild(img_div);
+    div.appendChild(content_div);
+
+    document.getElementById('show_info').appendChild(div);
+}
+
+function sideSelect() {
+    let result_header = document.getElementById("info_header");
+    // result_header.textContent = e.target.innerText;
+
+    let result_div = document.getElementById("info_result");
+
+
+    result_div.innerHTML = '';
+    result_div.innerHTML += `
+    <form action='/mypage/update' method='post' class='form_group'>
+    <input type="hidden" name='idx' value=1>
+    <span class='span_text'>아이디</span> <input type='text' name='id' class='input_box' disabled value = 'user1 '> <br>
+    <span class='span_text'>비밀번호</span> <input class='input_box input_chane_box' type='password' name='password' id='pwd' placeholder = '변경할 비밀번호 입력' required> <br>
+    <span class='span_text'>비밀번호 확인</span> <input class='input_box input_chane_box' type='password' name='check_pwd' id='c_pwd' placeholder = '비밀번호 확인' required> <br>
+    <span class='span_text'>닉네임</span> <input class='input_box input_chane_box' type='text' name='nickname' placeholder = '변경할 닉네임 입력' required> <br>
+    <div class='edit-category'>
+        <div class="span-height-div">
+            <span class='span_text'>관심 카테고리</span>
+        </div>
+        <div class="custom-checkbox">
+            <label>
+                <input type="checkbox" class="custom-checkbox-input">
+                <div class="custom-checkbox-text">운동</div>
+            </label>
+            <label>
+                <input type="checkbox" class="custom-checkbox-input">
+                <div class="custom-checkbox-text">스터디</div>
+            </label>
+            <label>
+                <input type="checkbox" class="custom-checkbox-input">
+                <div class="custom-checkbox-text">게임</div>
+            </label>
+            <label>
+                <input type="checkbox" class="custom-checkbox-input">
+                <div class="custom-checkbox-text">카페</div>
+            </label>
+            <label>
+                <input type="checkbox" class="custom-checkbox-input">
+                <div class="custom-checkbox-text">영화</div>
+            </label>
+            <label>
+                <input type="checkbox" class="custom-checkbox-input">
+                <div class="custom-checkbox-text">독서</div>
+            </label>
+        </div>
+    </div>
+    <span class='span_text'>이메일</span> <input class='input_box' type='text' name='email' disabled value = 'user@email'> <br>
+    <span class='span_text'>휴대폰 번호</span> <input class='input_box' type='text' name='phone_num' disabled value = '010-999-111'> <br>
+    <div class='submit_btn'>
+        <input type='submit' value='정 보 변 경' id='submit_button' disabled> </form>
+    </div>`;
+    //          <input type='submit' value='정 보 변 경'> </form>`;
+
+
+}
+
+// window.addEventListener('load',sideSelect);
+window.addEventListener('load',makeMeetingBlock(meeting1));
+</script>
+</body>
+</html>

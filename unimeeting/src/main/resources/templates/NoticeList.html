@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript">
+        let result = '${result}';
+        if (!location.hash && result === 'success') {
+            alert('글쓰기 완료!!');
+            history.replaceState('', '', '#rs');
+        }
+    </script>
+    <title>게시판</title>
+</head>
+
+<body>
+<!-- 중앙 컨텐츠 시작 -->
+<div class="notice-main">
+<!--    <th:if test="${!empty user}">-->
+<!--        <div class="align-right">-->
+<!--            <input class="notice-wbtn" type="button" value="글쓰기" onclick="location.href='write.do'">-->
+<!--        </div>-->
+<!--    </th:if>-->
+        <table class="noticeList">
+            <tr>
+                <th style="width: 150px">번호</th>
+                <th style="width: auto">제목</th>
+                <th style="width: 150px">작성일</th>
+            </tr>
+                <tr th:if="${list}" th:each="notice : ${list}">
+                    <td style="text-align: center" th:text="${notice.idx}"></td>
+                    <td>
+                        <a th:href="@{/notice/detail(idx=${notice.idx})}" th:text="${notice.title}"></a>
+                    </td>
+                    <td style="text-align: center" th:text="${notice.created_datetime}">
+                    </td>
+                </tr>
+        </table>
+    <button onclick="location.href='/NoticeWrite.html'" >글쓰기</button>
+</div>
+<!-- 중앙 컨텐츠 끝 -->
+</body>
+
+</html>

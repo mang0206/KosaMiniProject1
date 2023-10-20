@@ -1,0 +1,151 @@
+/* Content Box */
+#meeting_div {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    /* padding: 0; */
+    width: 1136px;
+    height: 252px;
+    background: #FFFFFF;
+    border: 1px solid #DDE1E6;
+    border-radius: 8px;
+    margin: 15px;
+}
+
+/* Placeholder / picture */
+#img_div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    /* gap: 10px; */
+    width: 379px;
+    height: 252px;
+    /* background: url(Image-placeholder-empty), #DDE1E6; */
+    border-radius: 8px 0px 0px 8px;
+}
+
+#meeting_img {
+    width: 80%;
+    height: 80%;
+    border-radius: 8px 0px 0px 8px;
+}
+/* Content */
+#content_div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 757px;
+    height: 252px;
+}
+
+.meeting-info {
+    margin: 5px 0;
+}
+/* Title + Category */
+.meeting-info #Title_Category{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    /* gap: 0; */
+    width: 348px;
+    height: 46px;
+    /* margin-top: 30px; */
+}
+#Title_Category {
+    margin-top: 30px;
+}
+/* Frame 7 */
+/* Category */
+.meeting-info span {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 100%;
+}
+
+.meeting-info #location {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    /* font-size: 12px; */
+    line-height: 100%;
+    color: #6129FF;
+}
+
+/* Title */
+.meeting-info h2 {
+    width: 348px;
+    height: 22px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 23px;
+    line-height: 110%;
+    color: #21272A;
+}
+
+/* Paragraph */
+.meeting-info h5 {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 140%;
+    color: #21272A;
+}
+
+#meeting_content {
+    width: 725px;
+    height: 66px;
+    padding: 10px 0px;
+    font-size: 16px;
+    
+    /* white-space: nowrap; 텍스트가 한 줄에서만 표시되도록 합니다. */
+    white-space: normal; /* 텍스트를 여러 줄로 나타냅니다. */
+    max-height: 5.6em; /* 최대 높이를 설정하여 두 줄 이상의 텍스트가 보이지 않도록 합니다. */
+
+    overflow: hidden; /*텍스트가 요소 영역을 벗어날 때 숨깁니다.*/
+    /* text-overflow: ellipsis; 텍스트가 요소를 벗어날 때 "..."으로 생략합니다. */
+}
+
+/* Frame 5 */
+#flow {
+    display: flex;
+    flex-direction: row;
+    width:599px;
+    /* flex-grow: 10; */
+    justify-content: space-between;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+
+/* User-card */
+.meeting-info .user-card {
+    display: flex;
+    padding: 100px;
+}
+
+
+#flowchild {
+    display: flex;
+    gap:20px;
+}
+/* User Thumb */
+.meeting-info .user-thumb {
+    display: flex;
+    color: rgb(125, 127, 129);
+}
+
+/* Details */
+.meeting-info .details {
+    display: flex;
+    flex-direction: row-reverse;
+    /* width: auto; */
+}
