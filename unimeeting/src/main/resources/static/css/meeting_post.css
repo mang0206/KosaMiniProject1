@@ -12,16 +12,6 @@
 .btn-color {
   color: #5302FE;
  }
-.carousel {
-    width
-}
-.carousel-item img {
-  object-fit: cover;
-  object-position: center;
-  height: 100%;
-  overflow: hidden;
-  max-width:100%
-}
 
 .meeting-contents > * {
     margin: 0 auto;
@@ -35,7 +25,7 @@ a.col-1.btn.btn-outline-primary {
     color: #5302FE;
 }
 .col-md-auto a {
-    width 200px;
+    width: 200px;
 }
 
 main {
@@ -44,4 +34,15 @@ main {
 
 .justify-content-end{
     height: fit-content;
+}
+
+#carouselExampleDark {
+    height: 460px;
+    width: 810px;
+}
+
+.carousel-item img {
+    height: 450px;
+    width: 800px;
+    object-fit: contain;
 }

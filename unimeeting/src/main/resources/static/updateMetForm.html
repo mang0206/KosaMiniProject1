@@ -3,43 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>모임 작성</title>
+    <script src="javascript/updateMet.js"></script>
     <link rel="stylesheet" href="/css/meeting_form.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
 </head>
 <body>
-<script>
 
-
-    let was_validated = () => {
-    console.log("test");
-        let form = document.querySelector("#form");
-        form.classList.add("was-validated");
-    };
-
-
-    let url = new URL(document.referrer);
-    console.log(url);
-    let searchParams = new URLSearchParams(url.search);
-    console.log(searchParams.get("meeting_idx"));
-    let xhr = new XMLHttpRequest;
-    xhr.onload = () => {
-        let json = JSON.parse(xhr.responseText);
-        //for(let target in document.getElementsByName("category")){
-        //    if(target.value)
-        //}
-        document.getElementsByName("title")[0].defaultValue = json['title'];
-        document.getElementsByName("recruits")[0].defaultValue = json['recruits'];
-        document.getElementsByName("start_datetime")[0].defaultValue = json['start_datetime'].substring(0, 10);
-        document.getElementsByName("content_text")[0].defaultValue = json['content_text'];
-        document.getElementsByName("location")[0].defaultValue = json['location'];
-        document.getElementsByName("writer_nickname")[0].defaultValue = json['writer_nickname'];
-        document.getElementsByName("idx")[0].defaultValue = json['idx'];
-    }
-    xhr.open("GET", `/meeting/getMetJson?idx=${searchParams.get("meeting_idx")}`, true);
-    xhr.send();
-</script>
 <form id="form"  action="/meeting/updateMet" method="post" enctype="multipart/form-data" class="col-lg-8 mx-auto p-4 py-md-5">
     <fieldset class="row mb-3">
         <legend class="col-form-label col-sm-2 pt-0">카테고리</legend>
