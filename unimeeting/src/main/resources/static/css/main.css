@@ -37,7 +37,7 @@ body h1{
    flex-direction: row;
    flex-wrap : wrap;
    width: 90%;
-   border: 1px solid: blue;
+   border: 1px solid blue;
 }
 .list_div {
 border: 1px solid red;

@@ -79,16 +79,22 @@
     align-items: center;
     padding: 12px 16px;
     gap: 8px;
-    /* width: 916px; */
+    width: 990px;
     height: 48px;
-    background: #F2F4F8; /* CoolGray/10 */
+    /* background: #F2F4F8; CoolGray/10 */
     border-bottom: 1px solid #C1C7CD; /* CoolGray/30 */
     border-radius: 8px;
+
+    margin-left: 70px;
+}
+
+form {
+    width: 80%;
 }
 
 .meeting-search #search-submit {
-    padding-top: 20px;
-    padding-right: 100px;
+    padding-top: 10px;
+    padding-right: 35px;
     width: 30px;
     height: 30px;
 }
@@ -100,11 +106,12 @@
     font-size: 16px;
     line-height: 140%;
     color: #697077; /* CoolGray/60 */
-    width: 600px;
-    height: 30px;
+    width: 631px;
+    height: 48px;
     border: #f2f4f8;
     background: #F2F4F8;
-    padding-left: 30px;
+    padding-left: 15px;
+    border-radius: 10px;
 }
 
 .search-label {
@@ -115,16 +122,16 @@
     align-items: flex-start; */
 }
 /* Insert Meeting Button */
-button {
-    width: 196px;
-    height: 56px;
+.make-meeting-button {
+    width: 136px;
+    height: 45px;
     background: #6129FF;
     border: 2px solid #6129FF;
     border-radius: 8px;
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 15px;
     line-height: 100%;
     letter-spacing: 0.5px;
     color: #FFFFFF; /* Default/White */
