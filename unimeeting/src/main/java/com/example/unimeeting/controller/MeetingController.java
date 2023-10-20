@@ -93,7 +93,8 @@ public class MeetingController {
     @PostMapping("/insertMet")
     public String insertMet(MeetingDTO meetingDTO, Model m, MultipartRequest mreq, @ModelAttribute("user") UserVO user){
 
-
+        System.out.println("--------------------file error----------------");
+        System.out.println(mreq);
         meetingDTO.setWriter_nickname(user.getNickname());
         boolean result = meetingMapper.insertMet(meetingDTO);
         int meeting_idx = meetingMapper.getIdxOfCurrentMet();
