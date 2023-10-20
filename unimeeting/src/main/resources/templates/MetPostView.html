@@ -77,14 +77,14 @@
 
             <div th:if="${meeting_image}" id="carouselExampleDark" class="carousel carousel-dark slide border border-dark-subtle mb-5"
                  data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active object-fit-contain" th:each="image, index: ${meeting_image}"
+                    <div class="carousel-inner position-absolute top-50 start-50 translate-middle">
+                    <div class="carousel-item active" th:each="image, index: ${meeting_image}"
                          th:if="${index.index} == 0">
-                        <img th:src="${image}" class="d-block object-fit-contain" alt="no image">
+                        <img th:src="${image}" class="d-block" alt="no image">
                     </div>
-                    <div class="carousel-item object-fit-contain" th:each="image, index: ${meeting_image}"
+                    <div class="carousel-item" th:each="image, index: ${meeting_image}"
                          th:unless="${index.index} == 0">
-                        <img th:src="${image}" class="d-block object-fit-contain" alt="no image">
+                        <img th:src="${image}" class="d-block" alt="no image">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target='#carouselExampleDark'
@@ -98,7 +98,7 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
-            <div class="mb-5 fs-4" th:text="${meeting.content_text}" style="width:80%;"></div>
+            <div class="mb-5 fs-6" th:text="${meeting.content_text}" style="width:80%;"></div>
         </div>
 
     </main>

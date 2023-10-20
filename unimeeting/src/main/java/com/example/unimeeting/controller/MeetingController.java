@@ -70,6 +70,11 @@ public class MeetingController {
         return mv;
     }
 
+//    // check user before insert met
+//    @RequestMapping("/checkUser")
+////    public
+
+
     // Insert Meeting Post
     @PostMapping("/insertMet")
     public String insertMet(MeetingDTO meetingDTO, Model m, MultipartRequest mreq, @ModelAttribute("user") UserVO user){
