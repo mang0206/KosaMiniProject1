@@ -5,49 +5,55 @@
   <title>Title</title>
   <!-- 제이쿼리 -->
   <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link th:href="@{/css/nav.css}" rel="stylesheet" type="text/css">
-  <!-- 합쳐지고 최소화된 최신 CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-  <!-- 부가적인 테마 -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-  <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-
 <div th:replace="/nav ::nav"></div>
 
-<!--<div id = "mid-content" >-->
-<h1>unimeeting 홈페이지</h1>
+<h1 style="font-size:40px">UniMeeting 커뮤니티에서 자유롭게 이야기 나눠보세요!</h1>
     <div class="inner">
     <form method = "get" action ="/search" class="search">
       <input type = "search" name = "keyword" class="search-bar" placeholder="검색어를 입력해 주세요">
-      <input type = "submit" value = "검색" class="searching">
+      <input type = "image" src="/images/search_icon.png" value = "검색" class="searching">
     </form>
     </div>
-    <select name="changeTest" class="form-select">
-          <option value="">==선택==</option>
-          <option value="no">기본</option>
-          <option value="popular">인기순</option>
-          <option value="title">제목순</option>
-          <option value="start">최신순</option>
-    </select>
-    <div class="list_container">
-      <div class="list_div" th:if="${ list }" th:each="st : ${list}">
-          <a th:href="@{/meeting/post(meeting_idx=${st.idx})}"><img th:src="${st.image_url}" th:if="${st.image_url != null}" style="">
-          <img src="/images/default.jpg" th:if="${st.image_url == null}" style="">
-          <p>[[${st.title}]]</p>
-<!--              [[${st.content_text}]]-->
-<!--              [[${st.start_datetime}]]-->
-          <p>More Info</p>
-          </a>
-          <div class="clearfix"></div>
-      </div>
-    </div>
-<!--    </th:block>-->
 
-<!--</div>-->
+    <div class="list_container">
+        <div class="form-select1">
+        <select name="changeTest" class="form-select form-select-sm" aria-label=".form-select-sm example">
+            <option selected>menu</option>
+            <option value="no">기본</option>
+            <option value="popular">인기순</option>
+            <option value="title">제목순</option>
+            <option value="start">최신순</option>
+        </select>
+        </div>
+
+<!--        <div class="form-select2">-->
+            <div class="row row-cols-3 row-cols-md-3 g-4" th:if="${ list }" th:each="st : ${list}">
+                <div class="col">
+                    <div class="card">
+                        <a th:href="@{/meeting/post(meeting_idx=${st.idx})}">
+                            <img th:src="${st.image_url}" onerror="this.src='/images/book.png';" class="card-img-top">
+<!--                            <img src="/images/default.jpg" th:if="${st.image_url == null}" class="card-img-top">-->
+                            <div class="card-body">
+                                <h5 class="card-title">[[${st.title}]]</h5>
+                                <p class="card-text">[[${st.content_text}]]</p>
+
+
+                            </div>
+                            <p class="card-date">[[${st.start_datetime}]]</p>
+                        </a>
+                            <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+<!--        </div>-->
+<!--    </div>-->
+
+</div>
 
 
 <script>
@@ -65,9 +71,8 @@
     location.href = `/search?keyword=${num}`
   });
 
-
-
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <!--<footer style="background-color: aqua;"><p>footer 영역</p></footer>-->
 </body>
 </html>
