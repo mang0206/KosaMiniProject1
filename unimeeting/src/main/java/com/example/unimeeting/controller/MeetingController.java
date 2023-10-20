@@ -60,9 +60,13 @@ public class MeetingController {
         ModelAndView mv = new ModelAndView();
         mv.addObject("ctgr_list", getCategory());
 //        List<MeetingDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search, (page-1)*4);
+        System.out.println("ctgr = " + ctgr);
         List<MeetingCntDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search);
         mv.addObject("met_list", meetings);
+        System.out.println(meetings.size());
 
+        if(ctgr != null)
+            mv.addObject("path_ctgr", ctgr);
 
         mv.setViewName("MetBoardView");
         return mv;

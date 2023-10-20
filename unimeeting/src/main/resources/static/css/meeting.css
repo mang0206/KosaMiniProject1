@@ -34,7 +34,7 @@
     font-style: normal;
     font-size: 16px;
     font-weight: 700;
-    color: #21272A;
+    /* color: #21272A; */
 }
 
 .btn-menu-item{
@@ -44,12 +44,27 @@
     border: #6129FF solid;
 }
 
+.btn-menu-item a{
+    /* background: #e1d8e5; */
+    color: #6129FF;
+}
+
+
+.btn-menu-item:hover{
+    border: #6129FF solid;
+    background-color: #6129FF;
+    color: #FFFFFF;
+}
+
+.btn-menu-item:hover a{
+    color: #FFFFFF;
+}
 
 .nav-link {
     padding: 15px;
     display: inline-block;
     text-decoration: none;
-    color: #6129FF;
+    /* color: #6129FF; */
 
     font-family: 'Roboto';
     font-style: normal;

@@ -21,12 +21,12 @@ public interface MeetingMapper {
 //            "<if test='search!=null'>and title like concat('%',#{search}, '%')</if>" +
 //            "</where>order by idx desc limit 4 offset ${page}</script>")
 //    public List<MeetingDTO> viewMetBoard(@Param("category") String category,@Param("search") String search,@Param("page") int page );
-    @Select("<script>select * , now_recruits, image_url as img_url " +
-        "from meeting m join ( select meeting_idx, count(*) as now_recruits " +
+    @Select("<script>select * , image_url as img_url " +
+        "from meeting m left join ( select meeting_idx, count(*) as now_recruits " +
         "from meeting_member group by meeting_idx ) mb on m.idx = mb.meeting_idx " +
-        "join ( select meeting_idx, image_url from meeting_image group by meeting_idx ) mi on m.idx = mi.meeting_idx " +
+        "left join ( select meeting_idx, image_url from meeting_image group by meeting_idx ) mi on m.idx = mi.meeting_idx " +
         "<where>" +
-        "<if test='category!=null'>category = #{category} </if>" +
+        "<if test='category!=null'>category like #{category} </if>" +
         "<if test='search!=null'>and title like concat('%',#{search}, '%')</if>" +
         "</where>order by idx desc </script>")
     public List<MeetingCntDTO> viewMetBoard(@Param("category") String category,@Param("search") String search);
