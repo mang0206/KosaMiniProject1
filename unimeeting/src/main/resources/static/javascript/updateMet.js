@@ -23,5 +23,5 @@ xhr.onload = () => {
     document.getElementsByName("writer_nickname")[0].defaultValue = json['writer_nickname'];
     document.getElementsByName("idx")[0].defaultValue = json['idx'];
 }
-xhr.open("GET", `/meeting/getMetJson?idx=${searchParams.get("meeting_idx")}`, true);
+xhr.open("GET", `/meeting/getMetJson?meeting_idx=${searchParams.get("meeting_idx")}`, true);
 xhr.send();
