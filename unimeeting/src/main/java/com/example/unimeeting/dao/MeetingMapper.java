@@ -30,7 +30,6 @@ public interface MeetingMapper {
     // View Meeting Post
     @Select("select * from meeting where idx = ${idx}")
     public MeetingDTO viewMetPost(@Param("idx") int idx);
-
     // Count Meeting member
     @Select("select count(*) from meeting_member where meeting_idx = ${idx}")
     public int countMetMem(@Param("idx") int idx);
