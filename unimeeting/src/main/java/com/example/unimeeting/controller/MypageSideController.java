@@ -36,25 +36,25 @@ public class MypageSideController {
   @Autowired
   MypageMapper dao;
 
+  /* Mypage 참여 목록 */
   @GetMapping("")
   public String myDefault(Model model, @ModelAttribute("user") UserVO s_user, HttpSession httpSession) {
     if(s_user == null){
       return "redirect:/userLogin.html";
     }
-//    System.out.println("check session");
-//    System.out.println(httpSession.getAttribute("user"));
-//    System.out.println(s_user);
     model.addAttribute("list", dao.attendList(s_user));
     model.addAttribute("user", s_user);
     return "myPage";
   }
 
+  /* Session 정보 Json 반환 함수*/
   @ResponseBody
   @GetMapping(value = "/getSessionData", produces = "application/json; charset=utf-8")
   public UserVO sessionUser(@ModelAttribute("user") UserVO s_user) {
     return s_user;
   }
 
+  /* 참여, 스크랩, 생성한 미팅 목록 JSON 반환 함수*/
   @ResponseBody
   @GetMapping(value = "/{select}", produces = "application/json; charset=utf-8")
   public MyInfoMeetingDTO myInfoMeeting(@PathVariable String select,
@@ -81,6 +81,7 @@ public class MypageSideController {
     return myInfoMeetingDTO;
   }
 
+  /* 정보 변경 함수 */
   @PostMapping("/update")
   public ModelAndView updateUser(UserVO user, Model model) {
     ModelAndView mav = new ModelAndView();
