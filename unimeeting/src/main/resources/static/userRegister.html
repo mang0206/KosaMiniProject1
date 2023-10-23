@@ -1,19 +1,17 @@
 <!DOCTYPE html>
-<html lang="kr" xmlns:th="http://www.thymeleaf.org">
+<html lang="kr">
 <head>
     <meta charset="UTF-8">
     <title>회원가입</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/userRegister.css">
-    <link th:href="@{/css/nav.css}" rel="stylesheet" type="text/css">
     <style>        /* 추가적인 스타일링을 위한 CSS 코드를 여기에 추가할 수 있습니다. */
     .form-group {
         margin-bottom: 20px;
-    }
-    </style>
+    }    </style>
 </head>
 <body class="bg-light">
-<div th:replace="/nav ::nav"></div>
+
 <div id="register_container" class="container">
     <div id="register_form1"class="row justify-content-center mt-5">
         <div class="col-md-6">

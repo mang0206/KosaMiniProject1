@@ -34,11 +34,11 @@ public class UserController {
         if (userService.idcheck(user.getUser_id()) != null) {
 
             model.addAttribute("error", "이미 사용 중인 아이디입니다. 다른 아이디를 입력해주세요.");
-            return "userRegister.html";
+            return "register.html";
         }
 
         userService.registerUser(user);
-        return "redirect:/main.html";
+        return "redirect:/mainPage";
     }
 
 
