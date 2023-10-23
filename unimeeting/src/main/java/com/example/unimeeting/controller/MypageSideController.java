@@ -28,9 +28,24 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/mypage")
 public class MypageSideController {
 
+//  @ModelAttribute("user")
+//  public UserVO sessionuser() {
+//    return null;
+//  }
+
   @ModelAttribute("user")
   public UserVO sessionuser() {
     return null;
+  }
+
+  @ModelAttribute("user")
+  public UserVO updateSessionUser(UserVO userVO) {
+    if(userVO != null) {
+      System.out.println(userVO.getNickname());
+      return userVO;
+    }
+    else
+      return null;
   }
 
   @Autowired
@@ -77,13 +92,16 @@ public class MypageSideController {
         model.addAttribute("info_user", s_user);
         break;
     }
-
+    System.out.println(s_user);
+    System.out.println(dao.attendList(s_user));
+    System.out.println(dao.createList(s_user));
+    System.out.println(dao.scrapList(s_user));
     return myInfoMeetingDTO;
   }
 
   /* 정보 변경 함수 */
   @PostMapping("/update")
-  public ModelAndView updateUser(UserVO user, Model model) {
+  public ModelAndView updateUser(UserVO user, Model model, @ModelAttribute("user") UserVO userVO) {
     ModelAndView mav = new ModelAndView();
     boolean result = dao.updateUser(user);
     if (result) {
@@ -91,6 +109,9 @@ public class MypageSideController {
     } else {
       model.addAttribute("msg", "User 정보를 업데이트하는 동안 오류 발생했습니다. 다시 시도해 주세요");
     }
+
+    userVO.setNickname(user.getNickname());
+    userVO.setPassword(user.getPassword());
 
     RedirectView redirectView = new RedirectView("/mypage", true);
     mav.setView(redirectView);

@@ -12,6 +12,8 @@ import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface MypageMapper {
+  @Select("select * from user where idx = #{idx}")
+  public UserVO getUserByIdx(int idx);
   @Select("select m.idx, m.title, m.category, m.location, m.start_datetime, m.content_text, m.created_datetime, writer_nickname, m.recruits, now_recruits, image_url as img_url "
       + "from meeting m join ( select meeting_idx, count(*) as now_recruits "
       + "from meeting_member group by meeting_idx ) mb on m.idx = mb.meeting_idx "
@@ -20,10 +22,10 @@ public interface MypageMapper {
   public List<MeetingCntDTO> attendList(UserVO userVO);
 
   @Select("select m.idx, m.title, m.category, m.location, m.start_datetime, m.content_text, m.created_datetime, writer_nickname, m.recruits, now_recruits, image_url as img_url "
-      + "from meeting m join ( select meeting_idx, count(*) as now_recruits "
+      + "from meeting m left join ( select meeting_idx, count(*) as now_recruits "
       + "from meeting_member group by meeting_idx ) mb on m.idx = mb.meeting_idx "
-      + "join ( select meeting_idx, image_url from meeting_image group by meeting_idx ) mi on m.idx = mi.meeting_idx "
-      + "where writer_nickname = #{nickname}")
+      + "left join ( select meeting_idx, image_url from meeting_image group by meeting_idx ) mi on m.idx = mi.meeting_idx "
+      + "where writer_nickname in (#{nickname})")
   public List<MeetingCntDTO> createList(UserVO userVO);
 
   @Select("select m.idx, m.title, m.category, m.location, m.start_datetime, m.content_text, m.created_datetime, writer_nickname, m.recruits, now_recruits, image_url as img_url "
