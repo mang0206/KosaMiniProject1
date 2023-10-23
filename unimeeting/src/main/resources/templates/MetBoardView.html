@@ -91,10 +91,10 @@
                         <a class="page-link" href="#" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
-                    </li>
-                    <th:block th:each="i, index : ${cnt}">
-                        <li class="page-item" th:text="${index.count}"><a class="page-link" th:href="@{/meeting(page=${index.count})}}"></a></li>
-                    </th:block>
+                        </li>
+                        <th:block th:each="i, index : ${cnt}">
+                            <li class="page-item" th:text="${index.count}"><a class="page-link" th:href="@{/meeting(page=${index.count})}}"></a></li>
+                        </th:block>
                     <li class="page-item">
                         <a class="page-link" href="#" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
