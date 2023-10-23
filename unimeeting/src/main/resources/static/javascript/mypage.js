@@ -150,10 +150,10 @@ function sideSelect(e) {
 // });
 
 var menuItems = document.querySelectorAll(".menu-item");
-// 각 버튼에 클릭 이벤트 리스너를 추가합니다.
+// 각 버튼에 클릭 이벤트 리스너를 추가
 menuItems.forEach(function(item) {
   item.addEventListener("click", function() {
-      // 모든 버튼에서 selected 클래스를 제거합니다.
+      // 모든 버튼에서 selected 클래스 제거
       menuItems.forEach(function(otherItem) {
           otherItem.classList.remove("selected");
           const button = otherItem.querySelector("button");
@@ -162,7 +162,7 @@ menuItems.forEach(function(item) {
         }
       });
 
-      // 현재 클릭한 버튼에만 selected 클래스를 추가합니다.
+      // 현재 클릭한 버튼에만 selected 클래스 추가
       item.classList.add("selected");
       const button = item.querySelector("button");
       if (button) {
