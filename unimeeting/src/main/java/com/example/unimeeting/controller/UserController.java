@@ -38,7 +38,7 @@ public class UserController {
         }
 
         userService.registerUser(user);
-        return "redirect:/main.html";
+        return "redirect:/mainPage";
     }
 
 
