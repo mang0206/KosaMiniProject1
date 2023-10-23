@@ -1,0 +1,215 @@
+/* 마이페이지(생성한 소모임) */
+.page-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: aquamarine;
+    position: relative;
+    /* width: 1440px;
+    height: 880px; */
+}
+
+/* Rectangle 37 */
+.contents-right {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    width: 1184px;
+    height: 800px;
+    left: 256px;
+    /* top: 80px; */
+    background: #FFFFFF;
+    border-left: 2px solid #080707;
+}
+
+/* Rectangle 38 */
+.nav-left {
+    /* display: flex; */
+    position: absolute;
+    width: 256px;
+    height: 800px;
+    left: 0px;
+    /* top: 80px; */
+    /* background: #725f5f; */
+    background: #FFFFFF;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    position: absolute;
+    width: 224px;
+    height: 300px;
+    left: 16px;
+    /* top: 80px; */
+    background: #FFFFFF;
+    /* border: #080707; */
+}
+
+/* Menu-item */
+.menu-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 8px;
+    gap: 8px;
+    width: 197px;
+    height: 48px;
+    border: #FFFFFF;
+    background: #ffffff;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-size: 16px;
+    font-weight: 700;
+    color: #21272A; 
+}
+
+.menu-item:hover {
+  border: 1px solid #6129FF;
+  border-radius: 10px;
+}
+.menu-item button:hover{
+  border: #FFFFFF;
+}
+/* icon / jam-icons / outline & logos / home */
+.menu-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.selected {
+    background: #6129FF;
+    color:#FFFFFF;
+    border-radius: 10px;
+}
+
+#show_info {
+    padding: 3px 50px;
+    margin: 30px;
+}
+
+/* Group 21 */
+.form_group {
+    position: absolute;
+    width: 800px;
+    height: 585px;
+    margin: 20px;
+    padding: 10px 40px;
+    /* border-top: #000000; */
+    border:solid;
+    border-width: 2px;
+    border-color: #ffffff;
+  }
+  
+  .input_box {
+    /* position: absolute; */
+    width: 500px;
+    height: 30px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    align-items: center;
+    text-align: center;
+    color: #353434;
+    background-color: #e2e2e2;
+    margin-bottom: 30px;
+    border-radius: 10px;
+  }
+
+  .input_chane_box {
+    /* position: absolute; */
+    background-color: #e9e8a7;
+    color: #000000;
+    border: #FFFFFF;
+    border-radius: 10px;
+  }
+  input::placeholder {
+    color: rgb(53, 28, 50);
+    font-weight: 600;
+  }
+
+  .span_text {
+    /* position: absolute; */
+    width: 250px;
+    height: 35px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 100;
+    font-size: 20px;
+    line-height: 24px;
+    display: inline-block;
+    /* align-items: center; */
+    color: #454242;
+  }
+  
+  .edit-category {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: center; */
+    height: 50px;
+    margin-bottom: 20px;
+  }
+
+  .span-height-div {
+    height: 50px;
+    padding-top: 5px;
+  }
+
+  label {
+    margin: auto;    
+  }
+
+  .custom-checkbox {
+    display: flex;
+    align-items: center;
+    width : 500px;
+    /* height: 40px; */
+    padding-bottom: 20px;
+    /* margin-bottom: 40px; */
+  }
+  .custom-checkbox-input {
+    display: none;
+  }
+  .custom-checkbox-text {
+    border: 1px solid #ccc;
+    padding: 10px;
+    min-width: 40px;
+    /* margin: 10px; */
+  }
+  .custom-checkbox-input:checked + .custom-checkbox-text {
+    border: 1px solid #9BFFB1; /* 예시로 보더 색 변경 */
+    background-color:#9BFFB1 /* 예시로 배경색 변경 */
+  }
+
+  /* Group 11 */
+.submit_btn {
+    width: 207px;
+    height: 72px;
+    text-align: center;
+    background-color: #9BFFB1;
+    border-radius: 15px;
+  }
+  
+  
+  /* 정보변경 */
+  #submit_button {
+    /* width: 145px;
+    height: 42px; */
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 21px;
+    /* line-height: 19px; */
+    align-items: center;
+    letter-spacing: 0.5em;
+    color: #000000;
+    margin-top: 20px;
+    background-color: #9BFFB1;
+    border: #9BFFB1;
+    
+  }
+  
