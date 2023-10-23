@@ -44,7 +44,7 @@ public class MainController {
         } else if (changeTest.equals("title")){
             model.addAttribute("list", dao.titleSort());
         } else if (changeTest.equals("start")) {
-            model.addAttribute("list", dao.startDate());
+            model.addAttribute("list", dao.createDate());
         } else if (changeTest.equals("no")){
             model.addAttribute("list", dao.listM());
             System.out.println(dao.listM());

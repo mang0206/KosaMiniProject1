@@ -23,8 +23,8 @@ public interface InfoMapper {
     public List<InfoDTO> titleSort();
 
 
-    @Select("select * from meeting left join meeting_image on meeting.idx = meeting_image.meeting_idx group by meeting.idx order by binary(start_datetime) desc ") //최신순
-    public List<InfoDTO> startDate();
+    @Select("select * from meeting left join meeting_image on meeting.idx = meeting_image.meeting_idx group by meeting.idx order by binary(created_datetime) desc ") //최신순
+    public List<InfoDTO> createDate();
 
 //    @Select("")
 //    @Select("select ")
