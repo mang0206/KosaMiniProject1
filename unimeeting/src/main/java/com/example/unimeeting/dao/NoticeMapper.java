@@ -9,7 +9,7 @@ import java.util.Map;
 
 public interface NoticeMapper {
 
-    @Select("SELECT * FROM board where type=#{type} ORDER BY idx DESC ")
+    @Select("SELECT * FROM board where type=#{type} ORDER BY created_datetime DESC")
     public List<NoticeVO> selectList(String type);
     //글 타입.
 
