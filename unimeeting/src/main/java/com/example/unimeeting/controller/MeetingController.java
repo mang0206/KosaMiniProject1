@@ -59,7 +59,7 @@ public class MeetingController {
         mv.addObject("ctgr_list", getCategory());
 //        List<MeetingDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search, (page-1)*4);
         System.out.println("ctgr = " + ctgr);
-        List<MeetingCntDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search, (page-1)*4);
+        List<MeetingCntDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search);
         mv.addObject("met_list", meetings);
         System.out.println(meetings.size());
         int metCnt = ctgr == null ? meetingMapper.cntMetAll() : meetingMapper.cntMetOfCategory(ctgr);
