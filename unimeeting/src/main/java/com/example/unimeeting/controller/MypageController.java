@@ -3,10 +3,7 @@ package com.example.unimeeting.controller;
 
 import com.example.unimeeting.dao.MypageMapper;
 import com.example.unimeeting.domain.MyInfoMeetingDTO;
-import com.example.unimeeting.domain.UpdateUserVO;
 import jakarta.servlet.http.HttpSession;
-import java.util.Iterator;
-import java.util.List;
 
 import com.example.unimeeting.domain.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -26,7 +22,7 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 @SessionAttributes("user")
 @RequestMapping("/mypage")
-public class MypageSideController {
+public class MypageController {
 
   @ModelAttribute("user")
   public UserVO sessionuser() {
