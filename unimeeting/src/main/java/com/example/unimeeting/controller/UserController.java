@@ -26,7 +26,7 @@ public class UserController {
 
     @ModelAttribute
     public UserVO loginUser() {
-        return null;
+        return new UserVO();
     }
 
     @PostMapping("/register")
@@ -38,7 +38,7 @@ public class UserController {
         }
 
         userService.registerUser(user);
-        return "redirect:/main.html";
+        return "redirect:/mainPage";
     }
 
 
@@ -80,7 +80,7 @@ public class UserController {
             return "redirect:/mainPage";
         } else {
             model.addAttribute("error", "Invalid username or password");
-            return "login.html";
+            return "userLoginError.html";
 
         }
     }

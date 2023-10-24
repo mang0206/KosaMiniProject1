@@ -1,118 +1,152 @@
-  
-  /* Base Styled Header Group */
-  .base-header-group {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    padding: 0;
-    width: 1440px;
-    height: 70px;
-    background: #FFFFFF;
-    flex: none;
-    order: 0;
-    align-self: stretch;
-    flex-grow: 0;
-    gap: 15px;
-  }
-  
-  /* Logo */
-  .logo {
-    display: flex;
-    width: 182px;
-    height: 69px;
-    order: 0;
-  }
-  
-  /* Logo image */
-  .logo-image {
-    width: 60px;
-    height: auto;
-    margin: auto;
-
-  }
-
-  .logo-text {
-    font-family: 'Roboto';
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
     font-style: normal;
-    font-weight: 600;
+}
 
-    padding: 15px;
-    margin: auto;
-    font-size: 20px;
-    color: #131010;
+*{
+    font-family: 'Pretendard-Regular';
+}/* Base Styled Header Group */
+.base-header-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  width: 100%; /* 전체 화면 너비를 사용 */
+  height: 70px;
+  background: #FFFFFF;
+  /* flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+  gap: 15px; */
+  margin-left: 40px;
+}
 
-  }
-  
-  /* Frame 3 */
+/* Logo */
+.logo {
+  display: inline-flex;
+  margin-right: 90px;
+  width: auto; /* 로고 크기에 맞게 자동 조절 */
+  height: 69px;
+  order: 0;
+}
+
+/* Logo image */
+.logo-image {
+  max-width: 100%;
+  height: auto;
+  /* margin: auto; */
+}
+
+.logo-text {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 600;
+  padding: 10px;
+  font-size: 20px;
+  color: #131010;
+  margin-top: 10px;
+}
+
+/* Frame 3 */
+.frame-3 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 20px 10px 0; /* 왼쪽 패딩 추가 및 조절 가능 */
+  gap: 15px;
+  width: 100%; /* 전체 화면 너비를 사용 */
+  height: 70px;
+  flex: none;
+  order: 1;
+  flex-grow: 1;
+}
+
+/* Icon and Text */
+.nav_div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 10px;
+  width: auto; /* 컨텐츠 크기에 맞게 자동 조절 */
+  height: 18px;
+}
+
+/* search */
+.nav_text {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 600;
+  margin: auto;
+  text-decoration: none;
+  color: #131010;
+  font-size: 16px;
+}
+
+#nav_main {
+  color: #5302FE;
+}
+
+/* Button */
+.nav-button {
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 10px;
+  /* width:100%; */
+  width: 55vmax;
+}
+
+/* _base.Button */
+.base-button {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  box-sizing: border-box;
+  width: 120px; /* 조절 가능 */
+  height: 40px;
+  background: #FFFFFF;
+  border: 1px solid #5302FE;
+  border-radius: 6px;
+  margin: 10px;
+  color: #5302FE;
+  text-align: center;
+}
+
+.side-button {
+  background-color: #5302FE;
+  color: #FFFFFF;
+}
+
+.base-button:hover {
+  cursor: pointer;
+}
+
+.side-button:hover {
+  cursor: pointer;
+}
+
+/* 미디어 쿼리 */
+@media (max-width: 1040px) {
   .frame-3 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0 40px 0 0;
-    gap: 15px;
-    width: 1243px;
-    height: 69px;
-    flex: none;
-    order: 1;
-    flex-grow: 1;
+    padding: 10px 10px 10px 0; /* 화면이 작을 때 패딩을 줄임 */
   }
-  /* Icon and Text */
   .nav_div {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0px;
-    gap: 10px;
-
-    width: 80px;
-    height: 18px;
+    width: auto; /* 화면이 작을 때 컨텐츠 크기에 맞게 자동 조절 */
   }
-  
-  /* search */
   .nav_text {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 600;
-    margin: auto;
-    text-decoration: none;
-    color: #131010;
+    font-size: 14px; /* 화면이 작을 때 텍스트 크기를 줄임 */
   }
-
-  #nav_main {
-    color:#5302FE;
+  .nav-button {
+    flex-direction: row-reverse; /* 버튼들을 세로로 배치 */
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    /* width:350%; */
   }
-  
-  /* Button */
-  .button {
-    display: flex;
-    flex-direction: row-reverse;
-    /* justify-content: flex-end; */
-    /* align-items: center; */
-    padding: 30px;
-    width: 700px;
-  }
-  
-  /* _base.Button */
   .base-button {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 15px;
-    box-sizing: border-box;
-    /* padding: 12px 15px 10px; */
-    width: 100px;
-    height: 40px;
-    background: #FFFFFF;
-    border: 1px solid #5302FE;
-    border-radius: 6px;
-    margin: 10px;
-    color: #5302FE;
+    width: auto; /* 버튼 크기를 콘텐츠에 맞게 조절 */
   }
-
-  .side-button {
-    background-color: #5302FE;
-    color: #FFFFFF;
-  }
-
-  
-
+}

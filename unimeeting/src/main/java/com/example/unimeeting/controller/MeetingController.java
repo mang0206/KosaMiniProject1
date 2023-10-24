@@ -51,19 +51,39 @@ public class MeetingController {
         List<MeetingCntDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search);
         mv.addObject("met_list", meetings);
         System.out.println(meetings.size());
+        int metCnt = ctgr == null ? meetingMapper.cntMetAll() : meetingMapper.cntMetOfCategory(ctgr);
+        metCnt /= 4;
+
+        mv.addObject("cnt", new int[metCnt]);
 
         if(ctgr != null)
-            mv.addObject("path_ctgr", ctgr);
+            mv.addObject("path_ctgr", "/"+ctgr);
 
         mv.setViewName("MetBoardView");
         return mv;
     }
 
+    // get Meeting
+    @RequestMapping(value = "/getMetJson", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public MeetingDTO getMetJson(int meeting_idx){
+        return meetingMapper.viewMetPost(meeting_idx);
+    }
+
+    // check user before insert met
+    @RequestMapping("/goInsertMet")
+    public String goInsertMet(@ModelAttribute("user") UserVO user, RedirectAttributes rttr){
+        rttr.addFlashAttribute("msg", "로그인 후 이용 가능한 서비스입니다. ");
+        return user == null ? "redirect:/meeting": "redirect:/insertMetForm.html";
+    }
+
+
     // Insert Meeting Post
     @PostMapping("/insertMet")
     public String insertMet(MeetingDTO meetingDTO, Model m, MultipartRequest mreq, @ModelAttribute("user") UserVO user){
 
-
+        System.out.println("--------------------file error----------------");
+        System.out.println(mreq);
         meetingDTO.setWriter_nickname(user.getNickname());
         boolean result = meetingMapper.insertMet(meetingDTO);
         int meeting_idx = meetingMapper.getIdxOfCurrentMet();
@@ -74,7 +94,7 @@ public class MeetingController {
             // 상대 경로를 찾는 함수인 getRealPath()는 프로젝트 폴더 구조에서 resources가 아닌 webapp 폴더를 우선으로 찾고
             //  해당 폴더가 존재하지 않으면 위와 같이 임시 폴더를 찾아간다.
             // webapp 폴더를 만드는 방법도 있으나, Spring Boot는 jar로 배포되기 때문에 webapp 폴더를 만든다면 정상 배포 되지 않는다.
-            String realPath = "C:/UNIMEETING/unimeeting/src/main/resources/static" + path;
+            String realPath = "C:/workspace/uniMetting/unimeeting/src/main/resources/static" + path;
             File isDir = new File(realPath);
             if (!isDir.isDirectory()) {
                 isDir.mkdirs();
@@ -141,20 +161,17 @@ public class MeetingController {
 
 
 
-
-    // get Meeting
-    @RequestMapping(value = "/getMetJson", produces = "application/json; charset=utf-8")
-    @ResponseBody
-    public MeetingDTO getMetJson(int idx){
-        return meetingMapper.viewMetPost(idx);
-    }
-
     // delete meeting
     @RequestMapping("/deleteMet")
     public String deleteMetPost(int idx, String writer_nickname){ // HttpSession
         return meetingMapper.deleteMeeting(idx, writer_nickname) ? "redirect:/meeting" : "redirect:/";
     }
 
+//    @RequestMapping("/updateMetForm")
+//    public String updateMetForm(int idx){
+//        return
+//    }
+//
     // update meeting
     @RequestMapping("/updateMet")
     public String updateMetPost(MeetingDTO meetingDTO,Model m){

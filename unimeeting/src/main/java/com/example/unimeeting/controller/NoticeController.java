@@ -1,19 +1,17 @@
 package com.example.unimeeting.controller;
 import com.example.unimeeting.dao.NoticeMapper;
+import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.unimeeting.domain.NoticeVO;
 import com.example.unimeeting.domain.UserVO;
 
 @Controller
-@RequestMapping("/notice")
+@RequestMapping("/board")
 @SessionAttributes("user")
 
 public class NoticeController {
@@ -29,11 +27,11 @@ public class NoticeController {
     NoticeMapper noticeMapper;
 
     //=======공지 게시판 글 목록=========//
-    @RequestMapping("/list")
-    public ModelAndView process() {
+    @RequestMapping("/{type}")
+    public ModelAndView process(@PathVariable("type") String type) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("noticeList");
-        mav.addObject("list", noticeMapper.selectList());
+        mav.addObject("list", noticeMapper.selectList(type));
         return mav;
     }
     // ======공지 글 상세페이지 ======//
@@ -47,23 +45,40 @@ public class NoticeController {
     //========공지 작성=================//
     @RequestMapping("/write")
     public String write(NoticeVO noticeVO,@ModelAttribute("user") UserVO user){
-        noticeVO.setType("1");
+        System.out.println(noticeVO+"------------------------------");
         noticeVO.setWriter_nickname(user.getNickname());
         noticeMapper.insertNotice(noticeVO);
-        return "redirect:/notice/list";
+        return "redirect:/board/"+noticeVO.getType();
+    }
+    //=====공지 삭제 ===========//
+//    @RequestMapping("/delete")
+//    public String deleteNotice(NoticeVO noticeVO ,@ModelAttribute("user") UserVO user){
+//        System.out.println(noticeVO+"delete______________________________________");
+//        if (noticeMapper.isWriter(noticeVO.getIdx(), user.getNickname())==1 ){
+//            noticeMapper.deleteNotice(noticeVO.getIdx());
+//        }
+//        return "redirect:/board/"+noticeVO.getType();
+//    }
+    @RequestMapping("/delete")
+    public String deleteNotice(int idx, String type, @ModelAttribute("user") UserVO user){
+        if (noticeMapper.isWriter(idx, user.getNickname())==1 ){
+            noticeMapper.deleteNotice(idx);
+        }
+        return "redirect:/board/"+type;
     }
 
-//    @RequestMapping("/delete")
-//    public StrindeleteNotice(int idx,@ModelAttribute("user") UserVO user){
-//
-//        noticeMapper.deleteNotice(idx, user.getNickname());
-//        return "redirect:/notice/list";
-//    }
+    @RequestMapping("/update")
+    public String updateNotice(NoticeVO noticeVO ,@ModelAttribute("user") UserVO user){
+        if(noticeMapper.isWriter(noticeVO.getIdx(), user.getNickname())==1){
+            noticeMapper.updateNotice(noticeVO);
+        }
+        return "redirect:/board/detail?idx="+noticeVO.getIdx();
+    }
+    @RequestMapping(value = "/updateJSON", produces = "application/json; charset=utf-8")
 
-
-
-
-
-
+    @ResponseBody
+    public NoticeVO updateJSON(int idx){
+        return noticeMapper.selectNotice(idx);
+    }
 
 }

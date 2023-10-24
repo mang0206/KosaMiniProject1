@@ -3,31 +3,39 @@
     border-bottom: none;
     margin-top: 30px;
 }
+
 button.btn.btn-primary.btn-block {
     margin-bottom: 8px;
     background-color: #5302FE;
+
 }
+
 button#register_button {
     border-color: #5302FE;
     background-color: white;
 }
-#register_text{
-    color:#5302FE;
+
+#register_text {
+    color: #5302FE;
 }
 
 #id_card {
     width: 580px;
     height: 430px;
 }
+
 div#register_card {
     width: 580px;
     /* height: auto; */
 }
-#title_text{
+
+#title_text {
     font-weight: bold;
 }
+
 button.btn.btn-primary {
     background: #5302FE;
+    border-color: #5302FE;
 }
 
 

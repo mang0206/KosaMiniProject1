@@ -2,9 +2,13 @@ let meetings = {'idx':1, 'title':"미팅 제목1", "category":"카테고리1","l
           "create_datetime":"2023-10-16 15:00:00", "writer_nickname":'사용자1', "recruits":5};
 
 function makeMeetingBlock(meeting) {
+  console.log(meeting.img_url)
   const div = document.createElement('div');
   div.id = "meeting_div";
-  
+  div.addEventListener('click', function() {
+    window.location.href = `/meeting/post?meeting_idx=${meeting.idx}`;
+  });
+
   const img_div = document.createElement('div');
   img_div.id = "img_div";
 

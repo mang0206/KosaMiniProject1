@@ -14,6 +14,13 @@ public interface MeetingMapper {
     @Select("select distinct category from meeting order by category")
     public List<String> viewCtgy();
 
+    @Select("select count(*) from meeting")
+    public int cntMetAll();
+
+    @Select("select count(*) from meeting where category=#{category}")
+    public int cntMetOfCategory(String category);
+
+
     // Meeting List
 //    @Select("<script>select * " +
 //            "from meeting " +
@@ -42,7 +49,6 @@ public interface MeetingMapper {
     // View Meeting Post
     @Select("select * from meeting where idx = ${idx}")
     public MeetingDTO viewMetPost(@Param("idx") int idx);
-
     // Count Meeting member
     @Select("select count(*) from meeting_member where meeting_idx = ${idx}")
     public int countMetMem(@Param("idx") int idx);
