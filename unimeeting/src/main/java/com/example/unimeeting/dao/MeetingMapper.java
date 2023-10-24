@@ -2,6 +2,7 @@ package com.example.unimeeting.dao;
 
 import com.example.unimeeting.domain.MeetingCntDTO;
 import com.example.unimeeting.domain.MeetingDTO;
+import com.example.unimeeting.domain.MeetingImageDTO;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -35,8 +36,8 @@ public interface MeetingMapper {
         "<where>" +
         "<if test='category!=null'>category like #{category} </if>" +
         "<if test='search!=null'>and title like concat('%',#{search}, '%')</if>" +
-        "</where>order by idx desc limit 4 offset ${page} </script>")
-    public List<MeetingCntDTO> viewMetBoard(@Param("category") String category,@Param("search") String search, @Param("page") int page);
+        "</where>order by idx desc </script>")
+    public List<MeetingCntDTO> viewMetBoard(@Param("category") String category,@Param("search") String search);
 
     // Insert Meeting
     @Insert("insert into meeting (title, category, location, start_datetime, created_datetime, content_text,writer_nickname, recruits) " +
@@ -60,6 +61,33 @@ public interface MeetingMapper {
 
     @Select("select count(*) from meeting where idx=#{idx} && writer_nickname=#{writer_nickname}")
     public int isWriter(@Param("idx") int idx,@Param("writer_nickname")  String writer_nickname);
+
+    @Insert("insert into meeting_image (meeting_idx, image_url) values (#{meeting_idx}, #{image_url})")
+    public boolean insertMetImg(MeetingImageDTO meetingImageDTO);
+
+    @Select("select image_url from meeting_image where meeting_idx=#{meeting_idx}")
+    public String[] selectMetImg(int meeting_idx);
+
+    @Select("select count(*) from meeting_member where meeting_idx=#{meeting_idx} and user_idx=#{user_idx}")
+    public int checkMetMem(@Param("meeting_idx") int meeting_idx,@Param("user_idx") int user_idx);
+
+    @Insert("insert into meeting_member (meeting_idx, user_idx, accepted) values (#{meeting_idx} , #{user_idx}, 0)")
+    public void insertMetMem(@Param("meeting_idx") int meeting_idx,@Param("user_idx") int user_idx);
+
+    @Delete("delete from meeting_member where meeting_idx=#{meeting_idx} and user_idx=#{user_idx}")
+    public boolean deleteMetMem(@Param("meeting_idx") int meeting_idx,@Param("user_idx") int user_idx);
+
+    @Update("update meeting_member set accepted=true where meeting_idx=#{idx} and user_idx=#{user_idx}")
+    public boolean updateApplyMetMem(@Param("meeting_idx") int meeting_idx,@Param("user_idx") int user_idx);
+
+    @Select("select count(*) from scrap where meeting_idx=#{meeting_idx} and user_idx=#{user_idx}")
+    public int checkScrap(@Param("meeting_idx") int meeting_idx, @Param("user_idx") int user_idx);
+
+    @Insert("insert into scrap (meeting_idx, user_idx) value (#{meeting_idx}, #{user_idx})")
+    public boolean insertScrap(@Param("meeting_idx") int meeting_idx,@Param("user_idx") int user_idx);
+
+    @Delete("delete from scrap where meeting_idx=#{meeting_idx} and user_idx=#{user_idx}")
+    public boolean deleteScrap(@Param("meeting_idx") int meeting_idx,@Param("user_idx") int user_idx);
 
     //    // page
 //    @Select("<script>select count(*) from meeting"+

@@ -19,6 +19,7 @@ public class InfoDTO {
     private String image_url;
     private String code;
     private String displayName;
+    private String created_datetime;
 
 //    public MainInfoDTO (String id, String nickname, String title, String content_text, String imgUrl) {
 //        this.id =  id;

@@ -13,7 +13,6 @@ public class MeetingCntDTO {
   private int now_recruits;
   private int recruits;
   private String content_text;
-  private String content_img;
   private String writer_nickname;
   private String img_url;
 }

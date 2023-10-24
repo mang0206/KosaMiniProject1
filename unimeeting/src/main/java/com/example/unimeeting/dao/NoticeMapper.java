@@ -9,12 +9,12 @@ import java.util.Map;
 
 public interface NoticeMapper {
 
+
     @Select("<script>SELECT * FROM board " +
             "<where>type=#{type} " +
             "<if test='search!=null'>and title like concat('%',#{search}, '%') </if>" +
             "</where>ORDER BY idx DESC</script>")
     public List<NoticeVO> selectList(@Param("type") String type,@Param("search") String search);
-    //글 타입.
 
     @Insert("INSERT INTO board (title,content_text,type,created_datetime,writer_nickname) VALUES (#{title},#{content_text},#{type},now(),#{writer_nickname})")
     public void insertNotice(NoticeVO notice);
