@@ -68,7 +68,7 @@ public class MeetingController {
     @ResponseBody
     public MeetingDTO getMetJson(int meeting_idx){
         MeetingDTO meetingDTO = meetingMapper.viewMetPost(meeting_idx);
-        meetingDTO.setContent_img(meetingImageMapper.selectMetImg(meeting_idx));
+        meetingDTO.setContent_img(meetingMapper.selectMetImg(meeting_idx));
         return meetingDTO;
     }
 
