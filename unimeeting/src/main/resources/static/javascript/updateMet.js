@@ -24,8 +24,9 @@ xhr.onload = () => {
     document.getElementsByName("location")[0].defaultValue = json['location'];
     document.getElementsByName("writer_nickname")[0].defaultValue = json['writer_nickname'];
     document.getElementsByName("idx")[0].defaultValue = json['idx'];
-    for(let img in json['content_img']){
-        document.getElementById("images").defaultValue = img;
+    for(let img of json['content_img']){
+        document.getElementById("images").src = img;
+        console.log(img);
     }
 }
 xhr.open("GET", `/meeting/getMetJson?meeting_idx=${searchParams.get("meeting_idx")}`, true);
