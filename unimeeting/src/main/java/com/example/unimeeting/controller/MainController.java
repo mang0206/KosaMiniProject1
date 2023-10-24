@@ -124,16 +124,8 @@ public class MainController {
     }
 
     @GetMapping("/logout")
-    public String logout(@ModelAttribute("user") UserVO id,WebRequest request, SessionStatus status, Model model){
+    public String logout(SessionStatus status){
         status.setComplete();
-        request.removeAttribute("user", WebRequest.SCOPE_SESSION);
-        System.out.println("logout");
-        model.addAttribute("data", "hello");
-        model.addAttribute("list", dao.listM());
-        System.out.println(id);
-        if (id != null){
-            model.addAttribute("inout",id);
-        }
         return "redirect:/mainPage";
     }
 

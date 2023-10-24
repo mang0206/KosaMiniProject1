@@ -17,8 +17,12 @@
 <!-- 중앙 컨텐츠 시작 -->
 <div th:replace="/nav ::nav"></div>
 <div class="container mt-5">
+    <form id="search" method="get"
+          th:action="@{/board/__${type}__}">
+                <input id="search-text" name="search" class="form-control placeholder-image" placeholder="검색어를 입력해 주세요"><br>
+    </form>
     <table class="table table-bordered">
-        <input type="text" class="form-control placeholder-image" placeholder="검색어를 입력해 주세요">
+
         <thead class="thead-dark">
         <tr>
             <th id="noticelist_num" style="width: 150px">번호</th>
@@ -38,7 +42,9 @@
         </tr>
         </tbody>
     </table>
-    <button class="btn btn-primary" onclick="location.href='/noticeWrite.html'">게시글 작성</button>
+    <th:block th:if="${user}">
+        <button class="btn btn-primary" onclick="location.href='/noticeWrite.html'">게시글 작성</button>
+    </th:block>
 </div>
 <!-- 중앙 컨텐츠 끝 -->
 

@@ -78,7 +78,9 @@ public class MeetingController {
     @RequestMapping(value = "/getMetJson", produces = "application/json; charset=utf-8")
     @ResponseBody
     public MeetingDTO getMetJson(int meeting_idx){
-        return meetingMapper.viewMetPost(meeting_idx);
+        MeetingDTO meetingDTO = meetingMapper.viewMetPost(meeting_idx);
+        meetingDTO.setContent_img(meetingImageMapper.selectMetImg(meeting_idx));
+        return meetingDTO;
     }
 
     // check user before insert met
