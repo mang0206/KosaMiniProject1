@@ -18,17 +18,13 @@ import org.slf4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-//import static jdk.internal.org.jline.utils.Colors.s;
 
 @Controller
 @SessionAttributes("user")
 public class MainController {
 
-
     @Autowired
     InfoMapper dao;
-
-    private static final Logger logger = LoggerFactory.getLogger(MainController.class); //로그 기록 남기기 위해
 
     @ModelAttribute("user")
     public UserVO inout(){
@@ -55,48 +51,6 @@ public class MainController {
         }
         return "mainPage";
     }
-//    @GetMapping("/mainPage/list") //소모임 리스트
-//    public ModelAndView sortedlist(@RequestParam("value") String changeTest) {
-//        ModelAndView mav = new ModelAndView();
-//
-//        if (changeTest.equals("1")){
-//            mav.addObject("list", "hello");
-//        } else if (changeTest.equals("2")){
-//            mav.addObject("list", dao.titleSort());
-//        } else if (changeTest.equals("3")) {
-//            mav.addObject("list", "hello");
-//        } else {
-//            mav.addObject("list", dao.listM());
-//        }
-//        mav.setViewName("mainPage");
-//        return mav;
-//    }
-    
-    @RequestMapping(value = "/join", method = RequestMethod.GET)
-    public void joinGet() {
-
-        logger.info("회원가입 페이지");
-    }
-
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public void loginGet() {
-
-        logger.info("로그인 페이지");
-    }
-
-
-
-//    public String test(Model model, @RequestParam("value") String changeTest) {
-//
-//        if (changeTest.equals("1")){
-//            model.addAttribute("data", "hello");
-//        } else if (changeTest.equals("2")){
-//            model.addAttribute("data", "hello");
-//        } else if (changeTest.equals("3")) {
-//            model.addAttribute("data", "hello");
-//        }
-//        return "mainPage";
-//    }
 
     @GetMapping("/listSort")
     public ModelAndView sort() {
@@ -105,8 +59,6 @@ public class MainController {
         mav.addObject("sort", sort);
         mav.setViewName("mainPage");
         return mav;
-
-
     }
 
     @GetMapping("/search") //검색창
@@ -136,10 +88,4 @@ public class MainController {
         }
         return "redirect:/mainPage";
     }
-
-
-
 }
-
-
-
