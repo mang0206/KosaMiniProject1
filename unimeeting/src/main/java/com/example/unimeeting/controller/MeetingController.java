@@ -26,6 +26,7 @@ public class MeetingController {
     // Mapper
     @Autowired
     MeetingMapper meetingMapper;
+
     // get Session
     @ModelAttribute("user")
     public UserVO sessionLogin(){
@@ -86,10 +87,10 @@ public class MeetingController {
         System.out.println(mreq);
         meetingDTO.setWriter_nickname(user.getNickname());
         boolean result = meetingMapper.insertMet(meetingDTO);
-        int meeting_idx = meetingMapper.getIdxOfCurrentMet();
         List<MultipartFile> list = mreq.getFiles("images");
         if(!list.isEmpty()){
 
+            int meeting_idx = meetingMapper.getIdxOfCurrentMet();
             String path = "/images/" + meeting_idx;
             // 상대 경로를 찾는 함수인 getRealPath()는 프로젝트 폴더 구조에서 resources가 아닌 webapp 폴더를 우선으로 찾고
             //  해당 폴더가 존재하지 않으면 위와 같이 임시 폴더를 찾아간다.

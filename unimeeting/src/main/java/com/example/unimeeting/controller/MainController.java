@@ -36,7 +36,7 @@ public class MainController {
     }
 
     @GetMapping("/mainPage") //메인페이지 & 로그인/로그아웃 관리
-    public String test(Model model, @ModelAttribute("user") UserVO id, @RequestParam(value = "value", defaultValue = "no") String changeTest) {
+    public String test(Model model, @ModelAttribute("user") UserVO id, @RequestParam(defaultValue = "no") String changeTest) {
         System.out.println("main");
         model.addAttribute("data", "hello");
         if (changeTest.equals("popular")){
