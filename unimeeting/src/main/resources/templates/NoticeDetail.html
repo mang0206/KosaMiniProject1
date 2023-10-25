@@ -18,8 +18,9 @@
 
     </div>
 
-    <a class="btn btn-danger btn-delete" th:href="@{/board/delete(idx=${detail.idx})}">삭제</a>
+    <a class="btn btn-danger btn-delete" th:href="@{/board/delete(idx=${detail.idx},type=${detail.type})}">삭제</a>
         <a class="btn btn-danger btn-delete" th:href="@{/updateWrite.html}">수정</a>
+        <a class="btn btn-danger btn-delete" th:href="@{/board/{type}(type=${detail.type})}">목록</a>
 </div>
 
 <!-- 부트스트랩 JS, jQuery, Popper.js 불러오기 -->
