@@ -10,33 +10,25 @@ import java.util.List;
 @Mapper
 public interface MeetingMapper {
 
-    // Category List
+    // 현재 meeting table에 존재하는 category들을 가져온다 (중복 제거)
     @Select("select distinct category from meeting order by category")
     public List<String> viewCtgy();
 
-    @Select("select count(*) from meeting")
-    public int cntMetAll();
+    // pagination 시 몇 개의 page
+    @Select("<script>select count(*) from meeting <where>" +
+            "<if test='category!=null'>category like #{category}</if>" +
+            "<if test='search!=null'>and title like concat('%',#{search}, '%')</if>" +
+            "</where></script>")
+    public int cntMet(@Param("category") String category,@Param("search") String search);
 
-    @Select("select count(*) from meeting where category=#{category}")
-    public int cntMetOfCategory(String category);
-
-
-    // Meeting List
-//    @Select("<script>select * " +
-//            "from meeting " +
-//            "<where>" +
-//            "<if test='category!=null'>category = #{category} </if>" +
-//            "<if test='search!=null'>and title like concat('%',#{search}, '%')</if>" +
-//            "</where>order by idx desc limit 4 offset ${page}</script>")
-//    public List<MeetingDTO> viewMetBoard(@Param("category") String category,@Param("search") String search,@Param("page") int page );
     @Select("<script>select * , image_url as img_url " +
-        "from meeting m left join ( select meeting_idx, count(*) as now_recruits " +
-        "from meeting_member group by meeting_idx ) mb on m.idx = mb.meeting_idx " +
-        "left join ( select meeting_idx, image_url from meeting_image group by meeting_idx ) mi on m.idx = mi.meeting_idx " +
-        "<where>" +
-        "<if test='category!=null'>category like #{category} </if>" +
-        "<if test='search!=null'>and title like concat('%',#{search}, '%')</if>" +
-        "</where>order by idx desc </script>")
+            "from meeting m left join ( select meeting_idx, count(*) as now_recruits " +
+            "from meeting_member group by meeting_idx ) mb on m.idx = mb.meeting_idx " +
+            "left join ( select meeting_idx, image_url from meeting_image group by meeting_idx ) mi on m.idx = mi.meeting_idx " +
+            "<where>" +
+            "<if test='category!=null'>category like #{category} </if>" +
+            "<if test='search!=null'>and title like concat('%',#{search}, '%')</if>" +
+            "</where>order by idx desc </script>")
     public List<MeetingCntDTO> viewMetBoard(@Param("category") String category,@Param("search") String search);
 
     // Insert Meeting
@@ -53,8 +45,8 @@ public interface MeetingMapper {
     @Select("select count(*) from meeting_member where meeting_idx = ${idx}")
     public int countMetMem(@Param("idx") int idx);
 
-    @Delete("delete from meeting where idx=#{idx} && writer_nickname=#{writer_nickname}")
-    public boolean deleteMeeting(@Param("idx") int idx,@Param("writer_nickname")  String writer_nickname);
+    @Delete("delete from meeting where idx=#{idx}")
+    public boolean deleteMeeting(@Param("idx") int idx);
 
     @Update("update meeting set title=#{title}, category=#{category}, location=#{location}, start_datetime=#{start_datetime}, content_text=#{content_text},recruits=#{recruits} where idx=#{idx} and writer_nickname=#{writer_nickname}")
     public boolean updateMet(MeetingDTO meetingDTO);
@@ -89,11 +81,4 @@ public interface MeetingMapper {
     @Delete("delete from scrap where meeting_idx=#{meeting_idx} and user_idx=#{user_idx}")
     public boolean deleteScrap(@Param("meeting_idx") int meeting_idx,@Param("user_idx") int user_idx);
 
-    //    // page
-//    @Select("<script>select count(*) from meeting"+
-//            "<where>" +
-//            "<if test='category!=null'>category = #{category} </if>" +
-//            "<if test='search!=null'>title like concat('%',#{search}, '%')</if>" +
-//            "</where></script>")
-//    public int countMet(@Param("category") String category,@Param("search") String search);
 }
