@@ -4,7 +4,7 @@ import com.example.unimeeting.dao.MeetingImageMapper;
 import com.example.unimeeting.dao.MeetingMapper;
 import com.example.unimeeting.dao.MeetingMemberMapper;
 import com.example.unimeeting.dao.ScrapMapper;
-import com.example.unimeeting.domain.MeetingCntDTO;
+import com.example.unimeeting.domain.MeetingJoinDTO;
 import com.example.unimeeting.domain.MeetingDTO;
 import com.example.unimeeting.domain.MeetingImageDTO;
 import com.example.unimeeting.domain.UserVO;
@@ -59,7 +59,7 @@ public class MeetingController {
         mv.addObject("ctgr_list", getCategory());
 //        List<MeetingDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search, (page-1)*4);
         System.out.println("ctgr = " + ctgr);
-        List<MeetingCntDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search);
+        List<MeetingJoinDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search);
         mv.addObject("met_list", meetings);
         System.out.println(meetings.size());
         int metCnt = ctgr == null ? meetingMapper.cntMetAll() : meetingMapper.cntMetOfCategory(ctgr);

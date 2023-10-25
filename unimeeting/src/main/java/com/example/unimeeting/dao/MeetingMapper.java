@@ -1,6 +1,6 @@
 package com.example.unimeeting.dao;
 
-import com.example.unimeeting.domain.MeetingCntDTO;
+import com.example.unimeeting.domain.MeetingJoinDTO;
 import com.example.unimeeting.domain.MeetingDTO;
 import org.apache.ibatis.annotations.*;
 
@@ -36,7 +36,7 @@ public interface MeetingMapper {
         "<if test='category!=null'>category like #{category} </if>" +
         "<if test='search!=null'>and title like concat('%',#{search}, '%')</if>" +
         "</where>order by idx desc </script>")
-    public List<MeetingCntDTO> viewMetBoard(@Param("category") String category,@Param("search") String search);
+    public List<MeetingJoinDTO> viewMetBoard(@Param("category") String category,@Param("search") String search);
 
     // Insert Meeting
     @Insert("insert into meeting (title, category, location, start_datetime, created_datetime, content_text,writer_nickname, recruits) " +
