@@ -40,17 +40,6 @@ public class MeetingController {
         public ModelAndView viewMetBoard(@PathVariable(required = false) String ctgr,@RequestParam(required = false) String search, @RequestParam(defaultValue = "1") int page){
 
         ModelAndView mv = new ModelAndView();
-        mv.addObject("ctgr_list", getCategory());
-//        List<MeetingDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search, (page-1)*4);
-        System.out.println("ctgr = " + ctgr);
-        List<MeetingJoinDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search);
-        mv.addObject("met_list", meetings);
-        System.out.println(meetings.size());
-        int metCnt = ctgr == null ? meetingMapper.cntMetAll() : meetingMapper.cntMetOfCategory(ctgr);
-        metCnt /= 4;
-
-        mv.addObject("cnt", new int[metCnt]);
-
 
         // < ========== 카테고리 ========== >
         mv.addObject("ctgr_list", meetingMapper.viewCtgy());
