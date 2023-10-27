@@ -28,10 +28,11 @@ public class NoticeController {
 
     //=======공지 게시판 글 목록=========//
     @RequestMapping("/{type}")
-    public ModelAndView process(@PathVariable("type") String type) {
+    public ModelAndView process(@PathVariable("type") String type, @RequestParam(required = false) String search, @ModelAttribute("user") UserVO user) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("noticeList");
-        mav.addObject("list", noticeMapper.selectList(type));
+        mav.addObject("list", noticeMapper.selectList(type, search!=null ? search.trim() : search));
+        mav.addObject("user", user);
         return mav;
     }
     // ======공지 글 상세페이지 ======//
