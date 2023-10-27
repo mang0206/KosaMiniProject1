@@ -24,11 +24,6 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/mypage")
 public class MypageController {
 
-//  @ModelAttribute("user")
-//  public UserVO sessionuser() {
-//    return null;
-//  }
-
   @ModelAttribute("user")
   public UserVO sessionuser() {
     return null;
@@ -48,8 +43,9 @@ public class MypageController {
   MypageMapper dao;
 
   /* Mypage 참여 목록 */
+  /* 처음 접속할때의 Mapping 메서드로 참여한 미팅 리스트를 담아서 myPage html을 반환해준다.*/
   @GetMapping("")
-  public String myDefault(Model model, @ModelAttribute("user") UserVO s_user, HttpSession httpSession) {
+  public String myDefault(Model model, @ModelAttribute("user") UserVO s_user) {
     if(s_user == null){
       return "redirect:/userLogin.html";
     }
@@ -65,33 +61,30 @@ public class MypageController {
     return s_user;
   }
 
-  /* 참여, 스크랩, 생성한 미팅 목록 JSON 반환 함수*/
+  /* 참여, 스크랩, 생성한 미팅 목록 JSON 반환 함수 */
   @ResponseBody
   @GetMapping(value = "/{select}", produces = "application/json; charset=utf-8")
   public MyInfoMeetingDTO myInfoMeeting(@PathVariable String select,
       @ModelAttribute("user") UserVO s_user, Model model) {
     MyInfoMeetingDTO myInfoMeetingDTO = new MyInfoMeetingDTO();
     switch (select) {
+      // 참여 소모임 Ajax 요청을 받은 경우
       case "attend":
         myInfoMeetingDTO.setDivision(select);
         myInfoMeetingDTO.setList(dao.attendList(s_user));
         break;
+      // 생성한 소모임 Ajax 요청을 받은 경우
       case "create":
         myInfoMeetingDTO.setDivision(select);
         myInfoMeetingDTO.setList(dao.createList(s_user));
         break;
+      // 스크랩 소모임 Ajax 요청을 받은 경우
       case "scrap":
         myInfoMeetingDTO.setDivision(select);
         myInfoMeetingDTO.setList(dao.scrapList(s_user));
         break;
-      case "myInfo":
-        model.addAttribute("info_user", s_user);
-        break;
     }
-    System.out.println(s_user);
-    System.out.println(dao.attendList(s_user));
-    System.out.println(dao.createList(s_user));
-    System.out.println(dao.scrapList(s_user));
+
     return myInfoMeetingDTO;
   }
 

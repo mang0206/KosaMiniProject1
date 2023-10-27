@@ -1,7 +1,7 @@
 package com.example.unimeeting.controller;
 
 import com.example.unimeeting.dao.MeetingMapper;
-import com.example.unimeeting.domain.MeetingCntDTO;
+import com.example.unimeeting.domain.MeetingJoinDTO;
 import com.example.unimeeting.domain.MeetingDTO;
 import com.example.unimeeting.domain.MeetingImageDTO;
 import com.example.unimeeting.domain.UserVO;
@@ -40,6 +40,17 @@ public class MeetingController {
         public ModelAndView viewMetBoard(@PathVariable(required = false) String ctgr,@RequestParam(required = false) String search, @RequestParam(defaultValue = "1") int page){
 
         ModelAndView mv = new ModelAndView();
+        mv.addObject("ctgr_list", getCategory());
+//        List<MeetingDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search, (page-1)*4);
+        System.out.println("ctgr = " + ctgr);
+        List<MeetingJoinDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search);
+        mv.addObject("met_list", meetings);
+        System.out.println(meetings.size());
+        int metCnt = ctgr == null ? meetingMapper.cntMetAll() : meetingMapper.cntMetOfCategory(ctgr);
+        metCnt /= 4;
+
+        mv.addObject("cnt", new int[metCnt]);
+
 
         // < ========== 카테고리 ========== >
         mv.addObject("ctgr_list", meetingMapper.viewCtgy());
@@ -50,7 +61,7 @@ public class MeetingController {
         // 검색어가 있을 때 공백이 있으면 제거
         if(search!=null) search = search.trim();
         // <미팅 글 리스트>
-        List<MeetingCntDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search/*, (page-1)*4 */);
+        List<MeetingJoinDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search/*, (page-1)*4 */);
         mv.addObject("met_list", meetings);
 
         //< ========== 페이지네이션 ========== >
