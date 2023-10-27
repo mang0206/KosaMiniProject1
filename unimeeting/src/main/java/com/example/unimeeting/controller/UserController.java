@@ -1,5 +1,4 @@
 package com.example.unimeeting.controller;
-
 import com.example.unimeeting.domain.UserVO;
 import com.example.unimeeting.service.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -8,10 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
 import java.util.Map;
-
 
 @Controller
 @RequestMapping("/user")
@@ -24,40 +21,26 @@ public class UserController {
         this.userService = userService;
     }
 
-    @ModelAttribute
+    @ModelAttribute("user")
     public UserVO loginUser() {
         return new UserVO();
     }
 
     @PostMapping("/register")
-    public String registerUser(UserVO user, Model model) {
-        if (userService.idcheck(user.getUser_id()) != null) {
-
-            model.addAttribute("error", "이미 사용 중인 아이디입니다. 다른 아이디를 입력해주세요.");
-            return "register.html";
-        }
-
+    public String registerUser(UserVO user) {
         userService.registerUser(user);
         return "redirect:/mainPage";
     }
 
-
-    @GetMapping("/check")
-    public ResponseEntity<Map<String, Boolean>> checkUserId(@RequestParam("user_id") String userId) {
-        boolean isAvailable = (userService.idcheck(userId) == null);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("available", isAvailable);
-        return ResponseEntity.ok(response);
-    }
 
     @RequestMapping("/login")
     public String loginpage() {
         return "redirect:/userLogin.html";
     }
 
-    @GetMapping("/check-email")
-    public ResponseEntity<Map<String, Boolean>> checkEmail(@RequestParam("email") String email) {
-        boolean isAvailable = (userService.emailcheck(email) == null);
+    @GetMapping("/check")
+    public ResponseEntity<Map<String, Boolean>> checkUserId(@RequestParam("user_id") String userId) {
+        boolean isAvailable = (userService.idcheck(userId) == null);
         Map<String, Boolean> response = new HashMap<>();
         response.put("available", isAvailable);
         return ResponseEntity.ok(response);
@@ -71,17 +54,23 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/check-email")
+    public ResponseEntity<Map<String, Boolean>> checkEmail(@RequestParam("email") String email) {
+        boolean isAvailable = (userService.emailcheck(email) == null);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("available", isAvailable);
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/login/do")
     public String loginUser(@RequestParam("user_id") String user_id, @RequestParam("password") String password, Model model, HttpSession session) {
         if (userService.authenticateUser(user_id, password)) {
             UserVO user = userService.idcheck(user_id);
             session.setAttribute("user", user);
-            System.out.println(session.getAttribute("user"));
-            return "redirect:/mainPage";
+            return "mainPage";
         } else {
             model.addAttribute("error", "Invalid username or password");
-            return "userLoginError.html";
-
+            return "userLoginError";
         }
     }
 
