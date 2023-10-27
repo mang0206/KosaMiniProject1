@@ -38,7 +38,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean authenticateUser(String user_id, String password) {
         UserVO user = UserMapper.signIn(user_id);
-        System.out.println(user != null && user.getPassword().equals(password));
         return user != null && user.getPassword().equals(password);
     }
 }

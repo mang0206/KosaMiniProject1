@@ -36,7 +36,7 @@ public class MainController {
     }
 
     @GetMapping("/mainPage") //메인페이지 & 로그인/로그아웃 관리
-    public String test(Model model, @ModelAttribute("user") UserVO id, @RequestParam(value = "value", defaultValue = "no") String changeTest) {
+    public String test(Model model, @ModelAttribute("user") UserVO id, @RequestParam(defaultValue = "no") String changeTest) {
         System.out.println("main");
         model.addAttribute("data", "hello");
         if (changeTest.equals("popular")){
@@ -44,7 +44,7 @@ public class MainController {
         } else if (changeTest.equals("title")){
             model.addAttribute("list", dao.titleSort());
         } else if (changeTest.equals("start")) {
-            model.addAttribute("list", dao.startDate());
+            model.addAttribute("list", dao.createDate());
         } else if (changeTest.equals("no")){
             model.addAttribute("list", dao.listM());
             System.out.println(dao.listM());
@@ -55,22 +55,7 @@ public class MainController {
         }
         return "mainPage";
     }
-//    @GetMapping("/mainPage/list") //소모임 리스트
-//    public ModelAndView sortedlist(@RequestParam("value") String changeTest) {
-//        ModelAndView mav = new ModelAndView();
-//
-//        if (changeTest.equals("1")){
-//            mav.addObject("list", "hello");
-//        } else if (changeTest.equals("2")){
-//            mav.addObject("list", dao.titleSort());
-//        } else if (changeTest.equals("3")) {
-//            mav.addObject("list", "hello");
-//        } else {
-//            mav.addObject("list", dao.listM());
-//        }
-//        mav.setViewName("mainPage");
-//        return mav;
-//    }
+
     
     @RequestMapping(value = "/join", method = RequestMethod.GET)
     public void joinGet() {
@@ -86,17 +71,6 @@ public class MainController {
 
 
 
-//    public String test(Model model, @RequestParam("value") String changeTest) {
-//
-//        if (changeTest.equals("1")){
-//            model.addAttribute("data", "hello");
-//        } else if (changeTest.equals("2")){
-//            model.addAttribute("data", "hello");
-//        } else if (changeTest.equals("3")) {
-//            model.addAttribute("data", "hello");
-//        }
-//        return "mainPage";
-//    }
 
     @GetMapping("/listSort")
     public ModelAndView sort() {
@@ -124,20 +98,10 @@ public class MainController {
     }
 
     @GetMapping("/logout")
-    public String logout(@ModelAttribute("user") UserVO id,WebRequest request, SessionStatus status, Model model){
+    public String logout(SessionStatus status){
         status.setComplete();
-        request.removeAttribute("user", WebRequest.SCOPE_SESSION);
-        System.out.println("logout");
-        model.addAttribute("data", "hello");
-        model.addAttribute("list", dao.listM());
-        System.out.println(id);
-        if (id != null){
-            model.addAttribute("inout",id);
-        }
         return "redirect:/mainPage";
     }
-
-
 
 }
 
