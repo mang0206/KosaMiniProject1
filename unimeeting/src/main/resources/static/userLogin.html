@@ -8,11 +8,7 @@
   <link rel="stylesheet" href="/css/userLogin.css">
   <link th:href="@{/css/nav.css}" rel="stylesheet" type="text/css">
 </head>
-<script>
-  console.log(msg);
-  console.log("msg");
 
-</script>
 <body class="bg-light">
 <div th:replace="/nav ::nav"></div>
 <div class="container">
@@ -29,7 +25,7 @@
               <input type="text" class="form-control" id="user_id" name="user_id" placeholder="아이디를 입력해 주세요" required>
             </div>
             <div class="form-group">
-              <label for="password">비밀번호1</label>
+              <label for="password">비밀번호</label>
               <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호를 입력해 주세요" required>
             </div>
             <button type="submit" class="btn btn-primary btn-block">로그인</button>
@@ -43,5 +39,30 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  document.getElementById("login_form").addEventListener("submit", function(event) {
+    event.preventDefault();
+    var formData = new FormData(event.target);
+
+    fetch("/user/login/do", {
+      method: "POST",
+      body: formData
+    })
+            .then(function(response) {
+              if (response.ok) {
+                // 로그인 성공 시 메인 페이지로 리다이렉트 또는 다른 동작 수행
+                window.location.href = "/mainPage";
+              } else {
+                // 로그인 실패 시 오류 메시지를 팝업 창으로 표시
+                response.text().then(function(errorMessage) {
+                  alert(errorMessage); // 팝업 창에 메시지 표시
+                });
+              }
+            })
+            .catch(function(error) {
+              console.error(error);
+            });
+  });
+</script>
 </body>
 </html>
