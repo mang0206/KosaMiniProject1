@@ -15,6 +15,8 @@ xhr.onload = () => {
     //for(let target in document.getElementsByName("category")){
     //    if(target.value)
     //}
+    console.log(json);
+    document.getElementsByName("category")[0].checked = json['category'];
     document.getElementsByName("title")[0].defaultValue = json['title'];
     document.getElementsByName("recruits")[0].defaultValue = json['recruits'];
     document.getElementsByName("start_datetime")[0].defaultValue = json['start_datetime'].substring(0, 10);
@@ -22,6 +24,10 @@ xhr.onload = () => {
     document.getElementsByName("location")[0].defaultValue = json['location'];
     document.getElementsByName("writer_nickname")[0].defaultValue = json['writer_nickname'];
     document.getElementsByName("idx")[0].defaultValue = json['idx'];
+    for(let img of json['content_img']){
+        document.getElementById("images").src = img;
+        console.log(img);
+    }
 }
-xhr.open("GET", `/meeting/getMetJson?idx=${searchParams.get("meeting_idx")}`, true);
+xhr.open("GET", `/meeting/getMetJson?meeting_idx=${searchParams.get("meeting_idx")}`, true);
 xhr.send();

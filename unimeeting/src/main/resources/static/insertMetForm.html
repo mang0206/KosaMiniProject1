@@ -29,15 +29,33 @@
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="category" id="gridRadios2" value="스터디">
+                <input class="form-check-input" type="radio" name="category" id="gridRadios2" value="게임">
                 <label class="form-check-label" for="gridRadios2">
-                    스터디
+                    게임
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="category" id="gridRadios3" value="독서">
+                <input class="form-check-input" type="radio" name="category" id="gridRadios3" value="애니">
                 <label class="form-check-label" for="gridRadios3">
-                    독서
+                    애니
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="category" id="gridRadios4" value="영화">
+                <label class="form-check-label" for="gridRadios4">
+                    영화
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="category" id="gridRadios5" value="요리">
+                <label class="form-check-label" for="gridRadios5">
+                    요리
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="category" id="gridRadios6" value="코딩">
+                <label class="form-check-label" for="gridRadios6">
+                    코딩
                 </label>
             </div>
         </div>
@@ -46,6 +64,12 @@
         <label for="title" class="col-sm-2 form-label col-form-label">제목</label>
         <div class="col-sm-10">
             <input type="text" class="form-control" name="title" id="title" minlength="2" required>
+        </div>
+    </div>
+    <div class="row mb-3 position-relative">
+        <label for="location" class="col-sm-2 form-label col-form-label">장소</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="location" id="location" required>
         </div>
     </div>
     <div class="row mb-3">
@@ -65,14 +89,14 @@
     </div>
     <div class="row mb-3">
         <label for="content_text" class="form-label">소개</label>
-        <textarea class="form-control" id="content_text" name="content_text"  rows="10" required></textarea>
+        <textarea class="form-control" id="content_text" name="content_text"  rows="10" maxlength="1000" required></textarea>
 <!--        <div class="invalid-feedback">-->
 <!--            Please enter a message in the textarea.-->
 <!--        </div>-->
     </div>
     <div class="mb-3">
         <label for="images" class="form-label">사진</label>
-        <input class="form-control" type="file" id="images" multiple>
+        <input class="form-control" type="file" id="images"name="images" multiple>
     </div>
 
     <button id="submit" type="submit" class="btn btn-primary" onclick="was_validated()">등록</button><!--    제목: <label><input id="title" name="title" /><br></label>-->
@@ -80,7 +104,6 @@
 <!--    시작일: <label><input name="start_datetime" type="date"/><br></label>-->
 <!--    소개: <label><input name="content_text" maxlength="500" /><br></label>-->
 <!--    사진: <label><input type="file" name="images" multiple/><br></label>-->
-    장소(임시): <label><input name="location" required/><br></label>
 </form>
 
 

@@ -6,6 +6,7 @@
   <title>로그인</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/userLogin.css">
+  <link th:href="@{/css/nav.css}" rel="stylesheet" type="text/css">
 </head>
 <script>
   console.log(msg);
@@ -13,6 +14,7 @@
 
 </script>
 <body class="bg-light">
+<div th:replace="/nav ::nav"></div>
 <div class="container">
   <div class="row justify-content-center mt-5">
     <div class="col-md-6">

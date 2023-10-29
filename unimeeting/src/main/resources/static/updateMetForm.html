@@ -10,24 +10,7 @@
 
 </head>
 <body>
-<<<<<<< HEAD
-<script src="javascript/meetingUpdateForm.js"></script>
-<form action="/meeting/updateMet" method="post">
-    카테고리<br>
-    <label><input type="radio" name="category" value="운동" checked>운동</label>
-    <label><input type="radio" name="category" value="스터디" >스터디</label>
-    <label><input type="radio" name="category" value="독서" >독서</label>
-    <br>
-    제목: <label><input name="title" /><br></label>
-    모집 인원: <label><input name="recruits" type="number" min="2"/><br></label>
-    시작일: <label><input name="start_datetime" type="date"/><br></label>
-    소개: <label><input name="content_text" maxlength="500" /><br></label>
-    장소(임시): <label><input name="location" /><br></label>
-    <!--    작성자-> Session 사용 예정 -->
-    <label hidden="hidden"><input name="writer_nickname" /><br></label>
-    <label hidden="hidden"><input name="idx" /><br></label>
-    <input type="submit" value="수정"/>
-=======
+
 
 <form id="form"  action="/meeting/updateMet" method="post" enctype="multipart/form-data" class="col-lg-8 mx-auto p-4 py-md-5">
     <fieldset class="row mb-3">
@@ -40,15 +23,39 @@
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="category" id="gridRadios2" value="스터디">
+                <input class="form-check-input" type="radio" name="category" id="gridRadios2" value="게임">
                 <label class="form-check-label" for="gridRadios2">
-                    스터디
+                    게임
+                </label>
+
+
+
+
+
+
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="category" id="gridRadios3" value="애니">
+                <label class="form-check-label" for="gridRadios3">
+                    애니
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="category" id="gridRadios3" value="독서">
-                <label class="form-check-label" for="gridRadios3">
-                    독서
+                <input class="form-check-input" type="radio" name="category" id="gridRadios4" value="영화">
+                <label class="form-check-label" for="gridRadios4">
+                    영화
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="category" id="gridRadios5" value="요리">
+                <label class="form-check-label" for="gridRadios5">
+                    요리
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="category" id="gridRadios6" value="코딩">
+                <label class="form-check-label" for="gridRadios6">
+                    코딩
                 </label>
             </div>
         </div>
@@ -76,7 +83,7 @@
     </div>
     <div class="row mb-3">
         <label for="content_text" class="form-label">소개</label>
-        <textarea class="form-control" id="content_text" name="content_text"  rows="10" required></textarea>
+        <textarea class="form-control" id="content_text" name="content_text"  maxlength="1000" rows="10" required></textarea>
         <!--        <div class="invalid-feedback">-->
         <!--            Please enter a message in the textarea.-->
         <!--        </div>-->
@@ -96,7 +103,6 @@
         <input name="idx" />
         <input name="writer_nickname" />
     </div>
->>>>>>> ab301b4834119b8ef8085587b303e83b3f86931d
 </form>
 </body>
 </html>

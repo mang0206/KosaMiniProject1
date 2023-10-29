@@ -1,5 +1,6 @@
 package com.example.unimeeting.controller;
 import com.example.unimeeting.dao.NoticeMapper;
+import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,11 @@ public class NoticeController {
 
     //=======공지 게시판 글 목록=========//
     @RequestMapping("/{type}")
-    public ModelAndView process(@PathVariable("type") String type) {
+    public ModelAndView process(@PathVariable("type") String type, @RequestParam(required = false) String search, @ModelAttribute("user") UserVO user) {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("noticeList");
-        mav.addObject("list", noticeMapper.selectList(type));
+        mav.addObject("list", noticeMapper.selectList(type, search!=null ? search.trim() : search));
+        mav.addObject("user", user);
         return mav;
     }
     // ======공지 글 상세페이지 ======//
@@ -50,27 +52,34 @@ public class NoticeController {
         return "redirect:/board/"+noticeVO.getType();
     }
     //=====공지 삭제 ===========//
+//    @RequestMapping("/delete")
+//    public String deleteNotice(NoticeVO noticeVO ,@ModelAttribute("user") UserVO user){
+//        System.out.println(noticeVO+"delete______________________________________");
+//        if (noticeMapper.isWriter(noticeVO.getIdx(), user.getNickname())==1 ){
+//            noticeMapper.deleteNotice(noticeVO.getIdx());
+//        }
+//        return "redirect:/board/"+noticeVO.getType();
+//    }
     @RequestMapping("/delete")
-    public String deleteNotice(int idx,@ModelAttribute("user") UserVO user){
+    public String deleteNotice(int idx, String type, @ModelAttribute("user") UserVO user){
         if (noticeMapper.isWriter(idx, user.getNickname())==1 ){
             noticeMapper.deleteNotice(idx);
         }
-        return "redirect:/board/list";
+        return "redirect:/board/"+type;
     }
 
     @RequestMapping("/update")
-    public String updateNotice(NoticeVO noticeVO){
-        System.out.println(noticeVO);
-        noticeMapper.updateNotice(noticeVO);
+    public String updateNotice(NoticeVO noticeVO ,@ModelAttribute("user") UserVO user){
+        if(noticeMapper.isWriter(noticeVO.getIdx(), user.getNickname())==1){
+            noticeMapper.updateNotice(noticeVO);
+        }
         return "redirect:/board/detail?idx="+noticeVO.getIdx();
     }
     @RequestMapping(value = "/updateJSON", produces = "application/json; charset=utf-8")
+
     @ResponseBody
     public NoticeVO updateJSON(int idx){
         return noticeMapper.selectNotice(idx);
     }
-
-
-
 
 }

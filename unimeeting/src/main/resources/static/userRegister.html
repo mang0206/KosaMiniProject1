@@ -11,6 +11,7 @@
     }    </style>
 </head>
 <body class="bg-light">
+
 <div id="register_container" class="container">
     <div id="register_form1"class="row justify-content-center mt-5">
         <div class="col-md-6">
@@ -19,7 +20,7 @@
                     <h2 id="title_text">회원가입</h2>
                 </div>
                 <div class="card-body">
-                    <form action="/user/register" method="post">
+                    <form action="/user/register"  method="post">
                         <div class="form-group">
                             <label for="user_id">아이디</label>
                             <div class=form-control">
@@ -114,6 +115,7 @@
             </div>
         </div>
     </div>
+</div>
 </body>
 <script>    function checkUserId() {
     var userId = document.getElementById("user_id").value;
