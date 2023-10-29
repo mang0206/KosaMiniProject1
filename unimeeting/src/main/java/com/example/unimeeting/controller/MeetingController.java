@@ -1,10 +1,7 @@
 package com.example.unimeeting.controller;
 
 import com.example.unimeeting.dao.MeetingMapper;
-import com.example.unimeeting.domain.MeetingCntDTO;
-import com.example.unimeeting.domain.MeetingDTO;
-import com.example.unimeeting.domain.MeetingImageDTO;
-import com.example.unimeeting.domain.UserVO;
+import com.example.unimeeting.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -150,6 +147,9 @@ public class MeetingController {
             mv.addObject("meeting", meeting);
             mv.addObject("meeting_member", meeting_member);
             if(image_url.length != 0) mv.addObject("meeting_image", image_url);
+            if(meeting_member != 0){
+                mv.addObject("applicants", meetingMapper.selectMetMem(meeting_idx));
+            }
         }
 
         // < ========== 신청/스크랩 or 삭제/수정 ========== >
@@ -170,7 +170,11 @@ public class MeetingController {
         return mv;
     }
 
-
+//    @RequestMapping(value = "/viewMeetingApplicant", produces = "application/json; charset=utf-8")
+//    @ResponseBody
+//    public List<MeetingApplicantVO> viewMeetingApplicant(int meeting_idx){
+//        return meetingMapper.selectMetMem(meeting_idx);
+//    }
 
 
     // delete meeting
@@ -223,9 +227,9 @@ public class MeetingController {
 
 //    마이페이지와 연동 예정
     @RequestMapping("/accept")
-    public String updateMetMem(int meeting_idx, int user_idx, RedirectAttributes rttr){
+    public String accept(int meeting_idx, int user_idx, RedirectAttributes rttr){
         // 권한 필요
-        if(meetingMapper.updateApplyMetMem(meeting_idx,user_idx)){
+        if(meetingMapper.acceptApply(meeting_idx,user_idx)){
             rttr.addFlashAttribute("msg", "수락이 완료되었습니다.");
         }else {
             rttr.addFlashAttribute("msg", false);
@@ -233,10 +237,21 @@ public class MeetingController {
         return "redirect:/meeting/post?meeting_idx=" + meeting_idx;
     }
     @RequestMapping("/accept/cancel")
-    public String deleteMetMemByLeader(int meeting_idx, int user_idx, RedirectAttributes rttr){
+    public String cancelAccept(int meeting_idx, int user_idx, RedirectAttributes rttr){
         // 권한 필요
-        if(meetingMapper.updateApplyMetMem(meeting_idx,user_idx)){
+        if(meetingMapper.acceptCancel(meeting_idx,user_idx)){
             rttr.addFlashAttribute("msg", "수락이 취소 되었습니다.");
+        }else {
+            rttr.addFlashAttribute("msg", false);
+        }
+        return "redirect:/meeting/post?meeting_idx=" + meeting_idx;
+    }
+
+    @RequestMapping("/accept/delete")
+    public String deleteAccept(int meeting_idx, int user_idx, RedirectAttributes rttr){
+        // 권한 필요
+        if(meetingMapper.deleteMetMem(meeting_idx,user_idx)){
+            rttr.addFlashAttribute("msg", "수락을 거절했습니다. ");
         }else {
             rttr.addFlashAttribute("msg", false);
         }
@@ -271,4 +286,10 @@ public class MeetingController {
         return "redirect:/meeting/post?meeting_idx=" + meeting_idx;
 
     }
+
+//    @RequestMapping(value = "/viewMeetingApplicant", produces = "application/json; charset=utf-8")
+//    @ResponseBody
+//    public List<MeetingApplicantVO> viewMeetingApplicant(int meeting_idx){
+//        return meetingMapper.selectMetMem(meeting_idx);
+//    }
 }
