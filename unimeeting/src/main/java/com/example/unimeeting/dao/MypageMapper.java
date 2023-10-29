@@ -6,6 +6,7 @@ import com.example.unimeeting.domain.UpdateUserVO;
 import java.util.List;
 
 import com.example.unimeeting.domain.UserVO;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -37,4 +38,7 @@ public interface MypageMapper {
 
   @Update("update user set password = #{password}, nickname = #{nickname}, category = #{category} where idx = #{idx}")
   public boolean updateUser(UserVO userVO);
+
+  @Delete("delete from user where idx = #{idx}")
+  public boolean deleteUser(UserVO userVO) ;
 }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -49,7 +50,7 @@ public class MypageController {
 
   /* Mypage 참여 목록 */
   @GetMapping("")
-  public String myDefault(Model model, @ModelAttribute("user") UserVO s_user, HttpSession httpSession) {
+  public String myDefault(Model model, @ModelAttribute("user") UserVO s_user) {
     if(s_user == null){
       return "redirect:/userLogin.html";
     }
@@ -113,5 +114,17 @@ public class MypageController {
     mav.setView(redirectView);
 //    mav.setViewName("myPage");
     return mav;
+  }
+
+  @GetMapping("/withdraw")
+  public String deleteUser(@ModelAttribute("user") UserVO userVO, Model model, SessionStatus status) {
+    boolean result = dao.deleteUser(userVO);
+    if (result){
+      model.addAttribute("msg", "탈퇴 되었습니다");
+    } else {
+      model.addAttribute("msg", "탈퇴하는 동안 오류 발생했습니다. 다시 시도해 주세요");
+    }
+    status.setComplete();
+    return "redirect:/mainPage";
   }
 }

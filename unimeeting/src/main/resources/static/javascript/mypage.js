@@ -19,6 +19,11 @@ function initializePage() {
       makeMeetingBlock(o)
     }
   }
+
+  let attend = document.getElementById('side_attend');
+  attend.classList.add("selected");
+  attend.parentNode.classList.add("selected");
+
   xhr.open('GET', '/mypage/attend', true);
   xhr.send();
 }
@@ -75,14 +80,37 @@ function sideSelect(e) {
       <span class='span_text'>이메일</span> <input class='input_box' type='text' name='email' disabled value = '${userObj.email}'> <br>
       <span class='span_text'>휴대폰 번호</span> <input class='input_box' type='text' name='phone_num' disabled value = '${userObj.phone_number}'> <br>
       <div class='submit_btn'>
-          <input type='submit' value='정 보 변 경' id='submit_button' disabled> </form>
-      </div>`;
+          <input type='submit' value='정 보 변 경' id='submit_button' disabled>
+      </div> </form>`;
       document.getElementById('pwd').addEventListener('input', validatePassword);
       document.getElementById('c_pwd').addEventListener('input', validatePassword);
 
       }
       xhr.open('GET', '/mypage/getSessionData', true);
       xhr.send();
+  } else if (e.target.name=="withDraw"){
+    let xhr = new XMLHttpRequest();
+    xhr.onload = function() {
+        let userObj = JSON.parse(xhr.responseText);
+        let result_header = document.getElementById("info_header");
+        result_header.textContent = e.target.innerText;
+
+        let result_div = document.getElementById("info_result");
+
+        result_div.innerHTML = `
+            <h3> 탈퇴 안내 </h3>
+
+            <h5>사용하고 계신 아이디(${userObj.user_id})는 탈퇴할 경우 복구가 불가능합니다. </h5>
+            <h5>탈퇴 후 회원정보 및 개인형 서비스 이용기록은 모두 삭제됩니다. </h5>
+
+            <input class='input_box input_chane_box' type='password' id='wd' placeholder = '비밀번호 입력' required> <br>
+            <botton class='submit_btn' disabled onclick="window.location.href = '/mypage/withdraw'">
+                <span id = submit_button>회 원 탈 퇴</span>
+            </button>
+        `
+    }
+    xhr.open('GET', '/mypage/getSessionData', true);
+    xhr.send();
   }
   else if(e.target.nodeName == "BUTTON"){
     let xhr = new XMLHttpRequest();
