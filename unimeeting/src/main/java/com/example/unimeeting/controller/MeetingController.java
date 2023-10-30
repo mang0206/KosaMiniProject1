@@ -1,10 +1,7 @@
 package com.example.unimeeting.controller;
 
 import com.example.unimeeting.dao.MeetingMapper;
-import com.example.unimeeting.domain.MeetingCntDTO;
-import com.example.unimeeting.domain.MeetingDTO;
-import com.example.unimeeting.domain.MeetingImageDTO;
-import com.example.unimeeting.domain.UserVO;
+import com.example.unimeeting.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,46 +23,46 @@ public class MeetingController {
     // Mapper
     @Autowired
     MeetingMapper meetingMapper;
-
     // get Session
     @ModelAttribute("user")
     public UserVO sessionLogin(){
         return null;
     }
 
-    // Get Category
-    @RequestMapping(value = "/getCategory", produces = "application/json; charset=utf-8" )
-    @ResponseBody
-    public List<String> getCategory(){
-        return meetingMapper.viewCtgy();
-    }
-
     // Get Meeting Board
     // [path]ctgr(category) 카테고리 별로 meeting row 가져옴. (ctgr == null -> 모든 meeting row)
     // [param] search query. (required=false)
     @RequestMapping(value = {"" ,"/{ctgr}"})
-        public ModelAndView viewMetBoard(@PathVariable(required = false) String ctgr,@RequestParam(required = false) String search, @RequestParam(defaultValue = "1") int page){
+    public ModelAndView viewMetBoard(@PathVariable(required = false) String ctgr,@RequestParam(required = false) String search, @RequestParam(defaultValue = "1") int page){
+
         ModelAndView mv = new ModelAndView();
-        mv.addObject("ctgr_list", getCategory());
-//        List<MeetingDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search, (page-1)*4);
-        System.out.println("ctgr = " + ctgr);
-        List<MeetingCntDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search, (page-1)*4);
-        mv.addObject("met_list", meetings);
-        System.out.println(meetings.size());
-        int metCnt = ctgr == null ? meetingMapper.cntMetAll() : meetingMapper.cntMetOfCategory(ctgr);
-        metCnt /= 4;
 
-        mv.addObject("cnt", new int[metCnt]);
-        System.out.println("cnt-"+metCnt);
-
+        // < ========== 카테고리 ========== >
+        mv.addObject("ctgr_list", meetingMapper.viewCtgy());
+        // ctgr가 null일 때 uri가 '/meeting/' 으로 되어 404 error 발생.
         if(ctgr != null)
             mv.addObject("path_ctgr", "/"+ctgr);
+
+        // 검색어가 있을 때 공백이 있으면 제거
+        if(search!=null) search = search.trim();
+        // <미팅 글 리스트>
+        List<MeetingCntDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search, (page-1)*4 );
+        mv.addObject("met_list", meetings);
+
+        //< ========== 페이지네이션 ========== >
+        // pagination, meeting 글을 4개씩 보여줌
+        // -> 4개 이하일 경우, page는 하나
+        int metCnt = meetingMapper.cntMet(ctgr ,search);
+        metCnt = metCnt <  4 ?  1 : (metCnt /= 4);
+        // thymeleaf에 each를 쓰기 위해 페이지 수를 배열로 전달
+        mv.addObject("met_cnt", new int[metCnt]);
 
         mv.setViewName("MetBoardView");
         return mv;
     }
 
-    // get Meeting
+    // 글 수정 시 기존 글 내용을 가져오기
+    // static/javascript/updateMet.js에서 Ajax를 사용해 값을 불러온다.
     @RequestMapping(value = "/getMetJson", produces = "application/json; charset=utf-8")
     @ResponseBody
     public MeetingDTO getMetJson(int meeting_idx){
@@ -86,10 +83,12 @@ public class MeetingController {
     @PostMapping("/insertMet")
     public String insertMet(MeetingDTO meetingDTO, Model m, MultipartRequest mreq, @ModelAttribute("user") UserVO user){
 
-        System.out.println("--------------------file error----------------");
-        System.out.println(mreq);
+        // < ========== 미팅 글 등록 ========== >
+        // Session으로 user 정보 등록
         meetingDTO.setWriter_nickname(user.getNickname());
         boolean result = meetingMapper.insertMet(meetingDTO);
+
+        // < ========== 미팅의 이미지 등록 ========== >
         int meeting_idx = meetingMapper.getIdxOfCurrentMet();
         List<MultipartFile> list = mreq.getFiles("images");
         if(!list.isEmpty()){
@@ -135,40 +134,53 @@ public class MeetingController {
     // Get Meeting Post
     @GetMapping("/post")
     public ModelAndView viewMetPost(int meeting_idx, @ModelAttribute("user") UserVO user){
+
+        // < ========== 미팅 글 정보 가져옴 ========== >
         MeetingDTO meeting = meetingMapper.viewMetPost(meeting_idx);
-        // get images of meeting post
+        // 글의 사진 가져오기
         String[] image_url = meetingMapper.selectMetImg(meeting_idx);
-        // get
+        // 미팅 신청한 인원
         int meeting_member = meetingMapper.countMetMem(meeting_idx);
+
         ModelAndView mv = new ModelAndView();
         if(meeting != null){
             mv.addObject("meeting", meeting);
             mv.addObject("meeting_member", meeting_member);
             if(image_url.length != 0) mv.addObject("meeting_image", image_url);
+            if(meeting_member != 0){
+                mv.addObject("applicants", meetingMapper.selectMetMem(meeting_idx));
+            }
         }
 
+        // < ========== 신청/스크랩 or 삭제/수정 ========== >
         if(user!=null){
+            // 로그인이 되어있을 경우
+            // apply, scrap -> true(신청/스크랩 버튼), false(삭제/수정 버튼)
             mv.addObject("apply", meetingMapper.checkMetMem(meeting_idx, user.getIdx()) == 0);
             mv.addObject("scrap", meetingMapper.checkScrap(meeting_idx, user.getIdx()) == 0);
             System.out.println(meetingMapper.isWriter(meeting_idx, user.getNickname())+"-------------");
             mv.addObject("isWriter", meetingMapper.isWriter(meeting_idx, user.getNickname()) == 1);
         }else{
+            // 로그인이 되어있지 않을 경우 (/apply, /scrap 에서 처리)
             mv.addObject("apply", true);
             mv.addObject("scrap", true);
         }
 
-        System.out.println(mv);
         mv.setViewName("MetPostView");
         return mv;
     }
 
-
+//    @RequestMapping(value = "/viewMeetingApplicant", produces = "application/json; charset=utf-8")
+//    @ResponseBody
+//    public List<MeetingApplicantVO> viewMeetingApplicant(int meeting_idx){
+//        return meetingMapper.selectMetMem(meeting_idx);
+//    }
 
 
     // delete meeting
     @RequestMapping("/deleteMet")
-    public String deleteMetPost(int idx, String writer_nickname){ // HttpSession
-        return meetingMapper.deleteMeeting(idx, writer_nickname) ? "redirect:/meeting" : "redirect:/";
+    public String deleteMetPost(int idx){
+        return meetingMapper.deleteMeeting(idx) ? "redirect:/meeting" : "redirect:/";
     }
 
     // update meeting
@@ -213,11 +225,11 @@ public class MeetingController {
         return "redirect:/meeting/post?meeting_idx=" + meeting_idx;
     }
 
-//    마이페이지와 연동 예정
+    //    마이페이지와 연동 예정
     @RequestMapping("/accept")
-    public String updateMetMem(int meeting_idx, int user_idx, RedirectAttributes rttr){
+    public String accept(int meeting_idx, int user_idx, RedirectAttributes rttr){
         // 권한 필요
-        if(meetingMapper.updateApplyMetMem(meeting_idx,user_idx)){
+        if(meetingMapper.acceptApply(meeting_idx,user_idx)){
             rttr.addFlashAttribute("msg", "수락이 완료되었습니다.");
         }else {
             rttr.addFlashAttribute("msg", false);
@@ -225,10 +237,21 @@ public class MeetingController {
         return "redirect:/meeting/post?meeting_idx=" + meeting_idx;
     }
     @RequestMapping("/accept/cancel")
-    public String deleteMetMemByLeader(int meeting_idx, int user_idx, RedirectAttributes rttr){
+    public String cancelAccept(int meeting_idx, int user_idx, RedirectAttributes rttr){
         // 권한 필요
-        if(meetingMapper.updateApplyMetMem(meeting_idx,user_idx)){
+        if(meetingMapper.acceptCancel(meeting_idx,user_idx)){
             rttr.addFlashAttribute("msg", "수락이 취소 되었습니다.");
+        }else {
+            rttr.addFlashAttribute("msg", false);
+        }
+        return "redirect:/meeting/post?meeting_idx=" + meeting_idx;
+    }
+
+    @RequestMapping("/accept/delete")
+    public String deleteAccept(int meeting_idx, int user_idx, RedirectAttributes rttr){
+        // 권한 필요
+        if(meetingMapper.deleteMetMem(meeting_idx,user_idx)){
+            rttr.addFlashAttribute("msg", "수락을 거절했습니다. ");
         }else {
             rttr.addFlashAttribute("msg", false);
         }
@@ -263,4 +286,10 @@ public class MeetingController {
         return "redirect:/meeting/post?meeting_idx=" + meeting_idx;
 
     }
+
+//    @RequestMapping(value = "/viewMeetingApplicant", produces = "application/json; charset=utf-8")
+//    @ResponseBody
+//    public List<MeetingApplicantVO> viewMeetingApplicant(int meeting_idx){
+//        return meetingMapper.selectMetMem(meeting_idx);
+//    }
 }
