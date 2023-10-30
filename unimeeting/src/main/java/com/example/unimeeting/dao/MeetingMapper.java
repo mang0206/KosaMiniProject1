@@ -36,8 +36,8 @@ public interface MeetingMapper {
         "<where>" +
         "<if test='category!=null'>category like #{category} </if>" +
         "<if test='search!=null'>and title like concat('%',#{search}, '%')</if>" +
-        "</where>order by idx desc </script>")
-    public List<MeetingCntDTO> viewMetBoard(@Param("category") String category,@Param("search") String search);
+        "</where>order by idx desc limit 4 offset ${page}</script>")
+    public List<MeetingCntDTO> viewMetBoard(@Param("category") String category,@Param("search") String search,@Param("page") int page);
 
     // Insert Meeting
     @Insert("insert into meeting (title, category, location, start_datetime, created_datetime, content_text,writer_nickname, recruits) " +

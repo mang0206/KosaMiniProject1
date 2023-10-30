@@ -26,6 +26,7 @@ public class MeetingController {
     // Mapper
     @Autowired
     MeetingMapper meetingMapper;
+
     // get Session
     @ModelAttribute("user")
     public UserVO sessionLogin(){
@@ -48,13 +49,14 @@ public class MeetingController {
         mv.addObject("ctgr_list", getCategory());
 //        List<MeetingDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search, (page-1)*4);
         System.out.println("ctgr = " + ctgr);
-        List<MeetingCntDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search);
+        List<MeetingCntDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search, (page-1)*4);
         mv.addObject("met_list", meetings);
         System.out.println(meetings.size());
         int metCnt = ctgr == null ? meetingMapper.cntMetAll() : meetingMapper.cntMetOfCategory(ctgr);
         metCnt /= 4;
 
         mv.addObject("cnt", new int[metCnt]);
+        System.out.println("cnt-"+metCnt);
 
         if(ctgr != null)
             mv.addObject("path_ctgr", "/"+ctgr);
@@ -169,11 +171,6 @@ public class MeetingController {
         return meetingMapper.deleteMeeting(idx, writer_nickname) ? "redirect:/meeting" : "redirect:/";
     }
 
-//    @RequestMapping("/updateMetForm")
-//    public String updateMetForm(int idx){
-//        return
-//    }
-//
     // update meeting
     @RequestMapping("/updateMet")
     public String updateMetPost(MeetingDTO meetingDTO,Model m){
