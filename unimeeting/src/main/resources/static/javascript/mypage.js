@@ -105,7 +105,7 @@ function sideSelect(e) {
 
             <input class='input_box input_chane_box' type='password' id='wd' placeholder = '비밀번호 입력' required> <br>
             <botton class='submit_btn' disabled onclick="window.location.href = '/mypage/withdraw'">
-                <span id = submit_button>회 원 탈 퇴</span>
+                <span id = 'submit_button'>회 원 탈 퇴</span>
             </button>
         `
     }
