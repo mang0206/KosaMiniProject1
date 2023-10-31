@@ -67,7 +67,7 @@ public interface MeetingMapper {
     @Select("select meeting_idx, user_idx, accepted, u.nickname, u.category from meeting_member m join user u on m.user_idx = u.idx where meeting_idx=${meeting_idx}")
     public List<MeetingApplicantVO> selectMetMem(@Param("meeting_idx") int meeting_idx);
     @Insert("insert into meeting_member (meeting_idx, user_idx, accepted) values (#{meeting_idx} , #{user_idx}, 0)")
-    public void insertMetMem(@Param("meeting_idx") int meeting_idx,@Param("user_idx") int user_idx);
+    public boolean insertMetMem(@Param("meeting_idx") int meeting_idx,@Param("user_idx") int user_idx);
 
     @Delete("delete from meeting_member where meeting_idx=#{meeting_idx} and user_idx=#{user_idx}")
     public boolean deleteMetMem(@Param("meeting_idx") int meeting_idx,@Param("user_idx") int user_idx);
