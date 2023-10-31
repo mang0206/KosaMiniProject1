@@ -102,12 +102,13 @@ function sideSelect(e) {
 
             <h5>사용하고 계신 아이디(${userObj.user_id})는 탈퇴할 경우 복구가 불가능합니다. </h5>
             <h5>탈퇴 후 회원정보 및 개인형 서비스 이용기록은 모두 삭제됩니다. </h5>
-
+            <input type="hidden" name='user_pwd' id='user_pwd'value=${userObj.password}>
             <input class='input_box input_chane_box' type='password' id='wd' placeholder = '비밀번호 입력' required> <br>
-            <botton class='submit_btn' disabled onclick="window.location.href = '/mypage/withdraw'">
+            <button class='submit_btn' id='wdr-btn' disabled onclick="window.location.href = '/mypage/withdraw'">
                 <span id = 'submit_button'>회 원 탈 퇴</span>
             </button>
         `
+        document.getElementById('wd').addEventListener('input', withDrawPassword);
     }
     xhr.open('GET', '/mypage/getSessionData', true);
     xhr.send();
@@ -210,5 +211,20 @@ function validatePassword() {
      submitButton.disabled = false;
   } else {
      submitButton.disabled = true;
+  }
+}
+
+// 회원 탈퇴 버튼 활성화
+function withDrawPassword() {
+  const button = document.getElementById('wdr-btn');
+  console.log(button)
+  let passwordValue = document.getElementById('user_pwd').value;
+  var checkPwdValue = document.getElementById('wd').value;
+
+  console.log(passwordValue + "///" + checkPwdValue + "///" + typeof(passwordValue) + "///"+ typeof(checkPwdValue));
+  if (passwordValue === checkPwdValue) {
+     button.disabled = false;
+  } else {
+     button.disabled = true;
   }
 }

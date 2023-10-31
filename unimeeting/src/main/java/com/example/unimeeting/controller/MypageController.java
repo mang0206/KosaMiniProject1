@@ -35,15 +35,15 @@ public class MypageController {
     return null;
   }
 
-  @ModelAttribute("user")
-  public UserVO updateSessionUser(UserVO userVO) {
-    if(userVO != null) {
-      System.out.println(userVO.getNickname());
-      return userVO;
-    }
-    else
-      return null;
-  }
+//  @ModelAttribute("user")
+//  public UserVO updateSessionUser(UserVO userVO) {
+//    if(userVO != null) {
+//      System.out.println(userVO.getNickname());
+//      return userVO;
+//    }
+//    else
+//      return null;
+//  }
 
   @Autowired
   MypageMapper dao;
