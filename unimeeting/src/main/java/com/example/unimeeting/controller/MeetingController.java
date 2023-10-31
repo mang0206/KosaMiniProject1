@@ -98,7 +98,8 @@ public class MeetingController {
         // < ========== 미팅 글 등록 ========== >
         // Session으로 user 정보 등록
         meetingDTO.setWriter_nickname(user.getNickname());
-//        meetingDTO.setContent_text(meetingDTO.getContent_text().replaceAll("\n", "\n"));
+//        System.out.println(meetingDTO.getContent_text());
+
         boolean result = meetingMapper.insertMet(meetingDTO);
 
         // < ========== 미팅의 이미지 등록 ========== >
@@ -157,6 +158,7 @@ public class MeetingController {
 
         ModelAndView mv = new ModelAndView();
         if(meeting != null){
+            mv.addObject("newLineChar", "\n");
             mv.addObject("meeting", meeting);
             mv.addObject("meeting_member", meeting_member);
             if(image_url.length != 0) mv.addObject("meeting_image", image_url);
