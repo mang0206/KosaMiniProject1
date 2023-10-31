@@ -1,5 +1,7 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
 <style>
-
+<meta charset="UTF-8">
     @font-face {
     font-family: 'Pretendard-Regular';
     src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
@@ -11,11 +13,12 @@
     font-family: 'Pretendard-Regular';
 }
 </style>
-
+<link th:href="@{/css/nav.css}" rel="stylesheet" type="text/css">
+</head>
 <nav class="base-header-group">
     <div class="logo">
         <img alt="" th:src="@{/images/meeting.png}" class="logo-image">
-        <span class="logo-text">UniMeeing</span>
+        <span class="logo-text">UniMeeting</span>
     </div>
     <div id="navbar" class="frame-3" aria-expanded="false">
         <div class="nav_div">

@@ -32,6 +32,10 @@
               <img class="menu-icon" th:src="@{/images/users.png}" alt="">
               <button class ="menu-item"id="side_myInfo" name="myInfo">내 정보 수정</button>
           </div>
+          <div class="menu-item">
+              <img class="menu-icon" th:src="@{/images/users.png}" alt="">
+              <button class ="menu-item"id="side_withdraw" name="withDraw">회원 탈퇴</button>
+          </div>
       </div>
     </div>
 
@@ -45,8 +49,8 @@
     </div>
   </div>
 
-  <script type="module" th:src="@{/javascript/mypage.js}"></script>
-  <script type="module" th:src="@{/javascript/meetingblock.js}"></script>
+  <script type="module" th:src="@{/javascript/mypage.js}" defer></script>
+  <script type="module" th:src="@{/javascript/meetingblock.js}" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js" crossorigin="anonymous"></script>
 </body>
 </html>

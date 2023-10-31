@@ -8,11 +8,7 @@
   <link rel="stylesheet" href="/css/userLogin.css">
   <link th:href="@{/css/nav.css}" rel="stylesheet" type="text/css">
 </head>
-<script>
-  console.log(msg);
-  console.log("msg");
 
-</script>
 <body class="bg-light">
 <div th:replace="/nav ::nav"></div>
 <div class="container">
@@ -43,5 +39,29 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  document.getElementById("login_form").addEventListener("submit", function(event) {
+    event.preventDefault();
+    var formData = new FormData(event.target);
+    fetch("/user/login/do", {
+      method: "POST",
+      body: formData
+    })
+            .then(function(response) {
+              if (response.ok) {
+                // 로그인 성공 시 메인 페이지로
+                window.location.href = "/mainPage";
+              } else {
+                // 로그인 실패 시 오류 메시지를 팝업 창으로 표시
+                response.text().then(function(errorMessage) {
+                  alert(errorMessage);
+                });
+              }
+            })
+            .catch(function(error) {
+              console.error(error);
+            });
+  });
+</script>
 </body>
 </html>

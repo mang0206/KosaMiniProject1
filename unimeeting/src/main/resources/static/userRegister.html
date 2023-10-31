@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="kr">
 <head>
     <meta charset="UTF-8">
@@ -73,7 +73,7 @@
                                     <input class="btn-check" type="checkbox" name="category" id="cat2" value="게임">
                                     <label class="btn btn-outline-primary" for="cat2" >게임</label>
                                 </div>
-                                 <div class="form-check form-check-inline">
+                                    <div class="form-check form-check-inline">
                                     <input class="btn-check" type="checkbox" id="cat3" name="category" value="애니">
                                     <label class="btn btn-outline-primary" for="cat3">애니</label>
                                 </div>
@@ -117,16 +117,19 @@
     </div>
 </div>
 </body>
-<script>    function checkUserId() {
+<script>
+    function checkUserId() {
     var userId = document.getElementById("user_id").value;
     var availabilityMessage = document.getElementById("availability-message");
-    if (userId === "") {
-        availabilityMessage.textContent = "아이디를 입력해주세요.";
-        return;
-    }
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/user/check?user_id=" + userId, true);
-    xhr.onload = function () {
+
+        if (userId === "") {
+            availabilityMessage.textContent = "아이디를 입력해주세요.";
+            return;
+        }
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/user/check?user_id=" + userId, true);
+
+        xhr.onload = function () {
         if (xhr.status >= 200 && xhr.status < 300) {
             var response = JSON.parse(xhr.responseText);
             if (response.available) {

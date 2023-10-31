@@ -32,7 +32,7 @@ public class MainController {
     }
 
     @GetMapping("/mainPage") //메인페이지 & 로그인/로그아웃 관리
-    public String test(Model model, @ModelAttribute("user") UserVO id, @RequestParam(value = "value", defaultValue = "no") String changeTest) {
+    public String test(Model model, @ModelAttribute("user") UserVO id, @RequestParam(defaultValue = "no") String changeTest) {
         System.out.println("main");
         model.addAttribute("data", "hello");
         if (changeTest.equals("popular")){
@@ -79,16 +79,8 @@ public class MainController {
     }
 
     @GetMapping("/logout")
-    public String logout(@ModelAttribute("user") UserVO id,WebRequest request, SessionStatus status, Model model){
+    public String logout(SessionStatus status){
         status.setComplete();
-        request.removeAttribute("user", WebRequest.SCOPE_SESSION);
-        System.out.println("logout");
-        model.addAttribute("data", "hello");
-        model.addAttribute("list", dao.listM());
-        System.out.println(id);
-        if (id != null){
-            model.addAttribute("inout",id);
-        }
         return "redirect:/mainPage";
     }
 

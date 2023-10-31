@@ -52,11 +52,12 @@
 
 
 <script th:inline="javascript">
+
     $("select[name=changeTest]").change(function(){
     console.log($(this).val()); //value값 가져오기
     let num = $(this).val()
     console.log($("select[name=changeTest] option:selected").text()); //text값 가져오기
-    location.href = `/mainPage?value=${num}`
+    location.href = `/mainPage?changeTest=${num}`
   });
 
     $("select[name=keyword]").change(function(){
