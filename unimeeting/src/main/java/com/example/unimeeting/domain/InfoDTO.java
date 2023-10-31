@@ -21,12 +21,5 @@ public class InfoDTO {
     private String displayName;
     private String created_datetime;
 
-//    public MainInfoDTO (String id, String nickname, String title, String content_text, String imgUrl) {
-//        this.id =  id;
-//        this.nickname = nickname;
-//        this.title = title;
-//        this.content_text = content_text;
-//        this.imgUrl = imgUrl;
-//    }
 
 }

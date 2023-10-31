@@ -1,0 +1,3 @@
+https://ubiquitous-polka-b43.notion.site/Education-a48b19408e154e70abc75b0dc1834a01
+
+https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api

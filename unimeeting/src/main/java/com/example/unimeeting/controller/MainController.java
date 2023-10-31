@@ -18,17 +18,13 @@ import org.slf4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-//import static jdk.internal.org.jline.utils.Colors.s;
 
 @Controller
 @SessionAttributes("user")
 public class MainController {
 
-
     @Autowired
     InfoMapper dao;
-
-    private static final Logger logger = LoggerFactory.getLogger(MainController.class); //로그 기록 남기기 위해
 
     @ModelAttribute("user")
     public UserVO inout(){
@@ -55,21 +51,6 @@ public class MainController {
         }
         return "mainPage";
     }
-
-    
-    @RequestMapping(value = "/join", method = RequestMethod.GET)
-    public void joinGet() {
-
-        logger.info("회원가입 페이지");
-    }
-
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public void loginGet() {
-
-        logger.info("로그인 페이지");
-    }
-
-
 
 
     @GetMapping("/listSort")
