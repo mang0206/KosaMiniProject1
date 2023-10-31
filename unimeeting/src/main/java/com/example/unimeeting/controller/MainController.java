@@ -3,9 +3,6 @@ package com.example.unimeeting.controller;
 import com.example.unimeeting.dao.InfoMapper;
 import com.example.unimeeting.domain.InfoDTO;
 import com.example.unimeeting.domain.UserVO;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
-import org.slf4j.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -52,7 +47,6 @@ public class MainController {
         return "mainPage";
     }
 
-
     @GetMapping("/listSort")
     public ModelAndView sort() {
         ModelAndView mav = new ModelAndView();
@@ -60,8 +54,6 @@ public class MainController {
         mav.addObject("sort", sort);
         mav.setViewName("mainPage");
         return mav;
-
-
     }
 
     @GetMapping("/search") //검색창
@@ -83,8 +75,4 @@ public class MainController {
         status.setComplete();
         return "redirect:/mainPage";
     }
-
 }
-
-
-
