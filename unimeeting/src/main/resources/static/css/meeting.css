@@ -3,7 +3,7 @@
     src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
     font-weight: 400;
     font-style: normal;
-}
+    }
 
 *{
     font-family: 'Pretendard-Regular';
@@ -19,63 +19,63 @@
 }
 
 .meeting-nav-left {
-    position: absolute;
-    width: 256px;
-    height: 800px;
-    left: 0px;
+    position: absolute !important;
+    width: 256px !important;
+    height: 800px !important;
+    left: 0px !important;
     /* top: 80px; */
     /* background: #725f5f; */
     /* background: #ffffff; */
-    padding-top: 30px;
+    padding-top: 30px !important;
 }
 
 .meeting-menu-item {
-    padding: 12px 8px;
+    padding: 12px 8px !important;
     /* gap: 8px; */
-    width: 224px;
-    height: 48px;
-    border: #FFFFFF;
-    background: #ffffff;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-size: 16px;
-    font-weight: 700;
+    width: 224px !important;
+    height: 48px !important;
+    border: #FFFFFF !important;
+    background: #ffffff !important;
+    font-family: 'Roboto'!important;
+    font-style: normal !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
     /* color: #21272A; */
 }
 
 .btn-menu-item{
     /* background: #e1d8e5; */
-    text-align: center;
-    border-radius: 8px;
-    border: #6129FF solid;
+    text-align: center !important;
+    border-radius: 8px !important;
+    border: #6129FF solid !important;
 }
 
 .btn-menu-item a{
     /* background: #e1d8e5; */
-    color: #6129FF;
+    color: #6129FF !important;
 }
 
 
 .btn-menu-item:hover{
-    border: #6129FF solid;
-    background-color: #6129FF;
-    color: #FFFFFF;
+    border: #6129FF solid !important;
+    background-color: #6129FF !important;
+    color: #FFFFFF !important;
 }
 
 .btn-menu-item:hover a{
-    color: #FFFFFF;
+    color: #FFFFFF !important;
 }
 
 .nav-link {
-    padding: 15px;
-    display: inline-block;
-    text-decoration: none;
+    padding: 15px !important;
+    display: inline-block !important;
+    text-decoration: none !important;
     /* color: #6129FF; */
 
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 600;
-    font-size: 18px;
+    font-family: 'Roboto' !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+    font-size: 18px !important;
 }
 
 /* meeting-search */
@@ -95,7 +95,7 @@
 }
 
 form {
-    width: 80%;
+    width: 80% !important;
 }
 
 .meeting-search #search-submit {
@@ -121,22 +121,22 @@ form {
 }
 
 .search-label {
-    width: 900px;
-    padding-bottom: 15px;
+    width: 900px !important;
+    padding-bottom: 15px !important;
     /* display: flex;
     flex-direction: row;
     align-items: flex-start; */
 }
 /* Insert Meeting Button */
 .make-meeting-button {
-    width: 136px;
-    height: 45px;
-    background: #6129FF;
-    border: 2px solid #6129FF;
-    border-radius: 8px;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 600;
+    width: 136px    ;
+    height: 45px !important;
+    background: #6129FF !important;
+    border: 2px solid #6129FF !important;
+    border-radius: 8px !important;
+    font-family: 'Roboto' !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
     font-size: 15px;
     line-height: 100%;
     letter-spacing: 0.5px;

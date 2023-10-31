@@ -7,8 +7,8 @@
 
     <link rel="stylesheet" href="/css/meeting.css">
 
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"> -->
+<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"-->
+<!--        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">-->
     <link th:href="@{/css/m_box.css}" rel="stylesheet" type="text/css">
     <link th:href="@{/css/mypage.css}" rel="stylesheet" type="text/css">
     <link th:href="@{/css/nav.css}" rel="stylesheet" type="text/css">
@@ -83,7 +83,25 @@
 <!--            pagination    -->
             <hr>
 
+                <nav aria-label="...">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link">Previous</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" href="?page=2">2</a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=3">Next</a>
+                        </li>
+                    </ul>
+                </nav>
         </div>
+
 
 <!--            <nav aria-label="Page navigation example">-->
 <!--                <ul class="pagination">-->

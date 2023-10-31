@@ -1,8 +1,8 @@
 package com.example.unimeeting.dao;
-
 import com.example.unimeeting.domain.MeetingJoinDTO;
 import com.example.unimeeting.domain.MeetingDTO;
 import com.example.unimeeting.domain.MeetingImageDTO;
+import com.example.unimeeting.domain.MeetingApplicantVO;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -30,6 +30,7 @@ public interface MeetingMapper {
         "<if test='search!=null'>and title like concat('%',#{search}, '%')</if>" +
         "</where>order by idx desc </script>")
     public List<MeetingJoinDTO> viewMetBoard(@Param("category") String category,@Param("search") String search);
+
 
     // Insert Meeting
     @Insert("insert into meeting (title, category, location, start_datetime, created_datetime, content_text,writer_nickname, recruits) " +
@@ -63,14 +64,19 @@ public interface MeetingMapper {
     @Select("select count(*) from meeting_member where meeting_idx=#{meeting_idx} and user_idx=#{user_idx}")
     public int checkMetMem(@Param("meeting_idx") int meeting_idx,@Param("user_idx") int user_idx);
 
+    @Select("select meeting_idx, user_idx, accepted, u.nickname, u.category from meeting_member m join user u on m.user_idx = u.idx where meeting_idx=${meeting_idx}")
+    public List<MeetingApplicantVO> selectMetMem(@Param("meeting_idx") int meeting_idx);
     @Insert("insert into meeting_member (meeting_idx, user_idx, accepted) values (#{meeting_idx} , #{user_idx}, 0)")
     public void insertMetMem(@Param("meeting_idx") int meeting_idx,@Param("user_idx") int user_idx);
 
     @Delete("delete from meeting_member where meeting_idx=#{meeting_idx} and user_idx=#{user_idx}")
     public boolean deleteMetMem(@Param("meeting_idx") int meeting_idx,@Param("user_idx") int user_idx);
 
-    @Update("update meeting_member set accepted=true where meeting_idx=#{idx} and user_idx=#{user_idx}")
-    public boolean updateApplyMetMem(@Param("meeting_idx") int meeting_idx,@Param("user_idx") int user_idx);
+    @Update("update meeting_member set accepted=true where meeting_idx=#{meeting_idx} and user_idx=#{user_idx}")
+    public boolean acceptApply(@Param("meeting_idx") int meeting_idx,@Param("user_idx") int user_idx);
+
+    @Update("update meeting_member set accepted=false where meeting_idx=#{meeting_idx} and user_idx=#{user_idx}")
+    public boolean acceptCancel(@Param("meeting_idx") int meeting_idx,@Param("user_idx") int user_idx);
 
     @Select("select count(*) from scrap where meeting_idx=#{meeting_idx} and user_idx=#{user_idx}")
     public int checkScrap(@Param("meeting_idx") int meeting_idx, @Param("user_idx") int user_idx);

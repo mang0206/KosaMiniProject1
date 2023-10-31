@@ -5,6 +5,7 @@ import com.example.unimeeting.domain.MeetingJoinDTO;
 import com.example.unimeeting.domain.MeetingDTO;
 import com.example.unimeeting.domain.MeetingImageDTO;
 import com.example.unimeeting.domain.UserVO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,19 +38,17 @@ public class MeetingController {
     // [path]ctgr(category) 카테고리 별로 meeting row 가져옴. (ctgr == null -> 모든 meeting row)
     // [param] search query. (required=false)
     @RequestMapping(value = {"" ,"/{ctgr}"})
-        public ModelAndView viewMetBoard(@PathVariable(required = false) String ctgr,@RequestParam(required = false) String search, @RequestParam(defaultValue = "1") int page){
+    public ModelAndView viewMetBoard(@PathVariable(required = false) String ctgr,@RequestParam(required = false) String search, @RequestParam(defaultValue = "1") int page){
 
         ModelAndView mv = new ModelAndView();
-        mv.addObject("ctgr_list", getCategory());
-//        List<MeetingDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search, (page-1)*4);
         System.out.println("ctgr = " + ctgr);
         List<MeetingJoinDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search!=null ? search.trim() : search);
-        mv.addObject("met_list", meetings);
         System.out.println(meetings.size());
-        int metCnt = ctgr == null ? meetingMapper.cntMetAll() : meetingMapper.cntMetOfCategory(ctgr);
-        metCnt /= 4;
 
-        mv.addObject("cnt", new int[metCnt]);
+//        int metCnt = ctgr == null ? meetingMapper.cntMet() : meetingMapper.cntMetOfCategory(ctgr);
+//        metCnt /= 4;
+//
+//        mv.addObject("cnt", new int[metCnt]);
 
 
         // < ========== 카테고리 ========== >
@@ -61,7 +60,6 @@ public class MeetingController {
         // 검색어가 있을 때 공백이 있으면 제거
         if(search!=null) search = search.trim();
         // <미팅 글 리스트>
-        List<MeetingJoinDTO> meetings = meetingMapper.viewMetBoard(ctgr ,search/*, (page-1)*4 */);
         mv.addObject("met_list", meetings);
 
         //< ========== 페이지네이션 ========== >
@@ -162,6 +160,9 @@ public class MeetingController {
             mv.addObject("meeting", meeting);
             mv.addObject("meeting_member", meeting_member);
             if(image_url.length != 0) mv.addObject("meeting_image", image_url);
+            if(meeting_member != 0){
+                mv.addObject("applicants", meetingMapper.selectMetMem(meeting_idx));
+            }
         }
 
         // < ========== 신청/스크랩 or 삭제/수정 ========== >
@@ -182,7 +183,11 @@ public class MeetingController {
         return mv;
     }
 
-
+//    @RequestMapping(value = "/viewMeetingApplicant", produces = "application/json; charset=utf-8")
+//    @ResponseBody
+//    public List<MeetingApplicantVO> viewMeetingApplicant(int meeting_idx){
+//        return meetingMapper.selectMetMem(meeting_idx);
+//    }
 
 
     // delete meeting
@@ -233,11 +238,11 @@ public class MeetingController {
         return "redirect:/meeting/post?meeting_idx=" + meeting_idx;
     }
 
-//    마이페이지와 연동 예정
+    //    마이페이지와 연동 예정
     @RequestMapping("/accept")
-    public String updateMetMem(int meeting_idx, int user_idx, RedirectAttributes rttr){
+    public String accept(int meeting_idx, int user_idx, RedirectAttributes rttr){
         // 권한 필요
-        if(meetingMapper.updateApplyMetMem(meeting_idx,user_idx)){
+        if(meetingMapper.acceptApply(meeting_idx,user_idx)){
             rttr.addFlashAttribute("msg", "수락이 완료되었습니다.");
         }else {
             rttr.addFlashAttribute("msg", false);
@@ -245,10 +250,21 @@ public class MeetingController {
         return "redirect:/meeting/post?meeting_idx=" + meeting_idx;
     }
     @RequestMapping("/accept/cancel")
-    public String deleteMetMemByLeader(int meeting_idx, int user_idx, RedirectAttributes rttr){
+    public String cancelAccept(int meeting_idx, int user_idx, RedirectAttributes rttr){
         // 권한 필요
-        if(meetingMapper.updateApplyMetMem(meeting_idx,user_idx)){
+        if(meetingMapper.acceptCancel(meeting_idx,user_idx)){
             rttr.addFlashAttribute("msg", "수락이 취소 되었습니다.");
+        }else {
+            rttr.addFlashAttribute("msg", false);
+        }
+        return "redirect:/meeting/post?meeting_idx=" + meeting_idx;
+    }
+
+    @RequestMapping("/accept/delete")
+    public String deleteAccept(int meeting_idx, int user_idx, RedirectAttributes rttr){
+        // 권한 필요
+        if(meetingMapper.deleteMetMem(meeting_idx,user_idx)){
+            rttr.addFlashAttribute("msg", "수락을 거절했습니다. ");
         }else {
             rttr.addFlashAttribute("msg", false);
         }
@@ -283,4 +299,10 @@ public class MeetingController {
         return "redirect:/meeting/post?meeting_idx=" + meeting_idx;
 
     }
+
+//    @RequestMapping(value = "/viewMeetingApplicant", produces = "application/json; charset=utf-8")
+//    @ResponseBody
+//    public List<MeetingApplicantVO> viewMeetingApplicant(int meeting_idx){
+//        return meetingMapper.selectMetMem(meeting_idx);
+//    }
 }
