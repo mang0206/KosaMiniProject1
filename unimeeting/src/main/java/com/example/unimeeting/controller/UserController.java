@@ -3,6 +3,7 @@ import com.example.unimeeting.domain.UserVO;
 import com.example.unimeeting.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,15 +64,15 @@ public class UserController {
     }
 
     @PostMapping("/login/do")
-    public String loginUser(@RequestParam("user_id") String user_id, @RequestParam("password") String password, Model model, HttpSession session) {
+    public ResponseEntity<String> loginUser(@RequestParam("user_id") String user_id, @RequestParam("password") String password, Model model, HttpSession session) {
         if (userService.authenticateUser(user_id, password)) {
             UserVO user = userService.idcheck(user_id);
             session.setAttribute("user", user);
-            return "mainPage";
+            return ResponseEntity.ok("success");
         } else {
-            model.addAttribute("error", "Invalid username or password");
-            return "userLoginError";
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("아이디 비밀번호를 확인하세요 !");
         }
     }
+
 
 }
