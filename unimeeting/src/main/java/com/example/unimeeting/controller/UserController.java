@@ -24,7 +24,7 @@ public class UserController {
 
     @ModelAttribute("user")
     public UserVO loginUser() {
-        return new UserVO();
+        return null;
     }
 
     @PostMapping("/register")
