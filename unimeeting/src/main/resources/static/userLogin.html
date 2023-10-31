@@ -43,19 +43,18 @@
   document.getElementById("login_form").addEventListener("submit", function(event) {
     event.preventDefault();
     var formData = new FormData(event.target);
-
     fetch("/user/login/do", {
       method: "POST",
       body: formData
     })
             .then(function(response) {
               if (response.ok) {
-                // 로그인 성공 시 메인 페이지로 리다이렉트 또는 다른 동작 수행
+                // 로그인 성공 시 메인 페이지로
                 window.location.href = "/mainPage";
               } else {
                 // 로그인 실패 시 오류 메시지를 팝업 창으로 표시
                 response.text().then(function(errorMessage) {
-                  alert(errorMessage); // 팝업 창에 메시지 표시
+                  alert(errorMessage);
                 });
               }
             })

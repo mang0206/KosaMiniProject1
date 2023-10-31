@@ -16,16 +16,16 @@ public class NoticeController {
     public UserVO sessionLogin() {
         return null;
     }
-    private static final Logger logger =
-            LoggerFactory.getLogger(
-                    NoticeController.class);
     @Autowired
     NoticeMapper noticeMapper;
     //=======공지 게시판 글 목록=========//
+
+    // @PathVariable, @RequestParam
+    // board/free
     @RequestMapping("/{type}")
     public ModelAndView process(@PathVariable("type") String type, @RequestParam(required = false) String search,@ModelAttribute("user") UserVO user) {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("noticeList");
+        mav.setViewName("NoticeList");
         mav.addObject("list", noticeMapper.selectList(type, search != null ? search.trim() : null));
         mav.addObject("writehide",user);
         return mav;
