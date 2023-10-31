@@ -50,7 +50,6 @@ public class MeetingController {
 //
 //        mv.addObject("cnt", new int[metCnt]);
 
-
         // < ========== 카테고리 ========== >
         mv.addObject("ctgr_list", meetingMapper.viewCtgy());
         // ctgr가 null일 때 uri가 '/meeting/' 으로 되어 404 error 발생.
