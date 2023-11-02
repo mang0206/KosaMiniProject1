@@ -37,15 +37,19 @@ public interface MeetingMapper {
             "values (#{title}, #{category}, #{location}, #{start_datetime}, now() , #{content_text}, #{writer_nickname}, #{recruits})")
     public boolean insertMet(MeetingDTO meetingDTO);
 
+    // meeting 글 업로드 후 AI로 작성된 idx를 찾기.
     @Select("select max(idx) from meeting")
     public int getIdxOfCurrentMet();
+
     // View Meeting Post
     @Select("select * from meeting where idx = ${idx}")
     public MeetingDTO viewMetPost(@Param("idx") int idx);
+
     // Count Meeting member
     @Select("select count(*) from meeting_member where meeting_idx = ${idx}")
     public int countMetMem(@Param("idx") int idx);
 
+    // delete Met
     @Delete("delete from meeting where idx=#{idx}")
     public boolean deleteMeeting(@Param("idx") int idx);
 
