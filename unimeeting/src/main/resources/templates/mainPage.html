@@ -38,7 +38,7 @@
                             <img th:src="${st.image_url}" onerror="this.src='/images/book.png';" class="card-img-top">
                             <div class="card-body">
                                 <h4 class="card-title" style="font-weight: bold">[[${st.title}]]</h4>
-                                <p class="card-text">[[${st.content_text}]]</p>
+                                <p class="card-text">[[${st.content}]]</p>
 
                             </div>
                             <div class="card-date" style="color: gray" th:data-created_datetime="${st.created_datetime}"></div>

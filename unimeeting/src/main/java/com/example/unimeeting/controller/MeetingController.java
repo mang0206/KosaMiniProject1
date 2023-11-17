@@ -22,6 +22,7 @@ import java.util.List;
 @Controller
 @SessionAttributes("user")
 @RequestMapping("/meeting")
+@CrossOrigin("*")
 public class MeetingController {
 
     // Mapper
