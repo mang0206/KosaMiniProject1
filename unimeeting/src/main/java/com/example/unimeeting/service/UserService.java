@@ -2,7 +2,7 @@ package com.example.unimeeting.service;
 
 import com.example.unimeeting.domain.UserVO;
 
-public interface UserService {
+public interface    UserService {
     UserVO idcheck(String user_Id);
     UserVO nicknamecheck(String nickname);
     UserVO emailcheck(String email);
